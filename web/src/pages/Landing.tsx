@@ -1,5 +1,7 @@
 import github from "../assets/icons/github.png"
 import calender from "../assets/images/landing-cal-1.jpeg"
+import {GridLayout} from "../components/GridLayout"
+import { ScrollDiv } from "../components/ScrollDiv"
 
 function Landing() {
   return (
@@ -28,8 +30,8 @@ function Landing() {
           </div>
         </div>
       </div>
-      <div className='flex flex-row justify-between px-16 mt-20'>
-        <div className='flex flex-col '>
+      <div className='flex flex-row justify-center px-16 mt-20'>
+        <div className='flex flex-col w-6/12'>
           <div className='flex flex-col items-left justify-center p-16 pt-32'>
             <div className='w-full'>
               <p className='font-heading text-secondText text-2xl'>"Unlock your calendar's potential with Calenso.com - </p>
@@ -44,12 +46,49 @@ function Landing() {
             </div>
           </div>
         </div>
-        <div className='mr-16'><img src={calender} alt="" className="rounded-3xl w-full"/>
+        <div className='mr-16 w-6/12 h-5/12'><img src={calender} alt="" className="rounded-3xl w-full"/>
         </div>
       </div>
       <div className='px-32 w-full'>
         <p className='font-secondHeading text-mainText text-8xl'>infrastructure for  everyone. </p>
       </div>
+      <div className="flex flex-row justify-between px-16 mt-24 mx-28">
+        <div className="flex flex-row w-11/12">
+            <div className="w-3/12 p-8 bg-secondText border-second border-r-2 border-dashed rounded-s-3xl">
+                <div className="flex items-center h-full"><a href="/"><p className="font-secondHeading text-2xl">Calenso.com/</p></a></div>
+            </div>
+            <div className="w-10/12 h-full rounded-e-3xl p-8 bg-input">
+                <div className="flex items-center h-full"><input type="text" placeholder="Calenso123" className="border-none decoration-none w-full text-2xl bg-transparent focus:outline-none"/></div>
+            </div>
+        </div>
+        <div className="w-4/12 flex justify-center items-center">
+            <button className="flex items-center justify-center p-6 w-8/12 bg-second rounded-3xl">
+                <div className="text-mainText text-3xl font-secondHeading">
+                    <p className="mb-2">Claim</p><p> username</p>
+                </div>
+            </button>
+        </div>
+      </div>
+      <div className="p-16">
+        <ScrollDiv />
+      </div>
+      <div className="flex justify-center">
+        <div className="w-7/12 text-center">
+            <p className="font-secondHeading text-mainText text-7xl font-bold">Everything you need in a scheduling app</p>
+        </div>
+      </div>
+      <div className="mt-32">
+        <GridLayout />
+      </div>
+      <div className="flex justify-center mt-32">
+        <div className="w-7/12 text-center">
+            <p className="font-secondHeading text-mainText text-6xl font-bold">Tailored scheduling for every business, every time</p>
+        </div>
+      </div>
+      <div className="flex items-center justify-center mt-32 mb-16">
+        <div className='w-8xl'><img src={calender} alt="" className="rounded-3xl w-full"/></div>
+      </div>
+
     </div>
   )
 }
