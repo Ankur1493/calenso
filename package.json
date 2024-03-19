@@ -10,9 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "clsx": "^2.1.0",
-    "concurrently": "^8.2.2",
-    "framer-motion": "^11.0.15",
-    "tailwind-merge": "^2.2.2"
+    "concurrently": "^8.2.2"
   }
 }
