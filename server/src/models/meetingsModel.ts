@@ -1,24 +1,27 @@
 import mongoose from "mongoose";
 
-const meetingsSchema = new mongoose.Schema({
+const meetingSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   title: {
     type: String,
-    required: true,
+    required: true
   },
-  startTime: {
-    type: Date,
-    required: true,
+  length: {
+    type: Number,
+    enum: [10, 20, 30],
+    required: true
   },
-  endTime: {
-    type: Date,
-    required: true,
-  },
-  participants: [{
+  availability: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  }]
+    ref: 'Availability',
+    required: true
+  }
 });
 
-const Meetings = mongoose.model("Meetings", meetingsSchema);
+const Meeting = mongoose.model("Meeting", meetingSchema);
 
-export default Meetings;
+export default Meeting;

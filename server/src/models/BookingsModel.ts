@@ -1,22 +1,30 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema({
-  meetingId: {
+  meeting_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Meeting",
+    ref: 'Meeting',
     required: true
   },
-  userId: {
+  first_user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true
   },
-  startTime: {
+  second_user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  scheduledTime: {
     type: Date,
     required: true
+  },
+  additionalInfo: {
+    type: String,
+    required: false
   }
-});
-
+}, { timestamps: true });
 const Booking = mongoose.model("Booking", bookingSchema);
 export default Booking;
 
