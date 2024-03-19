@@ -1,4 +1,5 @@
 import github from "../assets/icons/github.png"
+import calender from "../assets/images/landing-cal-1.jpeg"
 
 function Landing() {
   return (
@@ -37,13 +38,13 @@ function Landing() {
               <p className='font-heading text-mainText text-3xl'>where every meeting matters."</p>
             </div>
           </div>
-          <div className='flex items-center justify-left px-16'>
+          <div className='flex justify-left px-16 pt-10'>
             <div>
               <p className='font-secondHeading text-mainText text-8xl'>Scheduling</p>
             </div>
           </div>
         </div>
-        <div className='w-8/12 h-5/12 bg-secondText rounded-3xl'>
+        <div className='mr-16'><img src={calender} alt="" className="rounded-3xl w-full"/>
         </div>
       </div>
       <div className='px-32 w-full'>
