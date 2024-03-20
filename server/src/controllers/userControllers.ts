@@ -3,7 +3,44 @@ import User from "../models/userModel"
 import bcrypt from "bcrypt"
 
 export const userLogin = async (req: Request, res: Response) => {
-  res.status(200).json({ message: "user logged in" })
+
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Fill all the necessary details"
+      })
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(409).json({
+        status: "failed",
+        message: "user doesn't exists"
+      })
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return res.status(400).json({
+        status: "failed",
+        message: "email or password is wrong"
+      })
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: "Welcome Back"
+    })
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "Try Again, this one is our fault"
+    })
+  }
 }
 
 export const userSignup = async (req: Request, res: Response) => {
