@@ -12,7 +12,8 @@ const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
+app.use(express.json());
 const URI = process.env.MONGO_DB_URI as string;
 const PORT = process.env.PORT || 8000;
 
