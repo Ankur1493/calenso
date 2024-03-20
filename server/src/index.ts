@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import { userRoutes } from "./routes/userRoutes";
 
 
 dotenv.config();
@@ -18,6 +19,8 @@ const PORT = process.env.PORT || 8000;
 app.get("/", (_: Request, res: Response) => {
   res.status(200).json({ status: "all clear" })
 });
+
+app.use("/user", userRoutes);
 
 mongoose.connect(URI)
   .then(() => {
