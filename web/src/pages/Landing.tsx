@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import github from "../assets/icons/github.png"
 import calender from "../assets/images/landing-cal-1.jpeg"
 import {GridLayout} from "../components/GridLayout"
@@ -23,10 +24,10 @@ function Landing() {
               </div>
             </a>
           </div>
-          <div className=' flex items-center bg-main rounded-3xl w-36 h-11 px-1.5 border-mainText border-2'>
-            <a href="/" className='cursos-pointer w-full flex justify-center'>
-              <p className='text-mainText font-heading font-semibold text-2xl '>Login</p>
-            </a>
+          <div className=' flex items-center bg-main rounded-3xl w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText'>
+            <Link to={"/login"} className='cursos-pointer w-full flex justify-center'>
+              <p className='font-heading font-semibold text-2xl '>Login</p>
+            </Link>
           </div>
         </div>
       </div>
