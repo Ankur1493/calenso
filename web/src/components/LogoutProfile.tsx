@@ -15,7 +15,7 @@ const LogoutProfile = ({ username }: { username: string }) => {
 
   const handleLogout = async () => {
     try {
-      await logout().unwrap();
+      const res = await logout().unwrap();
       dispatch(removeCredentials())
       navigate("/register");
       toast.success(res.message);

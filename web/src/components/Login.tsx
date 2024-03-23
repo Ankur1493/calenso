@@ -37,7 +37,6 @@ function Login() {
 
     try {
       const res = await login({ email, password }).unwrap();
-      console.log(res)
       dispatch(setCredentials({ ...res }));
       navigate("/");
       toast.success(res.message)
