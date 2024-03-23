@@ -40,11 +40,15 @@ export const userLogin = async (req: Request, res: Response) => {
     }
 
     const token = createToken(user._id.toString());
-
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+      maxAge: 2 * 24 * 60 * 60 * 1000 // 2days
+    });
     return res.status(200).json({
       status: "success",
       message: "Welcome Back",
-      token
     });
   } catch (err) {
     return res.status(500).json({
@@ -79,6 +83,12 @@ export const userSignup = async (req: Request, res: Response) => {
     const user = await User.create({ username, email, password: hashedPassword });
 
     const token = createToken(user._id.toString());
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSite: "strict",
+      maxAge: 2 * 24 * 60 * 60 * 1000 // 2days
+    });
 
     return res.status(200).json({
       status: "success",
