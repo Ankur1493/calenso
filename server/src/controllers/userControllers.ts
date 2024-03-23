@@ -103,6 +103,20 @@ export const userSignup = async (req: Request, res: Response) => {
   }
 }
 
+export const userLogout = (req: Request, res: Response) => {
+
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0)
+  })
+
+  res.status(200).json({
+    status: "success",
+    message: "user logged out"
+  })
+
+}
+
 export const getUser = async (req: Request, res: Response) => {
   res.status(200).json({ message: "here's your user" });
 }
