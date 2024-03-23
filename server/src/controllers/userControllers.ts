@@ -70,7 +70,7 @@ export const userSignup = async (req: Request, res: Response) => {
     }
 
     const exists = await User.findOne({ email });
-    const existingUsername = await User.find({ username })
+    const existingUsername = await User.findOne({ username })
 
     if (existingUsername) {
       return res.status(409).json({
