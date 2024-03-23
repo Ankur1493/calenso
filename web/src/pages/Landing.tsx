@@ -34,7 +34,7 @@ function Landing() {
             <LogoutProfile username={userInfo.username} />
           ) : (
             <div className=' flex items-center bg-main rounded-3xl w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText'>
-              <Link to={"/login"} className='cursos-pointer w-full flex justify-center'>
+              <Link to={"/register"} className='cursos-pointer w-full flex justify-center'>
                 <p className='font-heading font-semibold text-2xl '>Login</p>
               </Link>
             </div>

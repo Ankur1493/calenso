@@ -1,9 +1,27 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useLogoutMutation } from '../slices/usersApiSlice';
+import { removeCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const LogoutProfile = ({ username }: { username: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const handleLogout = () => {
-    console.log("handle logout")
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      dispatch(removeCredentials())
+      navigate("/register");
+      toast.success(res.message);
+    } catch (err) {
+      toast.error(err?.data?.message || err?.error)
+    }
   }
   return (
     <div className="relative">
@@ -37,14 +55,12 @@ const LogoutProfile = ({ username }: { username: string }) => {
             >
               Profile
             </a>
-            <a
-              href="#logout"
+            <div
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              role="menuitem"
             ><button onClick={handleLogout}>
                 Logout
               </button>
-            </a>
+            </div>
           </div>
         </div>
       )}

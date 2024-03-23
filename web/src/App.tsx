@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 
 
@@ -17,7 +16,7 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Landing />} ></Route>
-          <Route path='/login' element={<Authentication />}></Route>
+          <Route path='/register' element={<Authentication />}></Route>
         </Routes>
       </Router>
       <ToastContainer />
