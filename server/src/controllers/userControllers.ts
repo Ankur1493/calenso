@@ -47,8 +47,9 @@ export const userLogin = async (req: Request, res: Response) => {
       maxAge: 2 * 24 * 60 * 60 * 1000 // 2days
     });
     return res.status(200).json({
-      status: "success",
       message: "Welcome Back",
+      username: user.username,
+      email: user.email
     });
   } catch (err) {
     return res.status(500).json({
@@ -93,12 +94,12 @@ export const userSignup = async (req: Request, res: Response) => {
     return res.status(200).json({
       status: "success",
       message: `Hi ${user.username}, welcome to Calenso`,
-      token
+      username: user.username,
+      email: user.email,
     });
   } catch (err) {
     return res.status(500).json({
-      status: "failed",
-      message: "try again"
+      message: "try again",
     });
   }
 }
