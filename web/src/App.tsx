@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import HomeLayout from "./HomeLayout";
 import EventTypes from "./components/EventTypes";
+import Bookings from "./components/Bookings";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/register" element={<Authentication />} />
           <Route path="/HomeLayout" element={<HomeLayout />}>
             <Route path="event-types" element={<EventTypes />} />
+            <Route path="bookings" element={<Bookings />} />
           </Route>
         </Routes>
       </Router>

@@ -16,7 +16,7 @@ function Home() {
           </div>
           <div className="px-1">
             <Link
-              to="/event-types"
+              to="event-types"
               className="todesktop:py-[7px] text-default group flex items-center rounded-md px-8 py-2 font-medium transition [&amp;[aria-current='page']]:bg-emphasis [&amp;[aria-current='page']]:text-emphasis mt-0.5 text-sm hover:bg-subtle todesktop:[&amp;[aria-current='page']]:bg-emphasis hover:bg-input hover:bg-opacity-40 hover:text-emphasis "
             >
               <svg
@@ -45,9 +45,9 @@ function Home() {
             </Link>
           </div>
           <div className="px-1">
-            <a
+            <Link
+              to="bookings"
               className="todesktop:py-[7px] text-default group flex items-center rounded-md px-8 py-2 font-medium transition [&amp;[aria-current='page']]:bg-emphasis [&amp;[aria-current='page']]:text-emphasis mt-0.5 text-sm hover:bg-subtle todesktop:[&amp;[aria-current='page']]:bg-emphasis hover:bg-input hover:bg-opacity-40 hover:text-emphasis "
-              href="/bookings"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ function Home() {
               >
                 Bookings
               </span>
-            </a>
+            </Link>
           </div>
         </div>
         <div className="mb-4">
