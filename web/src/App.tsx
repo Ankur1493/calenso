@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomeLayout from "./pages/HomeLayout";
 import EventTypes from "./components/EventTypes";
 import Bookings from "./components/Bookings";
+import Form from "./components/Form";
 
 function App() {
   return (

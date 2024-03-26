@@ -60,7 +60,7 @@ function EventTypes() {
         </header>
       </div>
       <div className="flex justify-center">
-        <div className="flex w-10/12 select-none flex-col items-center justify-center rounded-lg p-7 lg:p-20 border-subtle border border-dashed mb-16 text-mainText">
+        <div className="flex w-11/12 flex-col items-center justify-center rounded-lg p-7 lg:p-20 border border-dashed text-mainText">
           <div className="bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@ function EventTypes() {
             <h2 className="font-heading text-emphasis text-center text-xl mt-6">
               Create your first event type
             </h2>
-            <div className="font-heading text-mainText mb-8 mt-3 text-center text-sm font-normal leading-6">
+            <div className="font-heading text-mainText mb-8 mt-3 text-center text-sm font-normal leading-6 opacity-80">
               Event types enable you to share links that show available times on
               your calendar and allow people to make bookings with you.
             </div>

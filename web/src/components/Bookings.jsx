@@ -77,10 +77,7 @@ function Bookings() {
             <main className="w-full">
               <div className="flex w-full flex-col relative;">
                 <div className="flex items-center justify-center pt-2 xl:pt-0">
-                  <div
-                    data-testid="empty-screen"
-                    className="flex w-full select-none flex-col items-center justify-center rounded-lg p-7 lg:p-20 border-subtle border border-dashed"
-                  >
+                  <div className="flex w-full select-none flex-col items-center justify-center rounded-lg p-7 lg:p-20 border-subtle border border-dashed">
                     <div className="bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full text-mainText">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +108,7 @@ function Bookings() {
                       <h2 className="font-heading text-mainText text-center text-xl mt-6">
                         No upcoming bookings
                       </h2>
-                      <div className="font-heading text-mainText mb-8 mt-8 text-center text-sm font-normal leading-6">
+                      <div className="font-heading text-mainText mb-8 mt-8 text-center text-sm font-normal leading-6 opacity-80">
                         You have no upcoming bookings. As soon as someone books
                         a time with you it will show up here.
                       </div>
