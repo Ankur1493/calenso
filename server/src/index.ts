@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from 'cookie-parser';
 import { userRoutes } from "./routes/userRoutes";
 import { meetingRoutes } from "./routes/meetingRoutes";
 
@@ -14,6 +15,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 const URI = process.env.MONGO_DB_URI as string;
 const PORT = process.env.PORT || 8000;
 

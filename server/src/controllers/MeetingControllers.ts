@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import Availability from "../models/availabilityModel"
 import Meeting from "../models/meetingsModel"
-
+import User from "../models/userModel"
 export const getAllMeetings = async (req: Request, res: Response) => {
   res.status(200).json({
     status: "success",
@@ -15,51 +15,80 @@ export const getMeeting = async (req: Request, res: Response) => {
     message: "Here is your meeting"
   })
 }
-export const createMeeting = async (req: Request, res: Response) => {
 
+
+export const createMeeting = async (req: Request, res: Response) => {
   const { meetingInfo, availabilitySchedule } = req.body;
   try {
     if (!meetingInfo || !availabilitySchedule) {
-      res.status(400).json({
+      return res.status(400).json({
         status: "failed",
         message: "fill all the necessary details"
-      })
+      });
     }
 
-    const availability = await Availability.create({ availabilitySchedule });
+    const availability = await Availability.create({ availableSchedule: availabilitySchedule });
 
     if (!availability) {
       return res.status(500).json({
         status: "failed",
         message: "this one's on us, try again"
-      })
+      });
     }
 
     const { title, duration, info } = meetingInfo;
     const availabilityId = availability._id;
-    //const userID = FROM JWT AUTH
+    const user = req.user;
 
-    const meeting = await Meeting.create({ title, duration, info, availabilityId });
+    if (!user) {
+      return res.status(403).json({
+        status: "failed",
+        message: "User not authenticated"
+      });
+    }
+
+    // Note the change here from userId to user_id to match your schema
+    const meeting = await Meeting.create({
+      title,
+      duration,
+      info,
+      availability: availabilityId,
+      user_id: user._id // This line was corrected
+    });
 
     if (!meeting) {
       return res.status(500).json({
         status: "failed",
         message: "this one's on us try again"
-      })
+      });
+    }
+
+    const finalStatus = await User.findByIdAndUpdate(
+      user._id,
+      { $push: { meetings: meeting._id } },
+      { new: true, useFindAndModify: false }
+    );
+
+    if (!finalStatus) {
+      return res.status(500).json({
+        status: "failed",
+        message: "this one's on us try again"
+      });
     }
 
     return res.status(200).json({
       status: "success",
       message: "Yay, your meeting has been created"
-    })
+    });
   } catch (err) {
+    console.error(err); // This will help in debugging
     return res.status(500).json({
       status: "failed",
-      message: "try Again"
-    })
+      message: "try Again",
+    });
   }
+};
 
-}
 export const updateMeeting = async (req: Request, res: Response) => {
   res.status(200).json({
     status: "success",

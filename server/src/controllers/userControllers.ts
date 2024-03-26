@@ -46,6 +46,8 @@ export const userLogin = async (req: Request, res: Response) => {
       sameSite: "strict",
       maxAge: 2 * 24 * 60 * 60 * 1000 // 2days
     });
+
+    console.log(token)
     return res.status(200).json({
       message: "Welcome Back",
       username: user.username,

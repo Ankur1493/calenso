@@ -1,9 +1,20 @@
 import 'express';
-import { User } from "../models/userModel"; // Adjust the import path as necessary
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    user?: User; // Extend the Request type to include the user object
+interface IUser {
+  _id: string; // Use ObjectId for the _id property
+  username: string;
+  password: string; // Consider omitting sensitive properties if not needed
+  email: string;
+  meetings: string[]; // Assuming these are ObjectId strings
+  bookings: string[]; // Assuming these are ObjectId strings
+  // Add other properties as necessary
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: IUser; // Use this interface for the user
+    }
   }
 }
 
