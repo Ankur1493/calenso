@@ -1,28 +1,14 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLogoutMutation } from '../slices/usersApiSlice';
-import { removeCredentials } from '../slices/authSlice';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useLogoutMutation } from "../slices/usersApiSlice";
+import { removeCredentials } from "../slices/authSlice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import Logout from "../Hooks/Logout";
 
 const LogoutProfile = ({ username }: { username: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [logout] = useLogoutMutation();
-
-  const handleLogout = async () => {
-    try {
-      const res = await logout().unwrap();
-      dispatch(removeCredentials())
-      navigate("/register");
-      toast.success(res.message);
-    } catch (err) {
-      toast.error(err?.data?.message || err?.error)
-    }
-  }
+  const { handleLogout } = Logout();
   return (
     <div className="relative">
       <button
@@ -47,7 +33,12 @@ const LogoutProfile = ({ username }: { username: string }) => {
       </button>
       {isOpen && (
         <div className="origin-top-right absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+          <div
+            className="py-1"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="options-menu"
+          >
             <a
               href="#profile"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -55,12 +46,8 @@ const LogoutProfile = ({ username }: { username: string }) => {
             >
               Profile
             </a>
-            <div
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
-            >
-              <button onClick={handleLogout}>
-                Logout
-              </button>
+            <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer">
+              <button onClick={handleLogout}>Logout</button>
             </div>
           </div>
         </div>
@@ -70,4 +57,3 @@ const LogoutProfile = ({ username }: { username: string }) => {
 };
 
 export default LogoutProfile;
-

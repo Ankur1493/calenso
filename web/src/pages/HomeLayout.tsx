@@ -1,11 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Home from "./pages/Home";
+import SideBar from "../components/SideBar";
 
 function HomeLayout() {
   return (
     <div className="bg-second flex h-screen">
-      <Home />
+      <SideBar />
       <div className="w-full">
         <Outlet />
       </div>

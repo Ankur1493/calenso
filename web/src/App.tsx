@@ -3,8 +3,7 @@ import Authentication from "./pages/Authentication";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import HomeLayout from "./HomeLayout";
+import HomeLayout from "./pages/HomeLayout";
 import EventTypes from "./components/EventTypes";
 import Bookings from "./components/Bookings";
 

@@ -1,11 +1,13 @@
 import React from "react";
-import LogoutProfile from "../components/LogoutProfile";
+import LogoutProfile from "./LogoutProfile";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Logout from "../Hooks/Logout";
 
-function Home() {
+function SideBar() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { handleLogout } = Logout();
 
   return (
     <div className="bg-second flex h-screen">
@@ -110,6 +112,7 @@ function Home() {
             <button
               id="logout"
               className="text-left [&amp;[aria-current='page']]:bg-emphasis text-default justify-right group flex items-center rounded-md px-8 gap-2 py-2 font-medium transition [&amp;[aria-current='page']]:text-emphasis mt-0.5 w-full text-sm hover:text-emphasis hover:bg-input hover:bg-opacity-40 "
+              onClick={handleLogout}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -138,4 +141,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SideBar;
