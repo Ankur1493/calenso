@@ -4,8 +4,8 @@ import calender from "../assets/images/landing-cal-1.jpeg"
 import { GridLayout } from "../components/GridLayout"
 import { ScrollDiv } from "../components/ScrollDiv"
 import { useSelector } from "react-redux"
-import { RootState } from "@reduxjs/toolkit/query"
-import LogoutProfile from "../components/LogoutProfile"
+// import { RootState } from "@reduxjs/toolkit/query"
+import { RootState } from "../store"
 
 function Landing() {
 
@@ -31,7 +31,11 @@ function Landing() {
             </a>
           </div>
           {userInfo ? (
-            <LogoutProfile username={userInfo.username} />
+            <div className=' flex items-center bg-main rounded-3xl w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText'>
+            <Link to={"/homeLayout"} className='cursos-pointer w-full flex justify-center'>
+              <p className='font-heading font-semibold text-2xl '>Go to App</p>
+              </Link>
+              </div>
           ) : (
             <div className=' flex items-center bg-main rounded-3xl w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText'>
               <Link to={"/register"} className='cursos-pointer w-full flex justify-center'>

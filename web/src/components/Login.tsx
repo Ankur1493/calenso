@@ -4,7 +4,9 @@ import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "@reduxjs/toolkit/query";
+// import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "../store";
+
 
 function Login() {
 
