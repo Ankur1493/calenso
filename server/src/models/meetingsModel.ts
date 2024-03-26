@@ -10,10 +10,13 @@ const meetingSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  length: {
+  duration: {
     type: Number,
-    enum: [10, 20, 30],
     required: true
+  },
+  info: {
+    type: String,
+    required: false
   },
   availability: {
     type: mongoose.Schema.Types.ObjectId,
