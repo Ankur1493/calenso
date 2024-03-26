@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Authentication />} />
-          <Route path="/HomeLayout" element={<HomeLayout />}>
+          <Route path="/Home" element={<HomeLayout />}>
             <Route path="event-types" element={<EventTypes />} />
             <Route path="bookings" element={<Bookings />} />
           </Route>
