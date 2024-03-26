@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import { userRoutes } from "./routes/userRoutes";
-
+import { meetingRoutes } from "./routes/meetingRoutes";
 
 dotenv.config();
 const app = express();
@@ -22,6 +22,7 @@ app.get("/", (_: Request, res: Response) => {
 });
 
 app.use("/user", userRoutes);
+app.use("/meetings", meetingRoutes);
 
 mongoose.connect(URI)
   .then(() => {
