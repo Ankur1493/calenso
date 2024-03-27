@@ -11,7 +11,7 @@ import { IsClickedProvider } from "./context/IsClickedContext";
 function App() {
   return (
     <IsClickedProvider>
-      <div className="w-full bg-black bg-dot-white/[0.2] relative pb-8">
+      <div className="w-full bg-black bg-dot-white/[0.2] relative ">
         <Router>
           <Routes>
             <Route path="/" element={<Landing />} />

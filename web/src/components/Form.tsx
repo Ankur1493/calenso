@@ -71,7 +71,7 @@ function Form() {
               id="url"
               placeholder={
                 userInfo
-                  ? `http://localhost:5173/${userInfo}`
+                  ? `http://localhost:5173/${userInfo.username}`
                   : "http://localhost:5173/"
               }
               readOnly

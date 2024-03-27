@@ -18,7 +18,7 @@ function HomeLayout() {
     <div className="relative">
       <div
         className={`bg-second flex h-screen ${
-          isClicked ? "blur-sm opacity-70" : ""
+          isClicked ? "blur-sm opacity-90" : ""
         }`}
       >
         <SideBar />
