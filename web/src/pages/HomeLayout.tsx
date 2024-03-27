@@ -4,15 +4,10 @@ import SideBar from "../components/SideBar";
 import { useState } from "react";
 import Form from "../components/Form";
 import { toggleIsClicked } from "../slices/isClickedSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function HomeLayout() {
-  const dispatch = useDispatch();
   const isClicked = useSelector((state) => state.isClicked.isClicked);
-
-  const handleClick = () => {
-    dispatch(toggleIsClicked());
-  };
 
   return (
     <div className="relative">
