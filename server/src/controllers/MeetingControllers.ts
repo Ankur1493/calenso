@@ -42,10 +42,34 @@ export const getAllMeetings = async (req: Request, res: Response) => {
 
 
 export const getMeeting = async (req: Request, res: Response) => {
-  res.status(200).json({
-    status: "success",
-    message: "Here is your meeting"
-  })
+
+  try {
+    const meetingId = req.params.id;
+    const meeting = await Meeting.findById(meetingId).populate("availability");
+    if (!meeting) {
+      return res.status(400).json({
+        status: "failed",
+        message: "try again"
+      });
+    }
+    if (!meeting.user_id.equals(req.user?._id)) {
+      return res.status(409).json({
+        status: "failed",
+        message: "not authorized"
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "here's your meeting",
+      meeting
+    })
+
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "An error occurred"
+    });
+  }
 }
 
 

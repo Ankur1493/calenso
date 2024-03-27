@@ -5,9 +5,9 @@ import { authenticate } from "../middlewares/authenticate";
 const router = express.Router();
 
 router.get("/all", authenticate, getAllMeetings);
-router.get("/:meetingId", getMeeting);
+router.get("/:id", authenticate, getMeeting);
 router.post("/create", authenticate, createMeeting);
-router.delete("/:meetingId", deleteMeeting);
-router.patch("/:meetingId", updateMeeting)
+router.delete("/:id", authenticate, deleteMeeting);
+router.patch("/:id", authenticate, updateMeeting)
 
 export { router as meetingRoutes };
