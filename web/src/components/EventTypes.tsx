@@ -2,13 +2,15 @@ import React from "react";
 import { useState } from "react";
 import { IsClickedContext } from "../pages/HomeLayout";
 import { useContext } from "react";
-import { useIsClicked } from "../context/IsClickedContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleIsClicked } from "../slices/isClickedSlice";
 
 function EventTypes() {
-  const { isClicked, setIsClicked } = useIsClicked();
+  const dispatch = useDispatch();
+  const isClicked = useSelector((state) => state.isClicked.isClicked);
 
   const handleClick = () => {
-    setIsClicked((isClicked) => !isClicked);
+    dispatch(toggleIsClicked());
   };
 
   return (

@@ -6,25 +6,22 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomeLayout from "./pages/HomeLayout";
 import EventTypes from "./components/EventTypes";
 import Bookings from "./components/Bookings";
-import { IsClickedProvider } from "./context/IsClickedContext";
 
 function App() {
   return (
-    <IsClickedProvider>
-      <div className="w-full bg-black bg-dot-white/[0.2] relative ">
-        <Router>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/register" element={<Authentication />} />
-            <Route path="/Home" element={<HomeLayout />}>
-              <Route path="event-types" element={<EventTypes />} />
-              <Route path="bookings" element={<Bookings />} />
-            </Route>
-          </Routes>
-        </Router>
-        <ToastContainer />
-      </div>
-    </IsClickedProvider>
+    <div className="w-full bg-black bg-dot-white/[0.2] relative ">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/register" element={<Authentication />} />
+          <Route path="/Home" element={<HomeLayout />}>
+            <Route path="event-types" element={<EventTypes />} />
+            <Route path="bookings" element={<Bookings />} />
+          </Route>
+        </Routes>
+      </Router>
+      <ToastContainer />
+    </div>
   );
 }
 

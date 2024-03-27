@@ -3,16 +3,16 @@ import { Outlet } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { useState } from "react";
 import Form from "../components/Form";
-import { useIsClicked } from "../context/IsClickedContext";
+import { toggleIsClicked } from "../slices/isClickedSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function HomeLayout() {
-  const { isClicked, setIsClicked } = useIsClicked();
+  const dispatch = useDispatch();
+  const isClicked = useSelector((state) => state.isClicked.isClicked);
 
   const handleClick = () => {
-    setIsClicked((isClicked) => !isClicked);
+    dispatch(toggleIsClicked());
   };
-
-  console.log({ isClicked });
 
   return (
     <div className="relative">

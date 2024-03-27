@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { useIsClicked } from "../context/IsClickedContext";
+import { toggleIsClicked } from "../slices/isClickedSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function Form() {
   const [title, setTitle] = useState("");
@@ -10,10 +10,11 @@ function Form() {
 
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
-  const { isClicked, setIsClicked } = useIsClicked();
+  const dispatch = useDispatch();
+  const isClicked = useSelector((state) => state.isClicked.isClicked);
 
   const handleClick = () => {
-    setIsClicked((isClicked) => !isClicked);
+    dispatch(toggleIsClicked());
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
