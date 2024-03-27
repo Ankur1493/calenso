@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useIsClicked } from "../context/IsClickedContext";
 
 function Form() {
   const [title, setTitle] = useState("");
@@ -8,6 +9,12 @@ function Form() {
   const [duration, setDuration] = useState("");
 
   const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const { isClicked, setIsClicked } = useIsClicked();
+
+  const handleClick = () => {
+    setIsClicked((isClicked) => !isClicked);
+  };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -108,6 +115,7 @@ function Form() {
               <button
                 type="button"
                 className="inline-flex items-center text-sm font-medium relative rounded-md transition h-9 px-4 py-2.5 text-mainText font-heading hover:bg-secondText hover:bg-opacity-40"
+                onClick={handleClick}
               >
                 Close
               </button>

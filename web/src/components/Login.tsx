@@ -4,12 +4,9 @@ import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-// import { RootState } from "@reduxjs/toolkit/query";
 import { RootState } from "../store";
 
-
 function Login() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,10 +18,9 @@ function Login() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/")
+      navigate("/");
     }
-  }, [userInfo, navigate])
-
+  }, [userInfo, navigate]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -41,9 +37,9 @@ function Login() {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
       navigate("/");
-      toast.success(res.message)
+      toast.success(res.message);
     } catch (err) {
-      toast.error(err?.data?.message || err?.error)
+      toast.error(err?.data?.message || err?.error);
     }
 
     setEmail("");
@@ -52,9 +48,14 @@ function Login() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="text-white mt-10 text-6xl font-bold font-secondHeading">Log In</div>
+      <div className="text-white mt-10 text-6xl font-bold font-secondHeading">
+        Log In
+      </div>
       <form className="flex flex-col py-6" onSubmit={submitLogin}>
-        <label htmlFor="email" className="mt-6 block text-md font-heading text-mainText">
+        <label
+          htmlFor="email"
+          className="mt-6 block text-md font-heading text-mainText"
+        >
           Email
         </label>
         <input
@@ -66,7 +67,10 @@ function Login() {
           onChange={handleEmailChange}
           placeholder="Enter your email"
         />
-        <label htmlFor="password" className="mt-6 block text-md font-heading text-mainText">
+        <label
+          htmlFor="password"
+          className="mt-6 block text-md font-heading text-mainText"
+        >
           Password
         </label>
         <input
@@ -78,17 +82,19 @@ function Login() {
           onChange={handlePasswordChange}
           placeholder="********"
         />
-        {
-          isLoading ? (
-            <h1 className="text-white text-2xl">Loading</h1>
-          )
-
-            : (<button type="submit" className="mt-8 px-4 py-2 rounded-md text-main bg-mainText border border-gray-400 text-md font-heading font-semibold hover:opacity-80">Login</button>
-            )}
+        {isLoading ? (
+          <h1 className="text-white text-2xl">Loading</h1>
+        ) : (
+          <button
+            type="submit"
+            className="mt-8 px-4 py-2 rounded-md text-main bg-mainText border border-gray-400 text-md font-heading font-semibold hover:opacity-80"
+          >
+            Login
+          </button>
+        )}
       </form>
     </div>
   );
 }
 
 export default Login;
-

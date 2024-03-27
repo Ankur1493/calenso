@@ -1,6 +1,16 @@
 import React from "react";
+import { useState } from "react";
+import { IsClickedContext } from "../pages/HomeLayout";
+import { useContext } from "react";
+import { useIsClicked } from "../context/IsClickedContext";
 
 function EventTypes() {
+  const { isClicked, setIsClicked } = useIsClicked();
+
+  const handleClick = () => {
+    setIsClicked((isClicked) => !isClicked);
+  };
+
   return (
     <div>
       <div className="flex items-center md:mb-6 md:mt-0 lg:mb-8 mb-0 p-4">
@@ -22,6 +32,7 @@ function EventTypes() {
               data-testid="new-event-type"
               type="button"
               className="whitespace-nowrap inline-flex items-center text-sm font-medium relative transition disabled:cursor-not-allowed rounded-full justify-center md:rounded-md px-4 py-2.5 h-14 md:h-9 md:w-auto md:px-4 md:py-2.5 text-main bg-mainText font-heading font-semibold hover:opacity-80"
+              onClick={handleClick}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,12 +97,12 @@ function EventTypes() {
               Event types enable you to share links that show available times on
               your calendar and allow people to make bookings with you.
             </div>
-            <a
-              href="/"
+            <button
               className="whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition bg-mainText h-9 px-4 py-2.5 text-main font-heading font-semibold hover:opacity-80"
+              onClick={handleClick}
             >
               Create
-            </a>
+            </button>
           </div>
         </div>
       </div>
