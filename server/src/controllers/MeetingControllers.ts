@@ -2,12 +2,44 @@ import { Request, Response } from "express"
 import Availability from "../models/availabilityModel"
 import Meeting from "../models/meetingsModel"
 import User from "../models/userModel"
+
+
 export const getAllMeetings = async (req: Request, res: Response) => {
-  res.status(200).json({
-    status: "success",
-    message: "Here are all your meetings"
-  })
+  try {
+    const user = req.user;
+    if (!user) {
+      return res.status(403).json({
+        status: "failed",
+        message: "user not authenticated"
+      });
+    }
+
+    const dbUser = await User.findById(user._id).populate({ path: "meetings", select: "-availability -user_id" })
+    if (!dbUser) {
+      return res.status(400).json({
+        status: "failed",
+        message: "try again, this one's on us"
+      });
+    }
+
+    const userMeetings = dbUser.meetings;
+
+
+    const message = userMeetings.length > 0 ? "Here's your meetings" : "You haven't created any event";
+    return res.status(200).json({
+      status: "success",
+      message,
+      userMeetings
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "An error occurred"
+    });
+  }
 }
+
 
 export const getMeeting = async (req: Request, res: Response) => {
   res.status(200).json({
