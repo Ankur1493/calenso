@@ -15,17 +15,18 @@ function HomeLayout() {
   console.log({ isClicked });
 
   return (
-    <div>
-      {isClicked ? (
-        <Form />
-      ) : (
-        <div className="bg-second flex h-screen">
-          <SideBar />
-          <div className="w-full">
-            <Outlet />
-          </div>
+    <div className="relative">
+      <div
+        className={`bg-second flex h-screen ${
+          isClicked ? "blur-sm opacity-70" : ""
+        }`}
+      >
+        <SideBar />
+        <div className="w-full">
+          <Outlet />
         </div>
-      )}
+      </div>
+      {isClicked && <Form />}
     </div>
   );
 }

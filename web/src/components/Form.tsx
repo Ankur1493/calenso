@@ -31,8 +31,8 @@ function Form() {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="bg-second flex flex-col justify-left px-8 pt-8 w-4/12 rounded-2xl">
+    <div className="flex justify-center fixed inset-0 items-center z-20">
+      <div className="bg-second flex flex-col justify-left px-8 pt-8 w-4/12 rounded-2xl border border-gray-400">
         <div>
           <h3 className="font-semibold font-heading text-mainText pb-1 text-2xl">
             Add a new event type
