@@ -103,13 +103,12 @@ export const createMeeting = async (req: Request, res: Response) => {
       });
     }
 
-    // Note the change here from userId to user_id to match your schema
     const meeting = await Meeting.create({
       title,
       duration,
       info,
       availability: availabilityId,
-      user_id: user._id // This line was corrected
+      user_id: user._id
     });
 
     if (!meeting) {
@@ -137,7 +136,7 @@ export const createMeeting = async (req: Request, res: Response) => {
       message: "Yay, your meeting has been created"
     });
   } catch (err) {
-    console.error(err); // This will help in debugging
+    console.error(err);
     return res.status(500).json({
       status: "failed",
       message: "try Again",
@@ -151,10 +150,33 @@ export const updateMeeting = async (req: Request, res: Response) => {
     message: "your meeting is updated"
   })
 }
-export const deleteMeeting = async (req: Request, res: Response) => {
-  res.status(200).json({
-    status: "success",
-    message: "your meeting is deleted"
-  })
-}
 
+export const deleteMeeting = async (req: Request, res: Response) => {
+  try {
+    const meetingId = req.params.id;
+
+    const meeting = await Meeting.findByIdAndDelete(meetingId);
+    if (!meeting) {
+      return res.status(404).json({
+        status: "failed",
+        message: "Meeting not found"
+      });
+    }
+
+    await Availability.findByIdAndDelete(meeting.availability);
+
+    await User.findByIdAndUpdate(meeting.user_id, { $pull: { meetings: meeting._id } });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Meeting is deleted successfully"
+    });
+
+  } catch (err) {
+    console.error("Error deleting meeting:", err);
+    return res.status(500).json({
+      status: "failed",
+      message: "An error occurred"
+    });
+  }
+};
