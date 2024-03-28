@@ -1,6 +1,3 @@
-// EventTypes.js
-
-import React from "react";
 import { useDispatch } from "react-redux";
 import { IsMeetingFormClicked } from "../slices/isClickedSlice";
 import { useMeetingsQuery } from "../slices/meetingsApiSlice";
@@ -8,7 +5,7 @@ import { useMeetingsQuery } from "../slices/meetingsApiSlice";
 function EventTypes() {
   const dispatch = useDispatch();
   const { data: meetings = [], isError, isLoading } = useMeetingsQuery();
-
+  console.log(meetings)
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
   };
@@ -78,8 +75,8 @@ function EventTypes() {
         <p>Error fetching meetings</p>
       ) : (
         <div>
-          {meetings.length > 0 ? (
-            meetings.map((meeting) => (
+          {meetings.userMeetings.length > 0 ? (
+            meetings.userMeetings.map((meeting) => (
               <div key={meeting.id}>
                 {/* Render meeting details */}
                 <p>{meeting.title}</p>

@@ -2,7 +2,10 @@ import { createApi, fetchBaseQuery, BaseQueryFn, FetchArgs, FetchBaseQueryError 
 
 import { BASE_URL } from "../constants/constants";
 
-const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = fetchBaseQuery({ baseUrl: BASE_URL });
+const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = fetchBaseQuery({
+  baseUrl: BASE_URL,
+  credentials: 'include', // Include cookies with requests
+});
 
 export const apiSlice = createApi({
   baseQuery,
