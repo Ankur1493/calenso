@@ -15,7 +15,7 @@ const LogoutProfile = ({ username }: { username: string }) => {
         className="bg-second text-white font-bold mt-2 w-40 py-1 px-6 rounded-[8px] text-[20px] inline-flex items-center hover:bg-input hover:bg-opacity-40"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{username}</span>
+        <span className="font-heading">{username}</span>
         <svg
           className=" w-full h-4"
           fill="none"
@@ -32,23 +32,25 @@ const LogoutProfile = ({ username }: { username: string }) => {
         </svg>
       </button>
       {isOpen && (
-        <div className="origin-top-right absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="origin-top-right absolute left-0 mt-2 w-40 rounded-md shadow-lg bg-second ring-1 ring-black ring-opacity-5">
           <div
-            className="py-1"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
             <a
               href="#profile"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className="block h-1/2 rounded-t-md px-4 py-2 text-sm text-mainText font-heading hover:bg-input hover:bg-opacity-40"
               role="menuitem"
             >
               Profile
             </a>
-            <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer">
-              <button onClick={handleLogout}>Logout</button>
-            </div>
+            <button
+              onClick={handleLogout}
+              className="block h-1/2 w-full text-left rounded-b-md px-4 py-2 text-sm text-mainText font-heading hover:bg-input hover:bg-opacity-40"
+            >
+              Logout
+            </button>
           </div>
         </div>
       )}
