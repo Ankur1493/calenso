@@ -1,12 +1,19 @@
+// EventTypes.js
+
+import React from "react";
 import { useDispatch } from "react-redux";
 import { IsMeetingFormClicked } from "../slices/isClickedSlice";
+import { useMeetingsQuery } from "../slices/meetingsApiSlice";
 
 function EventTypes() {
   const dispatch = useDispatch();
+  const { data: meetings = [], isError, isLoading } = useMeetingsQuery();
 
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
   };
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div>
@@ -38,9 +45,9 @@ function EventTypes() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="hidden h-4 w-4 stroke-[2px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2 md:inline-flex"
               >
                 <line x1="12" x2="12" y1="5" y2="19"></line>
@@ -53,9 +60,9 @@ function EventTypes() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="inline h-6 w-6 md:hidden"
                 data-testid="plus"
               >
@@ -67,42 +74,59 @@ function EventTypes() {
           </div>
         </header>
       </div>
-      <div className="flex justify-center mt-16 px-4">
-        <div className="flex w-full flex-col items-center justify-center rounded-lg p-7 lg:p-20 border border-dashed text-mainText">
-          <div className="bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="text-default inline-block h-10 w-10 stroke-[1.3px]"
-            >
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-            </svg>
-          </div>
-          <div className="flex max-w-[420px] flex-col items-center">
-            <h2 className="font-heading text-emphasis text-center text-xl mt-6">
-              Create your first event type
-            </h2>
-            <div className="font-heading text-mainText mb-8 mt-3 text-center text-sm font-normal leading-6 opacity-80">
-              Event types enable you to share links that show available times on
-              your calendar and allow people to make bookings with you.
+      {isError ? (
+        <p>Error fetching meetings</p>
+      ) : (
+        <div>
+          {meetings.length > 0 ? (
+            meetings.map((meeting) => (
+              <div key={meeting.id}>
+                {/* Render meeting details */}
+                <p>{meeting.title}</p>
+                {/* Add more meeting details rendering as needed */}
+              </div>
+            ))
+          ) : (
+            <div className="flex justify-center mt-16 px-4">
+              <div className="flex w-full flex-col items-center justify-center rounded-lg p-7 lg:p-20 border border-dashed text-mainText">
+                <div className="bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-default inline-block h-10 w-10 stroke-[1.3px]"
+                  >
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                  </svg>
+                </div>
+                <div className="flex max-w-[420px] flex-col items-center">
+                  <h2 className="font-heading text-emphasis text-center text-xl mt-6">
+                    Create your first event type
+                  </h2>
+                  <div className="font-heading text-mainText mb-8 mt-3 text-center text-sm font-normal leading-6 opacity-80">
+                    Event types enable you to share links that show available
+                    times on your calendar and allow people to make bookings
+                    with you.
+                  </div>
+                  <button
+                    className="whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition bg-mainText h-9 px-4 py-2.5 text-main font-heading font-semibold hover:opacity-80"
+                    onClick={handleMeetingClick}
+                  >
+                    Create
+                  </button>
+                </div>
+              </div>
             </div>
-            <button
-              className="whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition bg-mainText h-9 px-4 py-2.5 text-main font-heading font-semibold hover:opacity-80"
-              onClick={handleMeetingClick}
-            >
-              Create
-            </button>
-          </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }
