@@ -5,13 +5,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store.ts";
 
 function HomeLayout() {
-  const isClicked = useSelector((state: RootState) => state.isClicked.isClicked);
+  const isClicked = useSelector(
+    (state: RootState) => state.isClicked.isClicked
+  );
 
   return (
     <div className="relative">
       <div
-        className={`bg-second flex h-screen ${isClicked ? "blur-sm opacity-90" : ""
-          }`}
+        className={`bg-second flex h-screen ${
+          isClicked ? "blur-sm opacity-90" : ""
+        }`}
       >
         <SideBar />
         <div className="w-full bg-home">

@@ -68,8 +68,8 @@ function EventTypes() {
           </div>
         </header>
       </div>
-      <div className="flex justify-center">
-        <div className="flex w-11/12 flex-col items-center justify-center rounded-lg p-7 lg:p-20 border border-dashed text-mainText">
+      <div className="flex justify-center mt-16 px-4">
+        <div className="flex w-full flex-col items-center justify-center rounded-lg p-7 lg:p-20 border border-dashed text-mainText">
           <div className="bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
