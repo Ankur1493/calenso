@@ -18,7 +18,7 @@ function Login() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate("/home/event-types");
     }
   }, [userInfo, navigate]);
 
@@ -36,7 +36,7 @@ function Login() {
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
-      navigate("/");
+      navigate("/home/event-types");
       toast.success(res.message);
     } catch (err) {
       toast.error(err?.data?.message || err?.error);

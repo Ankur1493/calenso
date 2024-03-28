@@ -18,7 +18,9 @@ module.exports = {
         'second': '#1E1F20',
         'mainText': '#FFFFFF',
         'secondText': '#CAC7C7',
-        'input': '#D9D9D9'
+        'input': '#D9D9D9',
+        'home': "#07090b",
+        'sidebar': "#050709"
       },
       fontFamily: {
         heading: ["Poppins", "sans-serif"],
