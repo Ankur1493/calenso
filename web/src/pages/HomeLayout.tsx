@@ -17,7 +17,7 @@ function HomeLayout() {
         }`}
       >
         <SideBar />
-        <div className="w-full bg-home">
+        <div className="w-full bg-home ">
           <Outlet />
         </div>
       </div>

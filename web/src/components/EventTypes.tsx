@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
 import { IsMeetingFormClicked } from "../slices/isClickedSlice";
 import { useMeetingsQuery } from "../slices/meetingsApiSlice";
+import MeetingCard from "./MeetingCard";
 
 function EventTypes() {
   const dispatch = useDispatch();
   const { data: meetings = [], isError, isLoading } = useMeetingsQuery();
-  console.log(meetings)
+  console.log(meetings);
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
   };
@@ -14,7 +15,7 @@ function EventTypes() {
 
   return (
     <div>
-      <div className="flex items-center md:mb-6 md:mt-0 lg:mb-8 mb-0 p-4">
+      <div className="flex items-center md:mb-6 md:mt-0 lg:mb-8 mb-0 px-6 py-4">
         <header className="flex w-full max-w-full items-center truncate">
           <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
             <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-emphasis truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl hidden text-mainText">
@@ -79,7 +80,7 @@ function EventTypes() {
             meetings.userMeetings.map((meeting) => (
               <div key={meeting.id}>
                 {/* Render meeting details */}
-                <p>{meeting.title}</p>
+                <MeetingCard meeting={meeting} />
                 {/* Add more meeting details rendering as needed */}
               </div>
             ))

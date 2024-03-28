@@ -3,24 +3,20 @@ import svgToDataUri from "mini-svg-data-uri";
 import colors from "tailwindcss/colors";
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
     extend: {
       colors: {
-        'main': '#000000',
-        'second': '#1E1F20',
-        'mainText': '#FFFFFF',
-        'secondText': '#CAC7C7',
-        'input': '#D9D9D9',
-        'home': "#07090b",
-        'sidebar': "#050709"
+        main: "#000000",
+        second: "#1E1F20",
+        mainText: "#FFFFFF",
+        secondText: "#CAC7C7",
+        input: "#D9D9D9",
+        home: "#121212",
+        sidebar: "#0F0F0F",
       },
       fontFamily: {
         heading: ["Poppins", "sans-serif"],
@@ -30,7 +26,7 @@ module.exports = {
   },
   plugins: [
     addVariablesForColors,
-    function({ matchUtilities, theme }) {
+    function ({ matchUtilities, theme }) {
       matchUtilities(
         {
           "bg-grid": (value) => ({
