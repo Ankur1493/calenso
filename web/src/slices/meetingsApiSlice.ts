@@ -17,6 +17,20 @@ export const meetingsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createMeeting: builder.mutation({
+      query: (data) => ({
+        url: `${MEETINGS_URL}/create`,
+        method: "POST",
+        body: data,
+      })
+    }),
+    editMeeting: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `${MEETINGS_URL}/${id}`,
+        method: "PATCH",
+        body: data
+      })
+    }),
     deleteMeeting: builder.mutation({
       query: (id) => ({
         url: `${MEETINGS_URL}/${id}`,
@@ -26,4 +40,4 @@ export const meetingsApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useMeetingsQuery, useMeetingDetailsQuery, useDeleteMeetingMutation } = meetingsApiSlice;
+export const { useMeetingsQuery, useMeetingDetailsQuery, useCreateMeetingMutation, useEditMeetingMutation, useDeleteMeetingMutation } = meetingsApiSlice;
