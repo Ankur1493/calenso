@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import Availability from "../models/availabilityModel"
 import Meeting from "../models/meetingsModel"
 import User from "../models/userModel"
+import { updateAvailability } from "./availabilityControllers"
 
 
 export const getAllMeetings = async (req: Request, res: Response) => {
@@ -145,10 +146,56 @@ export const createMeeting = async (req: Request, res: Response) => {
 };
 
 export const updateMeeting = async (req: Request, res: Response) => {
-  res.status(200).json({
-    status: "success",
-    message: "your meeting is updated"
-  })
+
+  try {
+    const meetingId = req.params.id;
+    const { meetingData, availabilityData } = req.body;
+
+    const meeting = await Meeting.findById(meetingId);
+
+    if (!meeting) {
+      return res.status(400).json({
+        status: "failed",
+        message: "select appropriate meeting"
+      })
+    }
+
+    if (availabilityData) {
+      const updatedAvailability = await updateAvailability({
+        _id: meeting.availability.toString(),
+        availableSchedule: availabilityData
+      });
+
+      if (!updatedAvailability) {
+        return res.status(400).json({
+          status: "failed",
+          message: "try again, problem during changing availability"
+        })
+      }
+    }
+
+    const updatedMeeting = await meeting.updateOne({ $set: meetingData });
+
+    if (!updatedMeeting) {
+      return res.status(400).json({
+        status: "failed",
+        message: "try again"
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: "Your meeting is Updated",
+      meeting: updatedMeeting
+    })
+
+  } catch (err) {
+    res.status(200).json({
+      status: "failed",
+      message: "try again",
+      err,
+    })
+  }
 }
 
 export const deleteMeeting = async (req: Request, res: Response) => {

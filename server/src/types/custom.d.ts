@@ -1,19 +1,29 @@
 import 'express';
 
 interface IUser {
-  _id: string; // Use ObjectId for the _id property
+  _id: string;
   username: string;
-  password: string; // Consider omitting sensitive properties if not needed
+  password: string;
   email: string;
-  meetings: string[]; // Assuming these are ObjectId strings
-  bookings: string[]; // Assuming these are ObjectId strings
-  // Add other properties as necessary
+  meetings: string[];
+  bookings: string[];
+}
+
+interface IAvailableSchedule {
+  DAY: string;
+  START_TIME: Date;
+  LAST_TIME: Date;
+}
+
+interface IAvailability {
+  _id: string;
+  availableSchedule: IAvailableSchedule[];
 }
 
 declare global {
   namespace Express {
     interface Request {
-      user?: IUser; // Use this interface for the user
+      user?: IUser;
     }
   }
 }
