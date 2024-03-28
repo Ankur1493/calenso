@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 function MeetingCard({ meeting }) {
   const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const [showCopyTooltip, setShowCopyTooltip] = useState(false);
+  const [showEditTooltip, setShowEditTooltip] = useState(false);
+  const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
 
   return (
     <div className="p-2 px-6">
@@ -16,9 +20,9 @@ function MeetingCard({ meeting }) {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="h-5 w-5"
           ></svg>
         </button>
@@ -49,9 +53,9 @@ function MeetingCard({ meeting }) {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="h-3 w-3 stroke-[3px]"
                   >
                     <circle cx="12" cy="12" r="10"></circle>
@@ -69,7 +73,14 @@ function MeetingCard({ meeting }) {
               data-state="closed"
               type="button"
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default"
+              onMouseEnter={() => setShowCopyTooltip(true)}
+              onMouseLeave={() => setShowCopyTooltip(false)}
             >
+              {showCopyTooltip && (
+                <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
+                  Copy
+                </span>
+              )}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -77,9 +88,9 @@ function MeetingCard({ meeting }) {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="h-4 w-4"
               >
                 <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
@@ -90,7 +101,14 @@ function MeetingCard({ meeting }) {
               type="button"
               data-testid="event-type-edit-705355"
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default "
+              onMouseEnter={() => setShowEditTooltip(true)}
+              onMouseLeave={() => setShowEditTooltip(false)}
             >
+              {showEditTooltip && (
+                <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
+                  Edit
+                </span>
+              )}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -98,15 +116,24 @@ function MeetingCard({ meeting }) {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="h-4 w-4"
               >
                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
               </svg>
             </button>
-            <button className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default">
+            <button
+              className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default"
+              onMouseEnter={() => setShowDeleteTooltip(true)}
+              onMouseLeave={() => setShowDeleteTooltip(false)}
+            >
+              {showDeleteTooltip && (
+                <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
+                  Delete
+                </span>
+              )}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -114,9 +141,9 @@ function MeetingCard({ meeting }) {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="h-4 w-4"
               >
                 <path d="M3 6h18"></path>
