@@ -1,12 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
-import { toggleIsClicked } from "../slices/isClickedSlice";
-import { RootState } from "../store.ts";
+import { useDispatch } from "react-redux";
+import { IsMeetingFormClicked } from "../slices/isClickedSlice";
 
 function EventTypes() {
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(toggleIsClicked());
+  const handleMeetingClick = () => {
+    dispatch(IsMeetingFormClicked());
   };
 
   return (
@@ -30,7 +29,7 @@ function EventTypes() {
               data-testid="new-event-type"
               type="button"
               className="whitespace-nowrap inline-flex items-center text-sm font-medium relative transition disabled:cursor-not-allowed rounded-full justify-center md:rounded-md px-4 py-2.5 h-14 md:h-9 md:w-auto md:px-4 md:py-2.5 text-main bg-mainText font-heading font-semibold hover:opacity-80"
-              onClick={handleClick}
+              onClick={handleMeetingClick}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +96,7 @@ function EventTypes() {
             </div>
             <button
               className="whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition bg-mainText h-9 px-4 py-2.5 text-main font-heading font-semibold hover:opacity-80"
-              onClick={handleClick}
+              onClick={handleMeetingClick}
             >
               Create
             </button>

@@ -1,19 +1,19 @@
 import { Outlet } from "react-router-dom";
 import SideBar from "../components/SideBar";
-import Form from "../components/Form";
 import { useSelector } from "react-redux";
 import { RootState } from "../store.ts";
+import CreateMeeting from "../components/CreateMeeting.tsx";
 
 function HomeLayout() {
-  const isClicked = useSelector(
-    (state: RootState) => state.isClicked.isClicked
+  const isMeetingClicked = useSelector(
+    (state: RootState) => state.isClicked.isMeetingFormClicked
   );
 
   return (
     <div className="relative">
       <div
         className={`bg-second flex h-screen ${
-          isClicked ? "blur-sm opacity-90" : ""
+          isMeetingClicked ? "blur-sm opacity-90" : ""
         }`}
       >
         <SideBar />
@@ -21,7 +21,7 @@ function HomeLayout() {
           <Outlet />
         </div>
       </div>
-      {isClicked && <Form />}
+      {isMeetingClicked && <CreateMeeting />}
     </div>
   );
 }

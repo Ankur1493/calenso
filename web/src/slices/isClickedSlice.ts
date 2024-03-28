@@ -1,19 +1,23 @@
-// isClickedSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isClicked: false,
+  isMeetingFormClicked: false,
+  isAvailabilityClicked: false,
 };
 
 const isClickedSlice = createSlice({
   name: "isClicked",
   initialState,
   reducers: {
-    toggleIsClicked(state) {
-      state.isClicked = !state.isClicked;
+    IsMeetingFormClicked(state) {
+      state.isMeetingFormClicked = !state.isMeetingFormClicked;
+    },
+    IsAvailabilityClicked(state) {
+      state.isAvailabilityClicked = !state.isAvailabilityClicked;
     },
   },
 });
 
-export const { toggleIsClicked } = isClickedSlice.actions;
+export const { IsMeetingFormClicked, IsAvailabilityClicked } =
+  isClickedSlice.actions;
 export default isClickedSlice.reducer;

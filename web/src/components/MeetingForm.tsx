@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { RootState } from "../store";
-import { toggleIsClicked } from "../slices/isClickedSlice";
+import {
+  IsMeetingFormClicked,
+  IsAvailabilityClicked,
+} from "../slices/isClickedSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function Form() {
@@ -11,10 +14,13 @@ function Form() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
-  const isClicked = useSelector((state) => state.isClicked.isClicked);
 
-  const handleClick = () => {
-    dispatch(toggleIsClicked());
+  const handleMeetingClick = () => {
+    dispatch(IsMeetingFormClicked());
+  };
+
+  const handleAvailabilityClick = () => {
+    dispatch(IsAvailabilityClicked());
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,10 +39,10 @@ function Form() {
 
   return (
     <div className="flex justify-center fixed inset-0 items-center z-20">
-      <div className="bg-second flex flex-col justify-left px-8 pt-8 w-4/12 rounded-2xl border border-gray-400">
+      <div className="bg-second flex flex-col justify-left px-8 pt-8 w-[500px] rounded-2xl border border-gray-400 h-[600px]">
         <div>
           <h3 className="font-semibold font-heading text-mainText pb-1 text-2xl">
-            Add a new event type
+            Create a new event type
           </h3>
         </div>
         <div className="font-heading text-mainText opacity-70 text-1xl font-light">
@@ -116,13 +122,14 @@ function Form() {
               <button
                 type="button"
                 className="inline-flex items-center text-sm font-medium relative rounded-md transition h-9 px-4 py-2.5 text-mainText font-heading hover:bg-secondText hover:bg-opacity-40"
-                onClick={handleClick}
+                onClick={handleMeetingClick}
               >
                 Close
               </button>
               <button
                 type="submit"
                 className="inline-flex items-center text-sm font-medium relative rounded-md transition h-9 px-4 py-2.5 bg-mainText text-main font-heading hover:bg-opacity-80"
+                onClick={handleAvailabilityClick}
               >
                 Continue
               </button>
