@@ -22,14 +22,15 @@ const AvailabilityForm = () => {
     setAvailability(updatedAvailability);
   };
 
-  const [isChecked, setIsChecked] = useState(false);
-
-  const toggleSwitch = () => {
-    setIsChecked((toggleSwitch) => !toggleSwitch);
-  };
-
   const handleAvailabilityClick = () => {
     dispatch(IsAvailabilityClicked());
+  };
+
+  const [selected, setSelected] = useState(false);
+
+  const handleSelected = () => {
+    setSelected((selected) => !selected);
+    console.log({ selected });
   };
 
   return (
@@ -43,20 +44,16 @@ const AvailabilityForm = () => {
             {availability.map((day, index) => (
               <div key={index} className="flex flex-col py-1">
                 <div className="flex justify-around py-2 ml-[-20px]">
-                  <div
-                    className="relative inline-block w-10 mr-2 align-middle select-none"
-                    onClick={toggleSwitch}
-                  >
-                    <input
-                      type="checkbox"
-                      id="toggle"
-                      className="absolute block w-6 h-6 rounded-full bg-main border-4 appearance-none cursor-pointer"
-                    />
-                    <label
-                      htmlFor="toggle"
-                      className={`block overflow-hidden h-6 rounded-full cursor-pointer
-                      ${isChecked ? "bg-mainText" : "bg-input bg-opacity-40"}`}
-                    ></label>
+                  <div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        value=""
+                        className="sr-only peer"
+                        onClick={handleSelected}
+                      />
+                      <div className="w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-200"></div>
+                    </label>
                   </div>
                   <h3 className="ml-[-60px] text-md text-mainText font-heading mb-2 w-2/12">
                     {day.day}
