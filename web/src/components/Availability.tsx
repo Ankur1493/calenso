@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import { IsAvailabilityClicked } from "../slices/isClickedSlice";
 import { useDispatch } from "react-redux";
-import { timeOptions } from "../constants/constants";
+import { days, timeOptions } from "../constants/constants";
 
 const AvailabilityForm = () => {
   const dispatch = useDispatch();
 
-  const [availability, setAvailability] = useState([
-    { day: "Sunday", from: "", to: "" },
-    { day: "Monday", from: "", to: "" },
-    { day: "Tuesday", from: "", to: "" },
-    { day: "Wednesday", from: "", to: "" },
-    { day: "Thursday", from: "", to: "" },
-    { day: "Friday", from: "", to: "" },
-    { day: "Saturday", from: "", to: "" },
-  ]);
+  const [availability, setAvailability] = useState([]);
+  const [activeDays, setActiveDays] = useState(Array(days.length).fill(false));
 
   const handleTimeChange = (dayIndex, field, value) => {
     const updatedAvailability = [...availability];
@@ -26,11 +19,12 @@ const AvailabilityForm = () => {
     dispatch(IsAvailabilityClicked());
   };
 
-  const [selected, setSelected] = useState(false);
-
-  const handleSelected = () => {
-    setSelected((selected) => !selected);
-    console.log({ selected });
+  const handleSelected = (dayIndex) => {
+    setActiveDays((prevActiveDays) => {
+      const updatedActiveDays = [...prevActiveDays];
+      updatedActiveDays[dayIndex] = !updatedActiveDays[dayIndex];
+      return updatedActiveDays;
+    });
   };
 
   return (
@@ -41,7 +35,7 @@ const AvailabilityForm = () => {
         </h3>
         <form className="mt-6">
           <div>
-            {availability.map((day, index) => (
+            {days.map((day, index) => (
               <div key={index} className="flex flex-col py-1">
                 <div className="flex justify-around py-2 ml-[-20px]">
                   <div>
@@ -50,56 +44,60 @@ const AvailabilityForm = () => {
                         type="checkbox"
                         value=""
                         className="sr-only peer"
-                        onClick={handleSelected}
+                        onClick={() => handleSelected(index)}
                       />
-                      <div className="w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-200"></div>
+                      <div
+                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${
+                          activeDays[index] ? "peer-checked:bg-gray-200" : ""
+                        }`}
+                      ></div>
                     </label>
                   </div>
                   <h3 className="ml-[-60px] text-md text-mainText font-heading mb-2 w-2/12">
-                    {day.day}
+                    {day}
                   </h3>
                   <div className="flex gap-2">
                     <label className="flex items-center">
                       <select
-                        className="border border-gray-400 bg-transparent text-mainText text-center w-20 rounded py-1"
-                        value={day.from}
+                        className="border border-gray-400 bg-transparent text-mainText text-center w-24 rounded py-1"
+                        // value={day.from}
                         onChange={(e) =>
                           handleTimeChange(index, "from", e.target.value)
                         }
                       >
-                        {timeOptions.map((time, idx) => (
-                          <option
-                            key={idx}
-                            value={time}
-                            className="bg-second text-mainText"
-                          >
-                            {time}
-                          </option>
-                        ))}
+                        {activeDays[index] &&
+                          timeOptions.map((time, idx) => (
+                            <option
+                              key={idx}
+                              value={time}
+                              className="bg-second text-mainText"
+                            >
+                              {time}
+                            </option>
+                          ))}
                       </select>
                     </label>
                     <div className="flex items-center justify-center">
-                      <span className="text-mainText font-heading font-bold">
-                        -
-                      </span>
+                      <span className="text-mainText font-heading">-</span>
                     </div>
                     <label className="flex items-center">
                       <select
-                        className="border border-gray-400 bg-transparent text-mainText text-center w-20 rounded py-1"
-                        value={day.to}
+                        className="border border-gray-400 bg-transparent text-mainText text-center w-24 rounded py-1"
+                        // value={day.to}
                         onChange={(e) =>
                           handleTimeChange(index, "to", e.target.value)
                         }
                       >
-                        {timeOptions.map((time, idx) => (
-                          <option
-                            key={idx}
-                            value={time}
-                            className="bg-second text-mainText"
-                          >
-                            {time}
-                          </option>
-                        ))}
+                        {activeDays[index] &&
+                          timeOptions.map((time, idx) => (
+                            <option
+                              key={idx}
+                              value={time}
+                              className="bg-second text-mainText"
+                            >
+                              {time}
+                            </option>
+                          ))}
                       </select>
                     </label>
                   </div>

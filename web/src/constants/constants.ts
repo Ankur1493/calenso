@@ -3,6 +3,16 @@ export const AUTH_URL = "/user";
 
 export const MEETINGS_URL = "/meetings";
 
+export const days = [
+  "Munday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
 export const timeOptions = [
   "00:00",
   "01:00",

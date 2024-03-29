@@ -3,21 +3,12 @@ import { useMeetingDetailsQuery } from "../slices/meetingsApiSlice";
 import { useParams } from "react-router-dom";
 import { AvailabilityProps, Schedule } from "../interfaces/interfaces";
 import Delete from "../Hooks/Delete";
+import { days } from "../constants/constants";
 
 function MeetingDetails() {
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [showEditTooltip, setShowEditTooltip] = useState(false);
   const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
-
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
 
   const { id } = useParams();
   const { handleDeleteMeeting } = Delete({ id });
@@ -215,7 +206,7 @@ function MeetingDetails() {
           </label>
           <div className="border-subtle space-y-4 border rounded-2xl p-3">
             <ol className="table border-collapse text-sm">
-              {daysOfWeek.map((day) => {
+              {days.map((day) => {
                 const schedule =
                   meetingDetails.meeting.availability.availableSchedule.find(
                     (item: Schedule) => item.DAY === day
