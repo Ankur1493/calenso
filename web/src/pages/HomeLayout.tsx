@@ -3,15 +3,10 @@ import SideBar from "../components/SideBar";
 import { useSelector } from "react-redux";
 import { RootState } from "../store.ts";
 import CreateMeeting from "../components/CreateMeeting.tsx";
-import MeetingDetails from "../components/MeetingDetails.tsx";
 
 function HomeLayout() {
   const isMeetingClicked = useSelector(
     (state: RootState) => state.isClicked.isMeetingFormClicked
-  );
-
-  const isMeetingDetailsClicked = useSelector(
-    (state: RootState) => state.isClicked.isDetailsClicked
   );
 
   return (

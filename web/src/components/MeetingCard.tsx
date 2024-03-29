@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { IsDetailsClicked } from "../slices/isClickedSlice";
+import Delete from "../Hooks/Delete";
 
-function MeetingCard({ meeting, onClick }) {
+function MeetingCard({ meeting }) {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch;
-  const handleDetailsClicked = () => {
-    dispatch(IsDetailsClicked(meeting._id));
-  };
+
+  const { handleDeleteMeeting } = Delete({ id: meeting._id });
 
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [showEditTooltip, setShowEditTooltip] = useState(false);
@@ -37,14 +34,13 @@ function MeetingCard({ meeting, onClick }) {
           to={`/home/meeting/${meeting._id}`}
           className="flex-1 overflow-hidden pr-4 text-sm"
           title="Meeting"
-          onClick={handleDetailsClicked}
         >
           <div className="text-left">
             <span
               className="text-mainText font-heading font-semibold"
               data-testid="event-type-title-705355"
             >
-              {meeting.duration} Min Meeting
+              {meeting.title}
             </span>
             <small className="text-mainText font-heading">
               /{userInfo.username}/{meeting.duration}min
@@ -133,9 +129,10 @@ function MeetingCard({ meeting, onClick }) {
               </svg>
             </button>
             <button
-              className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default"
+              className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default hover:bg-red-400"
               onMouseEnter={() => setShowDeleteTooltip(true)}
               onMouseLeave={() => setShowDeleteTooltip(false)}
+              onClick={handleDeleteMeeting}
             >
               {showDeleteTooltip && (
                 <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
@@ -152,7 +149,7 @@ function MeetingCard({ meeting, onClick }) {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="h-4 w-4"
+                className="h-4 w-4 "
               >
                 <path d="M3 6h18"></path>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>

@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux";
 import { IsMeetingFormClicked } from "../slices/isClickedSlice";
 import { useMeetingsQuery } from "../slices/meetingsApiSlice";
 import MeetingCard from "./MeetingCard";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function EventTypes() {
   const dispatch = useDispatch();
