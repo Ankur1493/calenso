@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { IsDetailsClicked } from "../slices/isClickedSlice";
 
-function MeetingCard({ meeting }) {
+function MeetingCard({ meeting, onClick }) {
   const { userInfo } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch;
+  const handleDetailsClicked = () => {
+    dispatch(IsDetailsClicked(meeting._id));
+  };
 
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [showEditTooltip, setShowEditTooltip] = useState(false);
@@ -26,12 +33,13 @@ function MeetingCard({ meeting }) {
             className="h-5 w-5"
           ></svg>
         </button>
-        <a
+        <Link
+          to={`/home/meeting/${meeting._id}`}
           className="flex-1 overflow-hidden pr-4 text-sm"
           title="Meeting"
-          href="/"
+          onClick={handleDetailsClicked}
         >
-          <div>
+          <div className="text-left">
             <span
               className="text-mainText font-heading font-semibold"
               data-testid="event-type-title-705355"
@@ -66,7 +74,7 @@ function MeetingCard({ meeting }) {
               </li>
             </ul>
           </div>
-        </a>
+        </Link>
         <div className="mt-4 hidden sm:mt-0 sm:flex">
           <div className="flex justify-between space-x-2 rtl:space-x-reverse">
             <button

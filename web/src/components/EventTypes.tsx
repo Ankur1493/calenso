@@ -79,9 +79,7 @@ function EventTypes() {
           {meetings.userMeetings.length > 0 ? (
             meetings.userMeetings.map((meeting) => (
               <div key={meeting.id}>
-                {/* Render meeting details */}
                 <MeetingCard meeting={meeting} />
-                {/* Add more meeting details rendering as needed */}
               </div>
             ))
           ) : (

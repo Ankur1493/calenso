@@ -16,14 +16,14 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Authentication />} />
           <Route path="/Home" element={<HomeLayout />}>
-            <Route path="event-types" element={<EventTypes />} />
+            <Route path="meeting/:id" element={<MeetingDetails />} />
+            <Route path="event-types" element={<EventTypes />}></Route>
             <Route path="bookings" element={<Bookings />} />
           </Route>
         </Routes>
       </Router>
       <ToastContainer />
     </div>
-    // <MeetingDetails />
   );
 }
 
