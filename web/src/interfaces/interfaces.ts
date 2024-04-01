@@ -23,3 +23,10 @@ export interface AvailabilityProps {
     availableSchedule: Schedule[];
   };
 }
+
+export interface Meeting {
+  _id: string;
+  title: string;
+  duration: number;
+  info: string;
+}

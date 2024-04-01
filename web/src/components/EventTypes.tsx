@@ -2,16 +2,22 @@ import { useDispatch } from "react-redux";
 import { IsMeetingFormClicked } from "../slices/isClickedSlice";
 import { useMeetingsQuery } from "../slices/meetingsApiSlice";
 import MeetingCard from "./MeetingCard";
+import { setMeetingIds } from "../slices/meetingSlice";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Meeting } from "../interfaces/interfaces";
 
 function EventTypes() {
+
   const dispatch = useDispatch();
   const { data: meetings = [], isError, isLoading } = useMeetingsQuery();
-  console.log(meetings);
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
   };
+
+  useEffect(() => {
+    const meetingIdArr = meetings?.userMeetings?.map((meet: Meeting) => meet._id)
+    dispatch(setMeetingIds(meetingIdArr));
+  }, [meetings])
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -79,8 +85,8 @@ function EventTypes() {
       ) : (
         <div>
           {meetings.userMeetings.length > 0 ? (
-            meetings.userMeetings.map((meeting) => (
-              <div key={meeting.id}>
+            meetings.userMeetings.map((meeting: Meeting) => (
+              <div key={meeting._id}>
                 <MeetingCard meeting={meeting} />
               </div>
             ))
