@@ -1,23 +1,28 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IsMeetingFormClicked } from "../slices/isClickedSlice";
 import { useMeetingsQuery } from "../slices/meetingsApiSlice";
 import MeetingCard from "./MeetingCard";
 import { setMeetingIds } from "../slices/meetingSlice";
 import { useEffect } from "react";
 import { Meeting } from "../interfaces/interfaces";
+import { RootState } from '../store';
 
 function EventTypes() {
-
   const dispatch = useDispatch();
-  const { data: meetings = [], isError, isLoading } = useMeetingsQuery();
+  const { data: meetings = [], isError, isLoading, refetch } = useMeetingsQuery();
+  const selectedMeetings = useSelector((state: RootState) => state?.meetings?.meetings);
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
   };
 
   useEffect(() => {
-    const meetingIdArr = meetings?.userMeetings?.map((meet: Meeting) => meet._id)
-    dispatch(setMeetingIds(meetingIdArr));
-  }, [meetings])
+    dispatch(refetch)
+  }, [dispatch, refetch])
+
+  useEffect(() => {
+    const meetingArr = meetings?.userMeetings?.map((meet: Meeting) => meet)
+    dispatch(setMeetingIds(meetingArr));
+  }, [meetings, dispatch]);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -84,8 +89,8 @@ function EventTypes() {
         <p>Error fetching meetings</p>
       ) : (
         <div>
-          {meetings.userMeetings.length > 0 ? (
-            meetings.userMeetings.map((meeting: Meeting) => (
+          {selectedMeetings && selectedMeetings.length > 0 ? (
+            selectedMeetings.map((meeting: Meeting) => (
               <div key={meeting._id}>
                 <MeetingCard meeting={meeting} />
               </div>
@@ -136,3 +141,4 @@ function EventTypes() {
 }
 
 export default EventTypes;
+

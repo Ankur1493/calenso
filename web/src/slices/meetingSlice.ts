@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Meeting {
-  id: string; // or whatever type your meeting id is
+  _id: string;
+  title: string;
+  duration: number;
+  info: string;
 }
 
 interface MeetingState {
@@ -17,9 +20,10 @@ const meetingSlice = createSlice({
     setMeetingIds: (state, action: PayloadAction<Meeting[]>) => {
       state.meetings = action.payload;
     },
+
     deleteMeetingId: (state, action: PayloadAction<{ id: string }>) => {
       const idToDelete = action.payload.id;
-      state.meetings = state.meetings.filter(meeting => meeting.id !== idToDelete);
+      state.meetings = state.meetings.filter(meeting => meeting._id !== idToDelete);
     }
   }
 });
@@ -27,3 +31,4 @@ const meetingSlice = createSlice({
 export const { setMeetingIds, deleteMeetingId } = meetingSlice.actions;
 
 export default meetingSlice.reducer;
+

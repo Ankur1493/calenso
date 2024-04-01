@@ -9,7 +9,7 @@ const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authSliceReducer,
     isClicked: isClickedReducer,
-    meeting: meetingSliceReducer
+    meetings: meetingSliceReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
