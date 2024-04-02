@@ -25,7 +25,7 @@ export interface AvailabilityProps {
 }
 
 export interface Meeting {
-  _id: string;
+  _id?: string;
   title: string;
   duration: number;
   info: string;

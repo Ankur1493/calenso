@@ -43,6 +43,7 @@ const meetingSlice = createSlice({
         meetingInfo: action.payload.meetingInfo,
         availabilitySchedule: action.payload.availabilitySchedule
       };
+      console.log(state.activeMeeting)
     },
     clearActiveMeeting: (state) => {
       state.activeMeeting = null;
@@ -50,7 +51,7 @@ const meetingSlice = createSlice({
   }
 });
 
-export const { setMeetingIds, deleteMeetingId } = meetingSlice.actions;
+export const { setMeetingIds, deleteMeetingId, setActiveMeeting, clearActiveMeeting } = meetingSlice.actions;
 
 export default meetingSlice.reducer;
 

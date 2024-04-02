@@ -1,19 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RootState } from "../store";
+import { useSelector, useDispatch } from "react-redux";
 import {
   IsMeetingFormClicked,
   IsAvailabilityClicked,
 } from "../slices/isClickedSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { setActiveMeeting } from "../slices/meetingSlice";
 
 function Form() {
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { meetingInfo } = useSelector((state: RootState) => state.meetings.activeMeeting || { meetingInfo: null });
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("");
 
-  const { userInfo } = useSelector((state: RootState) => state.auth);
-
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (meetingInfo) {
+      setTitle(meetingInfo.title);
+      setDuration(String(meetingInfo.duration));
+      setDescription(meetingInfo.info);
+    }
+  }, [meetingInfo]);
 
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
@@ -37,6 +45,23 @@ function Form() {
     setDuration(e.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    // Dispatch action to set the active meeting
+    dispatch(
+      setActiveMeeting({
+        meetingInfo: {
+          title: title,
+          duration: Number(duration),
+          info: description, // Assuming it's 'info' not 'description'
+        },
+        availabilitySchedule: [],
+      })
+    );
+    // Dispatch action to handle availability click
+    handleAvailabilityClick();
+  };
+
   return (
     <div className="flex justify-center fixed inset-0 items-center z-20">
       <div className="bg-second flex flex-col justify-left px-8 pt-8 w-[500px] rounded-2xl border border-gray-400 h-[600px]">
@@ -49,7 +74,7 @@ function Form() {
           Create a new event type for people to book times with.
         </div>
         <div className="mt-4">
-          <form className="flex flex-col py-6">
+          <form className="flex flex-col py-6" onSubmit={handleSubmit}>
             <label
               htmlFor="title"
               className="block text-md font-heading text-mainText"
@@ -108,10 +133,7 @@ function Form() {
                 placeholder="15"
                 min="5"
               />
-              <div
-                className="w-3/12 bg-secondText bg-opacity-20 h-full flex justify-center align-center rounded-e py-2 border border-gray-400
-              "
-              >
+              <div className="w-3/12 bg-secondText bg-opacity-20 h-full flex justify-center align-center rounded-e py-2 border border-gray-400">
                 <span className="text-mainText ">Minutes</span>
               </div>
             </div>
@@ -129,7 +151,6 @@ function Form() {
               <button
                 type="submit"
                 className="inline-flex items-center text-sm font-medium relative rounded-md transition h-9 px-4 py-2.5 bg-mainText text-main font-heading hover:bg-opacity-80"
-                onClick={handleAvailabilityClick}
               >
                 Continue
               </button>
@@ -142,3 +163,4 @@ function Form() {
 }
 
 export default Form;
+
