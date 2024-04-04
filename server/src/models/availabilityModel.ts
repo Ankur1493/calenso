@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const availabilitySchema = new mongoose.Schema({
   availableSchedule: [{
     DAY: String,
-    START_TIME: Date,
-    END_TIME: Date
+    START_TIME: String,
+    END_TIME: String,
   }]
 });
 const Availability = mongoose.model("Availability", availabilitySchema);
