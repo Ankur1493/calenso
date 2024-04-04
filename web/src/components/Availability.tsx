@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { IsAvailabilityClicked } from "../slices/isClickedSlice";
-import { setActiveAvailabilitySchedule } from "../slices/meetingSlice";
+import { clearActiveAvailabilitySchedule, clearActiveMeetingInfo, setActiveAvailabilitySchedule } from "../slices/meetingSlice";
 import { days, timeOptions } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
 import { useCreateMeeting } from "../Hooks/useCreateMeeting";
@@ -43,6 +43,9 @@ const AvailabilityForm = () => {
       const response = await createNewMeeting();
       console.log("Meeting created successfully:", response);
       navigate(`/home/meeting/${response.meetingId}`);
+      dispatch(clearActiveMeetingInfo());
+      dispatch(clearActiveAvailabilitySchedule())
+      toast.success(response.message)
     } catch (error) {
       console.error("Error creating meeting:", error);
       toast.error(error?.data?.message || error?.error)
