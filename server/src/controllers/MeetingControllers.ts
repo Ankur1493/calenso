@@ -134,7 +134,8 @@ export const createMeeting = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       status: "success",
-      message: "Yay, your meeting has been created"
+      message: "Yay, your meeting has been created",
+      meetingId: meeting._id
     });
   } catch (err) {
     console.error(err);
