@@ -5,11 +5,11 @@ import {
   IsMeetingFormClicked,
   IsAvailabilityClicked,
 } from "../slices/isClickedSlice";
-import { setActiveMeeting } from "../slices/meetingSlice";
+import { setActiveMeetingInfo } from "../slices/meetingSlice";
 
-function Form() {
+function MeetingForm() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const { meetingInfo } = useSelector((state: RootState) => state.meetings.activeMeeting || { meetingInfo: null });
+  const { meetingInfo } = useSelector((state: RootState) => state.meetings.activeMeetingInfo || { meetingInfo: null });
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -46,19 +46,16 @@ function Form() {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    // Dispatch action to set the active meeting
+    e.preventDefault();
     dispatch(
-      setActiveMeeting({
+      setActiveMeetingInfo({
         meetingInfo: {
           title: title,
           duration: Number(duration),
-          info: description, // Assuming it's 'info' not 'description'
+          info: description,
         },
-        availabilitySchedule: [],
       })
     );
-    // Dispatch action to handle availability click
     handleAvailabilityClick();
   };
 
@@ -162,5 +159,5 @@ function Form() {
   );
 }
 
-export default Form;
+export default MeetingForm;
 
