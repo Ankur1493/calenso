@@ -1,16 +1,21 @@
-import React, { useState } from "react";
-import { IsAvailabilityClicked } from "../slices/isClickedSlice";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { IsAvailabilityClicked } from "../slices/isClickedSlice";
+import { setActiveAvailabilitySchedule } from "../slices/meetingSlice";
 import { days, timeOptions } from "../constants/constants";
+import { useNavigate } from "react-router-dom";
 
 const AvailabilityForm = () => {
   const dispatch = useDispatch();
 
-  const [availability, setAvailability] = useState([]);
-  const [activeDays, setActiveDays] = useState(Array(days.length).fill(false));
-
-  const handleTimeChange = (dayIndex, field, value) => {
+  const [availability, setAvailability] = useState<{ DAY: string, START_TIME: string, END_TIME: string }[]>([]);
+  const [activeDays, setActiveDays] = useState<boolean[]>(Array(days.length).fill(false));
+  const navigate = useNavigate();
+  const handleTimeChange = (dayIndex: number, field: string, value: string) => {
     const updatedAvailability = [...availability];
+    if (!updatedAvailability[dayIndex]) {
+      updatedAvailability[dayIndex] = { DAY: days[dayIndex], START_TIME: "", END_TIME: "" };
+    }
     updatedAvailability[dayIndex][field] = value;
     setAvailability(updatedAvailability);
   };
@@ -19,12 +24,18 @@ const AvailabilityForm = () => {
     dispatch(IsAvailabilityClicked());
   };
 
-  const handleSelected = (dayIndex) => {
+  const handleSelected = (dayIndex: number) => {
     setActiveDays((prevActiveDays) => {
       const updatedActiveDays = [...prevActiveDays];
       updatedActiveDays[dayIndex] = !updatedActiveDays[dayIndex];
       return updatedActiveDays;
     });
+  };
+
+  const handleSubmit = () => {
+    const availabilityData = availability.filter(day => day !== undefined);
+    dispatch(setActiveAvailabilitySchedule({ availabilitySchedule: availabilityData }));
+    navigate("/")
   };
 
   return (
@@ -47,9 +58,8 @@ const AvailabilityForm = () => {
                         onClick={() => handleSelected(index)}
                       />
                       <div
-                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${
-                          activeDays[index] ? "peer-checked:bg-gray-200" : ""
-                        }`}
+                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${activeDays[index] ? "peer-checked:bg-gray-200" : ""
+                          }`}
                       ></div>
                     </label>
                   </div>
@@ -60,9 +70,8 @@ const AvailabilityForm = () => {
                     <label className="flex items-center">
                       <select
                         className="border border-gray-400 bg-transparent text-mainText text-center w-24 rounded py-1"
-                        // value={day.from}
                         onChange={(e) =>
-                          handleTimeChange(index, "from", e.target.value)
+                          handleTimeChange(index, "START_TIME", e.target.value)
                         }
                       >
                         {activeDays[index] &&
@@ -83,9 +92,8 @@ const AvailabilityForm = () => {
                     <label className="flex items-center">
                       <select
                         className="border border-gray-400 bg-transparent text-mainText text-center w-24 rounded py-1"
-                        // value={day.to}
                         onChange={(e) =>
-                          handleTimeChange(index, "to", e.target.value)
+                          handleTimeChange(index, "END_TIME", e.target.value)
                         }
                       >
                         {activeDays[index] &&
@@ -115,7 +123,7 @@ const AvailabilityForm = () => {
           </button>
           <button
             className="inline-flex items-center text-sm font-medium relative rounded-md transition h-9 px-4 py-2.5 bg-mainText text-main font-heading hover:bg-opacity-80"
-            onClick={() => console.log(availability)}
+            onClick={handleSubmit}
           >
             Submit
           </button>
@@ -126,3 +134,4 @@ const AvailabilityForm = () => {
 };
 
 export default AvailabilityForm;
+
