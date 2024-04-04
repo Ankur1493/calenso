@@ -4,10 +4,14 @@ import { IsAvailabilityClicked } from "../slices/isClickedSlice";
 import { setActiveAvailabilitySchedule } from "../slices/meetingSlice";
 import { days, timeOptions } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
+import { useCreateMeeting } from "../Hooks/useCreateMeeting";
+import { toast } from "react-toastify";
 
 const AvailabilityForm = () => {
-  const dispatch = useDispatch();
 
+  const { createNewMeeting } = useCreateMeeting();
+
+  const dispatch = useDispatch();
   const [availability, setAvailability] = useState<{ DAY: string, START_TIME: string, END_TIME: string }[]>([]);
   const [activeDays, setActiveDays] = useState<boolean[]>(Array(days.length).fill(false));
   const navigate = useNavigate();
@@ -32,10 +36,17 @@ const AvailabilityForm = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const availabilityData = availability.filter(day => day !== undefined);
     dispatch(setActiveAvailabilitySchedule({ availabilitySchedule: availabilityData }));
-    navigate("/")
+    try {
+      const response = await createNewMeeting();
+      console.log("Meeting created successfully:", response);
+      navigate(`/home/meeting/${response.meetingId}`);
+    } catch (error) {
+      console.error("Error creating meeting:", error);
+      toast.error(error?.data?.message || error?.error)
+    }
   };
 
   return (

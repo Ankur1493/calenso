@@ -150,7 +150,7 @@ export const updateMeeting = async (req: Request, res: Response) => {
 
   try {
     const meetingId = req.params.id;
-    const { meetingData, availabilityData } = req.body;
+    const { meetingInfo, availabilitySchedule } = req.body;
 
     const meeting = await Meeting.findById(meetingId);
 
@@ -161,10 +161,10 @@ export const updateMeeting = async (req: Request, res: Response) => {
       })
     }
 
-    if (availabilityData) {
+    if (availabilitySchedule) {
       const updatedAvailability = await updateAvailability({
         _id: meeting.availability.toString(),
-        availableSchedule: availabilityData
+        availableSchedule: availabilitySchedule
       });
 
       if (!updatedAvailability) {
@@ -174,9 +174,9 @@ export const updateMeeting = async (req: Request, res: Response) => {
         })
       }
     }
-
-    const updatedMeeting = await meeting.updateOne({ $set: meetingData });
-
+    console.log("reached ")
+    const updatedMeeting = await meeting.updateOne({ $set: meetingInfo });
+    console.log("success")
     if (!updatedMeeting) {
       return res.status(400).json({
         status: "failed",
@@ -191,7 +191,7 @@ export const updateMeeting = async (req: Request, res: Response) => {
     })
 
   } catch (err) {
-    res.status(200).json({
+    res.status(500).json({
       status: "failed",
       message: "try again",
       err,
