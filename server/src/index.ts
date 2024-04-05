@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from 'cookie-parser';
 import { userRoutes } from "./routes/userRoutes";
 import { meetingRoutes } from "./routes/meetingRoutes";
+import { bookingRoutes } from "./routes/bookingRoutes";
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ app.get("/", (_: Request, res: Response) => {
 
 app.use("/user", userRoutes);
 app.use("/meetings", meetingRoutes);
+app.use("/bookings", bookingRoutes)
 
 mongoose.connect(URI)
   .then(() => {
