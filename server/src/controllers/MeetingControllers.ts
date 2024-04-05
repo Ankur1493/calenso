@@ -228,3 +228,39 @@ export const deleteMeeting = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const displayAllUserMeetings = async (req: Request, res: Response) => {
+  try {
+    const username1 = req.params.username;
+
+    const userExists = await User.findOne({ username: username1 }).populate({ path: "meetings", select: "-availability -user_id" })
+
+
+    if (!userExists) {
+      return res.status(400).json({
+        status: "failed",
+        message: "User doesn't exist"
+      });
+    }
+    const meetings = userExists.meetings;
+    if (meetings.length < 1) {
+      return res.status(200).json({
+        status: "success",
+        message: "User have not createad any event"
+      })
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: "Here's your Meetings",
+      meetings: userExists.meetings
+    })
+
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "This one's on us, try again",
+      error: err
+    })
+  }
+}
