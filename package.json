@@ -10,6 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "express-session": "^1.18.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/express-session": "^1.18.0",
+    "@types/passport": "^1.0.16",
+    "@types/passport-google-oauth20": "^2.0.14"
   }
 }

@@ -6,7 +6,8 @@ import cookieParser from 'cookie-parser';
 import { userRoutes } from "./routes/userRoutes";
 import { meetingRoutes } from "./routes/meetingRoutes";
 import { bookingRoutes } from "./routes/bookingRoutes";
-
+import session = require("express-session");
+import passport from "./config/passport"
 dotenv.config();
 const app = express();
 const corsOptions = {
@@ -17,6 +18,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET as string,
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 const URI = process.env.MONGO_DB_URI as string;
 const PORT = process.env.PORT || 8000;
 
