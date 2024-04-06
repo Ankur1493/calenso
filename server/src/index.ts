@@ -37,6 +37,7 @@ app.get("/", (_: Request, res: Response) => {
 app.use("/user", userRoutes);
 app.use("/meetings", meetingRoutes);
 app.use("/bookings", bookingRoutes)
+app.use("/auth/google")
 
 mongoose.connect(URI)
   .then(() => {
