@@ -1,10 +1,19 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import passport from "../config/passport";
 
 const router = Router();
 
 router.get('/',
-  passport.authenticate('google', { scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.events'] }));
+  (req: Request, res: Response, next: NextFunction) => {
+    const redirectUrl = passport.authenticate('google', {
+      scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.events'],
+      accessType: 'offline',
+      prompt: 'consent'
+    });
+
+    return redirectUrl(req, res, next);
+  }
+);
 
 router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google/failure' }),
@@ -13,10 +22,11 @@ router.get('/callback',
       return res.redirect('http://localhost:5173/auth/google/failure');
     }
     res.redirect('http://localhost:5173/home/event-types');
-  });
+  }
+);
 
 router.get('/failure', (_: Request, res: Response) => {
-  res.redirect('http://localhost:5173')
+  res.redirect('http://localhost:5173');
 });
 
 export { router as googleAuthRoutes };

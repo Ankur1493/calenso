@@ -22,8 +22,8 @@ passport.use(new GoogleStrategy({
         {
           $set: {
             googleId: profile.id,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
+            googleAccessToken: accessToken,
+            googleRefreshToken: refreshToken,
             profilePicUrl: profilePicUrl
           }
         },
