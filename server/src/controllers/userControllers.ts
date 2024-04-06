@@ -8,7 +8,7 @@ dotenv.config();
 const SECRET_KEY = process.env.SECRET as string
 
 const createToken = (_id: string): string => {
-  return jwt.sign({ _id }, SECRET_KEY, { expiresIn: "2d" });
+  return jwt.sign({ _id }, SECRET_KEY, { expiresIn: "10d" });
 }
 
 export const userLogin = async (req: Request, res: Response) => {
