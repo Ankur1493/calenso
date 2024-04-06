@@ -8,14 +8,16 @@ router.get('/',
 
 router.get('/callback',
   passport.authenticate('google', { failureRedirect: '/auth/google/failure' }),
-  (_: Request, res: Response) => {
-    // Successful authentication, redirect to the frontend
-    res.redirect('http://localhost:5173/event-types');
+  (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.redirect('http://localhost:5173/auth/google/failure');
+    }
+    res.redirect('http://localhost:5173/home/event-types');
   });
 
 router.get('/failure', (_: Request, res: Response) => {
-  res.status(401).json({ message: 'failed to connect your calendar, TRY AGAIN' });
+  res.redirect('http://localhost:5173')
 });
 
-export default router;
+export { router as googleAuthRoutes };
 

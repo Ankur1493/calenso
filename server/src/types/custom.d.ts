@@ -5,6 +5,10 @@ interface IUser {
   username: string;
   password: string;
   email: string;
+  profilePicUrl?: string;
+  googleId?: string;
+  googleAccessToken?: string;
+  googleRefreshToken?: string;
   meetings: string[];
   bookings: string[];
 }

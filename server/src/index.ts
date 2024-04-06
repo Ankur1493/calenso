@@ -8,6 +8,7 @@ import { meetingRoutes } from "./routes/meetingRoutes";
 import { bookingRoutes } from "./routes/bookingRoutes";
 import session = require("express-session");
 import passport from "./config/passport"
+import { googleAuthRoutes } from "./routes/googleRoutes";
 dotenv.config();
 const app = express();
 const corsOptions = {
@@ -37,7 +38,7 @@ app.get("/", (_: Request, res: Response) => {
 app.use("/user", userRoutes);
 app.use("/meetings", meetingRoutes);
 app.use("/bookings", bookingRoutes)
-app.use("/auth/google")
+app.use("/auth/google", googleAuthRoutes)
 
 mongoose.connect(URI)
   .then(() => {

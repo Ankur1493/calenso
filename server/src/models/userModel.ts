@@ -14,6 +14,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  profilePicUrl: {
+    type: String
+  },
+  googleId: {
+    type: String
+  },
+  googleAccessToken: {
+    type: String
+  },
+  googleRefreshToken: {
+    type: String
+  },
   meetings: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Meeting'
