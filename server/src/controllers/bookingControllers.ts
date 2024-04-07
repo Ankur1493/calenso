@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import Booking from "../models/BookingsModel"
-import { IBooking } from "../types/custom"
 
 
 export const getAllBookings = async (req: Request, res: Response) => {
@@ -29,19 +28,10 @@ export const getAllBookings = async (req: Request, res: Response) => {
       });
     }
 
-    const mappedBookings: IBooking[] = userBookings.map((booking: any) => ({
-      _id: booking._id.toString(),
-      meeting_id: booking.meeting_id.toString(),
-      first_user: booking.first_user.toString(),
-      second_user: booking.second_user.toString(),
-      scheduledTime: booking.scheduledTime,
-      additionalInfo: booking.additionalInfo || ''
-    }));
-
     return res.status(200).json({
       status: 'success',
       message: 'Here are your bookings',
-      bookings: mappedBookings
+      bookings: userBookings
     });
   } catch (err) {
     console.error(err);

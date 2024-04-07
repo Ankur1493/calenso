@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMeetingDetailsQuery } from "../slices/meetingsApiSlice";
 import { useParams } from "react-router-dom";
-import { AvailabilityProps, Schedule } from "../interfaces/interfaces";
 import Delete from "../Hooks/Delete";
 import { days } from "../constants/constants";
 
@@ -19,7 +18,7 @@ function MeetingDetails() {
     error,
   } = useMeetingDetailsQuery(id);
 
-  useEffect(() => {}, [id]);
+  useEffect(() => { }, [id]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -36,13 +35,17 @@ function MeetingDetails() {
   return (
     <div className="bg-home h-full px-6 py-3 ">
       <header className="group bg-transparent flex w-full max-w-full items-center justify-between overflow-hidden py-2 ">
+        {/* Title */}
         <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
           <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-mainText inline truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl">
             {meetingDetails.meeting.title}
           </h3>
         </div>
+
+        {/* Action Buttons */}
         <div className="mt-4 hidden sm:mt-0 sm:flex">
           <div className="flex justify-between space-x-2 rtl:space-x-reverse">
+            {/* Copy Button */}
             <button
               data-state="closed"
               type="button"
@@ -71,6 +74,8 @@ function MeetingDetails() {
                 <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
               </svg>
             </button>
+
+            {/* Edit Button */}
             <button
               type="button"
               data-testid="event-type-edit-705355"
@@ -98,6 +103,8 @@ function MeetingDetails() {
                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
               </svg>
             </button>
+
+            {/* Delete Button */}
             <button
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default hover:bg-red-400"
               onMouseEnter={() => setShowDeleteTooltip(true)}
@@ -129,19 +136,18 @@ function MeetingDetails() {
           </div>
         </div>
       </header>
+
+      {/* Meeting Details */}
       <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
         <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-mainText inline truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl">
           {meetingDetails.title}
         </h3>
       </div>
+
+      {/* Meeting Information */}
       <div className="border-subtle space-y-6 rounded-lg border p-6 mt-6">
         <div className="">
-          <label
-            className="text-mainText font-heading mb-2 block text-sm font-medium leading-none"
-            htmlFor="title"
-          >
-            Title
-          </label>
+          <label className="text-mainText font-heading mb-2 block text-sm font-medium leading-none" htmlFor="title">Title</label>
           <input
             id="title"
             placeholder=""
@@ -151,6 +157,8 @@ function MeetingDetails() {
             readOnly
           />
         </div>
+
+        {/* Other meeting details... */}
         <div className="">
           <label
             className="text-mainText font-heading mb-2 block text-sm font-medium leading-none"
@@ -197,53 +205,28 @@ function MeetingDetails() {
             readOnly
           />
         </div>
+
+        {/* Availability */}
         <div className="">
-          <label
-            className="text-mainText font-heading mb-2 block text-sm font-medium leading-none"
-            htmlFor="info"
-          >
-            Availability
-          </label>
+          <label className="text-mainText font-heading mb-2 block text-sm font-medium leading-none" htmlFor="info">Availability</label>
           <div className="border-subtle space-y-4 border rounded-2xl p-3">
             <ol className="table border-collapse text-sm">
               {days.map((day) => {
-                const schedule =
-                  meetingDetails.meeting.availability.availableSchedule.find(
-                    (item: Schedule) => item.DAY === day
-                  );
+                const schedule = meetingDetails.meeting.availability.availableSchedule.find((item: any) => item.DAY === day);
 
                 return (
-                  <li
-                    key={day}
-                    className="my-4 flex border-transparent last:mb-2"
-                  >
-                    <span className="w-20 font-medium sm:w-32 text-mainText font-heading">
-                      {day}
-                    </span>
+                  <li key={day} className="my-4 flex border-transparent last:mb-2">
+                    <span className="w-20 font-medium sm:w-32 text-mainText font-heading">{day}</span>
                     <div className="space-y-3 text-right pl-20">
                       {schedule && schedule.START_TIME && schedule.END_TIME ? (
                         <div className="text-mainText font-heading flex items-center leading-4">
-                          <span className="w-16 sm:w-28 sm:text-left">
-                            {new Date(schedule.START_TIME).toLocaleTimeString(
-                              [],
-                              { hour: "2-digit", minute: "2-digit" }
-                            )}
-                          </span>
-                          <span className="ms-4 text-mainText font-heading">
-                            -
-                          </span>
-                          <div className="ml-6 sm:w-28">
-                            {new Date(schedule.END_TIME).toLocaleTimeString(
-                              [],
-                              { hour: "2-digit", minute: "2-digit" }
-                            )}
-                          </div>
+                          <span className="w-16 sm:w-28 sm:text-left">{schedule.START_TIME}</span>
+                          <span className="ms-4 text-mainText font-heading">-</span>
+                          <div className="ml-6 sm:w-28">{schedule.END_TIME}</div>
                         </div>
                       ) : (
                         <div className="text-subtle flex items-center leading-4">
-                          <span className="ml-6 sm:ml-0 text-mainText font-heading text-opacity-50">
-                            Unavailable
-                          </span>
+                          <span className="ml-6 sm:ml-0 text-mainText font-heading text-opacity-50">Unavailable</span>
                         </div>
                       )}
                     </div>

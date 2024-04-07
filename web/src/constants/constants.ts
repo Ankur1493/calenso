@@ -4,7 +4,7 @@ export const AUTH_URL = "/user";
 export const MEETINGS_URL = "/meetings";
 
 export const days = [
-  "Munday",
+  "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
