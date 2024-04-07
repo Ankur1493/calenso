@@ -31,4 +31,11 @@ declare global {
     }
   }
 }
-
+interface IBooking {
+  _id: string;
+  meeting_id: string;
+  first_user: string;
+  second_user: string;
+  scheduledTime: Date;
+  additionalInfo?: string;
+}
