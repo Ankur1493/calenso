@@ -174,9 +174,7 @@ export const updateMeeting = async (req: Request, res: Response) => {
         })
       }
     }
-    console.log("reached ")
     const updatedMeeting = await meeting.updateOne({ $set: meetingInfo });
-    console.log("success")
     if (!updatedMeeting) {
       return res.status(400).json({
         status: "failed",
