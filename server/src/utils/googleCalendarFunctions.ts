@@ -42,11 +42,31 @@ export const createEvent = async (body) => {
       throw new Error("Can't connect to calendar")
     }
     const meetLink = response?.data?.conferenceData?.entryPoints?.find(entry => entry?.entryPointType === 'video')?.uri;
+    const eventId = response.data.id;
     console.log('Google Meet link:', meetLink);
+    return eventId;
+  } catch (error) {
+    console.error('Error creating event:', error);
+    return error;
+  }
+};
+
+export const deleteEvent = async (eventId) => {
+  try {
+    const response = await calendar.events.delete({
+      calendarId: "primary",
+      eventId: eventId,
+    });
+
+    if (!response) {
+      throw new Error("Can't connect to calendar");
+    }
+
+    console.log("Event deleted successfully");
 
     return true;
   } catch (error) {
-    console.error('Error creating event:', error);
+    console.error("Error deleting event:", error);
     return false;
   }
 };
