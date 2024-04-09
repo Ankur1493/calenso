@@ -6,25 +6,38 @@ const calendar = google.calendar({
   auth: process.env.API_KEY,
 });
 
+interface createProps {
+  title: string;
+  description: string;
+  firstUser: string;
+  guestUser: string;
+  startTime: Date;
+  endTime: Date;
+  userAccessToken: string;
+}
 
-export const createEvent = async (body) => {
+export const createEvent = async ({ title, description, firstUser, guestUser, startTime, endTime, userAccessToken }: createProps) => {
   try {
-    const { title, attendees, description, startTime, endTime } = body;
-
+    console.log(userAccessToken)
+    console.log(firstUser)
     const response = await calendar.events.insert({
       calendarId: "primary",
+      auth: userAccessToken,
       requestBody: {
         summary: title,
         description,
-        attendees: [...attendees],
         start: {
-          dateTime: startTime,
+          dateTime: startTime.toISOString(),
           timeZone: 'Asia/Kolkata'
         },
         end: {
-          dateTime: endTime,
+          dateTime: endTime.toISOString(),
           timeZone: 'Asia/Kolkata'
         },
+        attendees: [
+          { email: firstUser },
+          { email: guestUser }
+        ],
         conferenceData: {
           createRequest: {
             requestId: uuid()
@@ -33,27 +46,25 @@ export const createEvent = async (body) => {
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'email', 'minutes': 24 * 60 },
-            { method: 'popup', 'minutes': 10 },
+            { method: 'email', minutes: 24 * 60 },
+            { method: 'popup', minutes: 10 },
           ],
         },
       },
-      sendUpdates: "all"
+      sendUpdates: "all",
     });
-    if (!response) {
-      throw new Error("Can't connect to calendar")
-    }
+
+    console.log("failed to get response")
     const meetLink = response?.data?.conferenceData?.entryPoints?.find(entry => entry?.entryPointType === 'video')?.uri;
-    const eventId = response.data.id;
+    const eventId = response?.data.id;
     console.log('Google Meet link:', meetLink);
     return eventId;
   } catch (error) {
     console.error('Error creating event:', error);
-    return error;
+    return false;
   }
 };
-
-export const deleteEvent = async (eventId) => {
+export const deleteEvent = async (eventId: string) => {
   try {
     const response = await calendar.events.delete({
       calendarId: "primary",
