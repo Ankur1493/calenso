@@ -6,6 +6,7 @@ const calendar = google.calendar({
   auth: process.env.API_KEY,
 });
 
+
 export const createEvent = async (body) => {
   try {
     const { title, attendees, description, startTime, endTime } = body;
@@ -36,7 +37,8 @@ export const createEvent = async (body) => {
             { method: 'popup', 'minutes': 10 },
           ],
         },
-      }
+      },
+      sendUpdates: "all"
     });
     if (!response) {
       throw new Error("Can't connect to calendar")
@@ -56,6 +58,7 @@ export const deleteEvent = async (eventId) => {
     const response = await calendar.events.delete({
       calendarId: "primary",
       eventId: eventId,
+      sendUpdates: "all"
     });
 
     if (!response) {
