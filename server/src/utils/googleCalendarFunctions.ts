@@ -13,16 +13,15 @@ interface createProps {
   guestUser: string;
   startTime: Date;
   endTime: Date;
-  userAccessToken: string;
+  accessToken?: string;
 }
 
-export const createEvent = async ({ title, description, firstUser, guestUser, startTime, endTime, userAccessToken }: createProps) => {
+export const createEvent = async ({ title, description, firstUser, guestUser, startTime, endTime, accessToken }: createProps) => {
   try {
-    console.log(userAccessToken)
-    console.log(firstUser)
+    console.log(accessToken)
     const response = await calendar.events.insert({
+      auth: accessToken,
       calendarId: "primary",
-      auth: userAccessToken,
       requestBody: {
         summary: title,
         description,

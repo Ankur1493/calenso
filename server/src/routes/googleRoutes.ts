@@ -6,7 +6,7 @@ const router = Router();
 router.get('/',
   (req: Request, res: Response, next: NextFunction) => {
     const redirectUrl = passport.authenticate('google', {
-      scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.events'],
+      scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.events', 'https://www.googleapis.com/auth/calendar'],
       accessType: 'offline',
       prompt: 'consent'
     });

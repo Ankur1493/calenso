@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import Booking from "../models/BookingsModel"
 import Meeting from "../models/meetingsModel";
 import { createEvent } from "../utils/googleCalendarFunctions";
+import User from "../models/userModel";
 
 
 export const getAllBookings = async (req: Request, res: Response) => {
@@ -64,8 +65,15 @@ export const createBooking = async (req: Request, res: Response) => {
         message: "user not authorized"
       })
     }
-    const userEmail = user.email;
-    const userAccessToken = user.googleAccessToken as string;
+    const DBuser = await User.findByIdAndUpdate(user._id)
+    if (!DBuser) {
+      return res.status(400).json({
+        status: "failed",
+        message: "user galat hai"
+      })
+    }
+    const userEmail = DBuser.email as string;
+    const accessToken = DBuser.googleAccessToken as string;
 
     const meeting = await Meeting.findById(meetingId).populate('availability');
     if (!meeting) {
@@ -89,7 +97,7 @@ export const createBooking = async (req: Request, res: Response) => {
       guestUser,
       startTime,
       endTime,
-      userAccessToken
+      accessToken
     });
 
     if (!eventStatus) {
