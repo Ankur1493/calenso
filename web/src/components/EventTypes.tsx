@@ -5,22 +5,29 @@ import MeetingCard from "./MeetingCard";
 import { setMeetingIds } from "../slices/meetingSlice";
 import { useEffect } from "react";
 import { Meeting } from "../interfaces/interfaces";
-import { RootState } from '../store';
+import { RootState } from "../store";
 
 function EventTypes() {
   const dispatch = useDispatch();
-  const { data: meetings = [], isError, isLoading, refetch } = useMeetingsQuery();
-  const selectedMeetings = useSelector((state: RootState) => state?.meetings?.meetings);
+  const {
+    data: meetings = [],
+    isError,
+    isLoading,
+    refetch,
+  } = useMeetingsQuery();
+  const selectedMeetings = useSelector(
+    (state: RootState) => state?.meetings?.meetings
+  );
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
   };
 
   useEffect(() => {
-    dispatch(refetch)
-  }, [dispatch, refetch])
+    dispatch(refetch);
+  }, [dispatch, refetch]);
 
   useEffect(() => {
-    const meetingArr = meetings?.userMeetings?.map((meet: Meeting) => meet)
+    const meetingArr = meetings?.userMeetings?.map((meet: Meeting) => meet);
     dispatch(setMeetingIds(meetingArr));
   }, [meetings, dispatch]);
 
@@ -28,7 +35,7 @@ function EventTypes() {
 
   return (
     <div>
-      <div className="flex items-center md:mb-6 md:mt-0 lg:mb-8 mb-0 px-6 py-4">
+      <div className="flex items-center px-6 py-8 ">
         <header className="flex w-full max-w-full items-center truncate">
           <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
             <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-emphasis truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl hidden text-mainText">
@@ -141,4 +148,3 @@ function EventTypes() {
 }
 
 export default EventTypes;
-

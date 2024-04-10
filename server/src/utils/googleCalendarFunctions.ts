@@ -16,12 +16,19 @@ interface createProps {
   accessToken?: string;
 }
 
-export const createEvent = async ({ title, description, firstUser, guestUser, startTime, endTime, accessToken }: createProps) => {
+export const createEvent = async ({
+  title,
+  description,
+  firstUser,
+  guestUser,
+  startTime,
+  endTime,
+  accessToken,
+}: createProps) => {
   try {
-
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: accessToken });
-    console.log(accessToken)
+    console.log(accessToken);
     const response = await calendar.events.insert({
       auth: oauth2Client,
       calendarId: "primary",
@@ -30,40 +37,39 @@ export const createEvent = async ({ title, description, firstUser, guestUser, st
         description,
         start: {
           dateTime: startTime.toISOString(),
-          timeZone: 'Asia/Kolkata'
+          timeZone: "Asia/Kolkata",
         },
         end: {
           dateTime: endTime.toISOString(),
-          timeZone: 'Asia/Kolkata'
+          timeZone: "Asia/Kolkata",
         },
-        attendees: [
-          { email: firstUser },
-          { email: guestUser }
-        ],
+        attendees: [{ email: firstUser }, { email: guestUser }],
         conferenceData: {
           createRequest: {
-            requestId: uuid()
-          }
+            requestId: uuid(),
+          },
         },
         reminders: {
           useDefault: false,
           overrides: [
-            { method: 'email', minutes: 24 * 60 },
-            { method: 'popup', minutes: 10 },
+            { method: "email", minutes: 24 * 60 },
+            { method: "popup", minutes: 10 },
           ],
         },
       },
       sendUpdates: "all",
-      conferenceDataVersion: 1
+      conferenceDataVersion: 1,
     });
 
-    console.log(response)
-    const meetLink = response?.data?.conferenceData?.entryPoints?.find(entry => entry?.entryPointType === 'video')?.uri;
+    console.log(response);
+    const meetLink = response?.data?.conferenceData?.entryPoints?.find(
+      (entry) => entry?.entryPointType === "video"
+    )?.uri;
     const eventId = response?.data.id;
-    console.log('Google Meet link:', meetLink);
+    console.log("Google Meet link:", meetLink);
     return eventId;
   } catch (error) {
-    console.error('Error creating event:', error);
+    console.error("Error creating event:", error);
     return false;
   }
 };
@@ -72,7 +78,7 @@ export const deleteEvent = async (eventId: string) => {
     const response = await calendar.events.delete({
       calendarId: "primary",
       eventId: eventId,
-      sendUpdates: "all"
+      sendUpdates: "all",
     });
 
     if (!response) {
@@ -87,4 +93,3 @@ export const deleteEvent = async (eventId: string) => {
     return false;
   }
 };
-
