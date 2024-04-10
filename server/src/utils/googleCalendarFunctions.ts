@@ -18,9 +18,12 @@ interface createProps {
 
 export const createEvent = async ({ title, description, firstUser, guestUser, startTime, endTime, accessToken }: createProps) => {
   try {
+
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
     console.log(accessToken)
     const response = await calendar.events.insert({
-      auth: accessToken,
+      auth: oauth2Client,
       calendarId: "primary",
       requestBody: {
         summary: title,
@@ -51,9 +54,10 @@ export const createEvent = async ({ title, description, firstUser, guestUser, st
         },
       },
       sendUpdates: "all",
+      conferenceDataVersion: 1
     });
 
-    console.log("failed to get response")
+    console.log(response)
     const meetLink = response?.data?.conferenceData?.entryPoints?.find(entry => entry?.entryPointType === 'video')?.uri;
     const eventId = response?.data.id;
     console.log('Google Meet link:', meetLink);
