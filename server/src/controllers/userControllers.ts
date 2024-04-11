@@ -50,7 +50,8 @@ export const userLogin = async (req: Request, res: Response) => {
     return res.status(200).json({
       message: "Welcome Back",
       username: user.username,
-      email: user.email
+      email: user.email,
+      profilePicture: user.profilePicUrl ? user.profilePicUrl : null
     });
   } catch (err) {
     return res.status(500).json({
