@@ -4,44 +4,13 @@ import calender from "../assets/images/landing-cal-1.jpeg";
 import { GridLayout } from "../components/GridLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import Connect from "../components/Connect";
-import { IsConnectClicked } from "../slices/isClickedSlice";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 
 function Landing() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const isConnectClicked = useSelector(
-    (state: RootState) => state.isClicked.isConnectClicked
-  );
-
-  const isConnected = useSelector(
-    (state: RootState) => state.isClicked.isConnected
-  );
-
-  useEffect(() => {
-    let intervalId = null;
-    const handleConnectClick = () => {
-      dispatch(IsConnectClicked());
-    };
-
-    if (!isConnectClicked && !isConnected) {
-      intervalId = setInterval(() => {
-        handleConnectClick();
-      }, 2000);
-    }
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [isConnectClicked, isConnected, dispatch]);
 
   return (
     <div className="relative">
       <div
-        className={`${
-          isConnectClicked && !isConnected ? "blur-sm opacity-40" : ""
-        }`}
       >
         <div className="flex justify-between px-2 md:px-12 lg:px-16 py-10">
           <div className="py-2">
@@ -192,7 +161,6 @@ function Landing() {
           </div>
         </div>
       </div>
-      {isConnectClicked && !isConnected && <Connect />}
     </div>
   );
 }

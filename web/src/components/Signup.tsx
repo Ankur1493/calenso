@@ -5,6 +5,7 @@ import { useSignupMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { RootState } from "../store";
+import { IsConnected } from "../slices/isClickedSlice";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -41,6 +42,7 @@ function Signup() {
     try {
       const res = await signup({ username, email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
+      dispatch(IsConnected());
       navigate("/home/event-types");
       toast.success(res.message);
     } catch (err) {

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { IsMeetingFormClicked } from "../slices/isClickedSlice";
+import { IsConnected, IsMeetingFormClicked } from "../slices/isClickedSlice";
 import { useMeetingsQuery } from "../slices/meetingsApiSlice";
 import MeetingCard from "./MeetingCard";
 import { setMeetingIds } from "../slices/meetingSlice";
@@ -30,6 +30,18 @@ function EventTypes() {
     const meetingArr = meetings?.userMeetings?.map((meet: Meeting) => meet);
     dispatch(setMeetingIds(meetingArr));
   }, [meetings, dispatch]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const profilePicture = params.get('profilePicture');
+    if (profilePicture) {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      userInfo.profilePicture = profilePicture;
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      localStorage.setItem("isConnected", "true")
+      dispatch(IsConnected());
+    }
+  }, []);
 
   if (isLoading) return <p>Loading...</p>;
 

@@ -5,6 +5,7 @@ import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
+import { IsConnected } from "../slices/isClickedSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -36,6 +37,7 @@ function Login() {
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
+      dispatch(IsConnected())
       navigate("/home/event-types");
       toast.success(res.message);
     } catch (err) {

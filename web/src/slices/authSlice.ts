@@ -11,10 +11,16 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.userInfo = action.payload;
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
+      const userInfo = localStorage.getItem("userInfo");
+      const profilePicture = userInfo ? JSON.parse(userInfo).profilePicture ? true : false : false;
+      if (profilePicture) {
+        localStorage.setItem("isConnected", "true")
+      }
     },
     removeCredentials: (state, _) => {
       state.userInfo = null;
       localStorage.removeItem("userInfo")
+      localStorage.removeItem("isConnected")
     }
   }
 });
