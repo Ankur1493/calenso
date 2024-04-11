@@ -20,7 +20,42 @@ function Bookings() {
             </div>
           </header>
         </div>
-        <div className="mt-24">
+        <div className="mt-16">
+          <div className="flex flex-col">
+            <div className="flex flex-row flex-wrap justify-between">
+              <div className="mb-4 h-9 max-w-full lg:mb-5">
+                <nav className="flex max-h-9 space-x-12 rounded-md">
+                  <a
+                    className="bg-emphasis text-emphasis inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm "
+                    href="/"
+                  >
+                    <div className="flex items-center gap-x-2 font-heading text-mainText">
+                      {" "}
+                      Upcoming
+                    </div>
+                  </a>
+                  <a
+                    className="bg-emphasis text-emphasis inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm "
+                    href="/"
+                  >
+                    <div className="flex items-center gap-x-2 font-heading text-mainText">
+                      {" "}
+                      Past
+                    </div>
+                  </a>
+                  <a
+                    className="bg-emphasis text-emphasis inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm "
+                    href="/"
+                  >
+                    <div className="flex items-center gap-x-2 font-heading text-mainText">
+                      {" "}
+                      Cancelled
+                    </div>
+                  </a>
+                </nav>
+              </div>
+            </div>
+          </div>
           <main className="w-full">
             <div className="flex w-full flex-col relative;">
               <div className="flex items-center justify-center pt-2 xl:pt-0">
