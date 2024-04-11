@@ -4,6 +4,7 @@ const initialState = {
   isMeetingFormClicked: false,
   isAvailabilityClicked: false,
   isDetailsClicked: false,
+  isConnectClicked: true,
 };
 
 const isClickedSlice = createSlice({
@@ -18,6 +19,9 @@ const isClickedSlice = createSlice({
     },
     IsDetailsClicked(state) {
       state.isDetailsClicked = !state.isDetailsClicked;
+    },
+    IsConnecClicked(state) {
+      state.isConnectClicked = !state.isConnectClicked;
     },
   },
 });

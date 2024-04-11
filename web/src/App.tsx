@@ -7,6 +7,7 @@ import HomeLayout from "./pages/HomeLayout";
 import EventTypes from "./components/EventTypes";
 import Bookings from "./components/Bookings";
 import MeetingDetails from "./components/MeetingDetails";
+import Connect from "./components/Connect";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       </Router>
       <ToastContainer />
     </div>
+    // <Connect />
   );
 }
 
