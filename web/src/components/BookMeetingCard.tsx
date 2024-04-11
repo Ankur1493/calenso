@@ -3,7 +3,7 @@ import React from "react";
 function BookMeetingCard() {
   return (
     <div>
-      <div className="border border-gray-400 rounded-md">
+      <div className="border border-gray-400 rounded-md bg-input bg-opacity-20">
         <div className="block w-full p-5">
           <a data-testid="event-type-link" href="/ankur-sharma/15min">
             <div className="flex flex-wrap items-center">

@@ -1,24 +1,38 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { IsAvailabilityClicked } from "../slices/isClickedSlice";
-import { clearActiveAvailabilitySchedule, clearActiveMeetingInfo, setActiveAvailabilitySchedule } from "../slices/meetingSlice";
+import {
+  IsAvailabilityClicked,
+  IsMeetingFormClicked,
+} from "../slices/isClickedSlice";
+import {
+  clearActiveAvailabilitySchedule,
+  clearActiveMeetingInfo,
+  setActiveAvailabilitySchedule,
+} from "../slices/meetingSlice";
 import { days, timeOptions } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
 import { useCreateMeeting } from "../Hooks/useCreateMeeting";
 import { toast } from "react-toastify";
 
 const AvailabilityForm = () => {
-
   const { createNewMeeting } = useCreateMeeting();
 
   const dispatch = useDispatch();
-  const [availability, setAvailability] = useState<{ DAY: string, START_TIME: string, END_TIME: string }[]>([]);
-  const [activeDays, setActiveDays] = useState<boolean[]>(Array(days.length).fill(false));
+  const [availability, setAvailability] = useState<
+    { DAY: string; START_TIME: string; END_TIME: string }[]
+  >([]);
+  const [activeDays, setActiveDays] = useState<boolean[]>(
+    Array(days.length).fill(false)
+  );
   const navigate = useNavigate();
   const handleTimeChange = (dayIndex: number, field: string, value: string) => {
     const updatedAvailability = [...availability];
     if (!updatedAvailability[dayIndex]) {
-      updatedAvailability[dayIndex] = { DAY: days[dayIndex], START_TIME: "", END_TIME: "" };
+      updatedAvailability[dayIndex] = {
+        DAY: days[dayIndex],
+        START_TIME: "",
+        END_TIME: "",
+      };
     }
     updatedAvailability[dayIndex][field] = value;
     setAvailability(updatedAvailability);
@@ -37,18 +51,22 @@ const AvailabilityForm = () => {
   };
 
   const handleSubmit = async () => {
-    const availabilityData = availability.filter(day => day !== undefined);
-    dispatch(setActiveAvailabilitySchedule({ availabilitySchedule: availabilityData }));
+    const availabilityData = availability.filter((day) => day !== undefined);
+    dispatch(
+      setActiveAvailabilitySchedule({ availabilitySchedule: availabilityData })
+    );
     try {
       const response = await createNewMeeting();
       console.log("Meeting created successfully:", response);
       navigate(`/home/meeting/${response.meetingId}`);
       dispatch(clearActiveMeetingInfo());
-      dispatch(clearActiveAvailabilitySchedule())
-      toast.success(response.message)
+      dispatch(clearActiveAvailabilitySchedule());
+      dispatch(IsAvailabilityClicked());
+      dispatch(IsMeetingFormClicked());
+      toast.success(response.message);
     } catch (error) {
       console.error("Error creating meeting:", error);
-      toast.error(error?.data?.message || error?.error)
+      toast.error(error?.data?.message || error?.error);
     }
   };
 
@@ -72,8 +90,9 @@ const AvailabilityForm = () => {
                         onClick={() => handleSelected(index)}
                       />
                       <div
-                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${activeDays[index] ? "peer-checked:bg-gray-200" : ""
-                          }`}
+                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${
+                          activeDays[index] ? "peer-checked:bg-gray-200" : ""
+                        }`}
                       ></div>
                     </label>
                   </div>
@@ -148,4 +167,3 @@ const AvailabilityForm = () => {
 };
 
 export default AvailabilityForm;
-
