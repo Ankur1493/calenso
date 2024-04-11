@@ -15,7 +15,15 @@ export const getAllBookings = async (req: Request, res: Response) => {
       });
     }
 
-    const userBookings = await Booking.find({ first_user: user._id }).lean().exec();
+    const DBuser = await User.findById(user._id).populate("bookings")
+    if (!DBuser) {
+      return res.status(409).json({
+        status: "failed",
+        message: "not authorized"
+      })
+    }
+
+    const userBookings = DBuser.bookings
 
     if (!userBookings) {
       return res.status(400).json({
@@ -64,7 +72,7 @@ export const createBooking = async (req: Request, res: Response) => {
         message: "user not authorized"
       })
     }
-    const DBuser = await User.findByIdAndUpdate(user._id)
+    const DBuser = await User.findById(user._id)
     if (!DBuser) {
       return res.status(400).json({
         status: "failed",
@@ -123,6 +131,16 @@ export const createBooking = async (req: Request, res: Response) => {
         status: "failed"
       })
     }
+    await User.findOneAndUpdate(
+      { email: userEmail },
+      { $push: { bookings: bookingBody._id } },
+      { new: true }
+    );
+    await User.findOneAndUpdate(
+      { email: guestUser },
+      { $push: { bookings: bookingBody._id } },
+      { new: true }
+    );
 
     return res.status(200).json({
       status: "success",
