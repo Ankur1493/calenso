@@ -1,7 +1,7 @@
-import { Request, Response } from "express"
+import { Request, Response, json } from "express"
 import Booking from "../models/BookingsModel"
 import Meeting from "../models/meetingsModel";
-import { createEvent } from "../utils/googleCalendarFunctions";
+import { createEvent, deleteEvent } from "../utils/googleCalendarFunctions";
 import User from "../models/userModel";
 
 
@@ -155,11 +155,55 @@ export const createBooking = async (req: Request, res: Response) => {
   }
 }
 
-export const cancelBooking = (req: Request, res: Response) => {
-  return res.status(200).json({
-    status: "success",
-    message: "booking deleted",
-  })
+export const cancelBooking = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const user = req.user;
+    if (!user) {
+      return res.status(409).json({
+        status: "failed",
+        message: "not authorized"
+      })
+    }
+
+    const DBuser = await User.findById(user._id);
+    if (!DBuser) {
+      return res.status(400).json({
+        status: "failed",
+        message: "user galat hai"
+      })
+    }
+    const accessToken = DBuser.googleAccessToken as string
+
+    const booking = await Booking.findById(id);
+    if (!booking) {
+      return res.status(400).json({
+        status: "failed",
+        message: "wrong booking id"
+      })
+    }
+    const deleteSuccess = await deleteEvent(booking.event?.calendarEventId as string, accessToken);
+
+    if (!deleteSuccess) {
+      return res.status(400).json({
+        status: "failed",
+        message: "failed to delete meeting, try again"
+      })
+    }
+
+    booking.canceled = true;
+    await booking.save();
+
+    return res.status(200).json({
+      status: "success",
+      message: "booking deleted",
+    })
+  } catch (err) {
+    return res.status(500).json({
+      status: "failed",
+      message: "this one's on us try again"
+    })
+  }
 }
 
 export const updateBooking = (req: Request, res: Response) => {

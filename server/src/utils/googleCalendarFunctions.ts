@@ -73,10 +73,14 @@ export const createEvent = async ({
     return false;
   }
 };
-export const deleteEvent = async (eventId: string) => {
+export const deleteEvent = async (eventId: string, accessToken: string) => {
   try {
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
+
     const response = await calendar.events.delete({
       calendarId: "primary",
+      auth: oauth2Client,
       eventId: eventId,
       sendUpdates: "all",
     });
@@ -84,9 +88,6 @@ export const deleteEvent = async (eventId: string) => {
     if (!response) {
       throw new Error("Can't connect to calendar");
     }
-
-    console.log("Event deleted successfully");
-
     return true;
   } catch (error) {
     console.error("Error deleting event:", error);
