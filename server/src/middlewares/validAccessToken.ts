@@ -17,7 +17,6 @@ const ensureValidAccessToken = async (req: Request, res: Response, next: NextFun
   if (!decodedToken || (decodedToken.exp as number) * 1000 < Date.now()) {
     try {
       const refreshedAccessToken = await refreshAccessToken(user.googleRefreshToken);
-      console.log(refreshedAccessToken)
       const updatedUser = await User.findByIdAndUpdate(
         user._id,
         { googleAccessToken: refreshedAccessToken },
@@ -27,7 +26,6 @@ const ensureValidAccessToken = async (req: Request, res: Response, next: NextFun
       if (!updatedUser) {
         return res.status(500).json({ message: 'Failed to update user.' });
       }
-      console.log("token naya bana")
 
       next();
     } catch (error) {

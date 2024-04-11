@@ -48,16 +48,15 @@ export const getAllBookings = async (req: Request, res: Response) => {
 export const createBooking = async (req: Request, res: Response) => {
   try {
     const user = req.user;
-    const { START_TIME, END_TIME, guestUser, meetingId } = req.body
+    const { START_TIME, guestUser, meetingId } = req.body
 
-    if (!START_TIME || !END_TIME || !guestUser) {
+    if (!START_TIME || !guestUser) {
       return res.status(400).json({
         status: "failed",
         message: "fill all the fields"
       })
     }
     const startTime = new Date(START_TIME);
-    const endTime = new Date(END_TIME);
 
     if (!user) {
       return res.status(400).json({
@@ -82,13 +81,14 @@ export const createBooking = async (req: Request, res: Response) => {
         message: "select a proper meeting"
       })
     }
-    const { title, info } = meeting;
+    const { title, info, duration } = meeting;
     if (!title || !info) {
       return res.status(500).json({
         status: "Failed",
         message: "this one's on us try again"
       })
     }
+    const endTime = new Date(startTime.getTime() + duration * 60000);
 
     const eventStatus = await createEvent({
       title: title,
@@ -106,12 +106,30 @@ export const createBooking = async (req: Request, res: Response) => {
         message: "try again, problem in creating event in your calendar"
       })
     }
+    const bookingBody = await Booking.create({
+      meeting_id: meetingId,
+      title,
+      description: info,
+      first_user: userEmail,
+      guestUser,
+      startTime,
+      endTime,
+      event: eventStatus
+    })
+
+    if (!bookingBody) {
+      return res.status(500).json({
+        message: "this one's on us try again",
+        status: "failed"
+      })
+    }
 
     return res.status(200).json({
       status: "success",
       message: "booking createad",
     })
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       status: "failed",
       message: "try again failed to connect with calendar"

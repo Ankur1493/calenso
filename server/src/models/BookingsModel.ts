@@ -6,25 +6,43 @@ const bookingSchema = new mongoose.Schema({
     ref: 'Meeting',
     required: true
   },
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
   first_user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true
   },
-  second_user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+  guestUser: {
+    type: String,
     required: true
   },
-  scheduledTime: {
+  startTime: {
     type: Date,
     required: true
   },
-  additionalInfo: {
-    type: String,
-    required: false
+  endTime: {
+    type: Date,
+    required: true
+  },
+  event: {
+    calendarEventId: {
+      type: String,
+      required: true
+    },
+    meetLink: {
+      type: String,
+      required: true
+    }
   }
 }, { timestamps: true });
+
 const Booking = mongoose.model("Booking", bookingSchema);
+
 export default Booking;
 

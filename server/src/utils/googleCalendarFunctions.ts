@@ -28,7 +28,6 @@ export const createEvent = async ({
   try {
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: accessToken });
-    console.log(accessToken);
     const response = await calendar.events.insert({
       auth: oauth2Client,
       calendarId: "primary",
@@ -61,13 +60,14 @@ export const createEvent = async ({
       conferenceDataVersion: 1,
     });
 
-    console.log(response);
     const meetLink = response?.data?.conferenceData?.entryPoints?.find(
       (entry) => entry?.entryPointType === "video"
     )?.uri;
     const eventId = response?.data.id;
-    console.log("Google Meet link:", meetLink);
-    return eventId;
+    return {
+      calendarEventId: eventId,
+      meetLink,
+    };
   } catch (error) {
     console.error("Error creating event:", error);
     return false;

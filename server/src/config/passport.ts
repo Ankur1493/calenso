@@ -10,7 +10,6 @@ passport.use(new GoogleStrategy({
   async function(accessToken: string, refreshToken: string, profile: Profile, cb: (err: any, user?: any) => void) {
     try {
       const profilePicUrl = profile.photos && profile.photos.length > 0 ? profile.photos[0].value : null;
-      console.log(accessToken)
       let user = await User.findOne({ email: profile.emails![0].value }).lean().exec();
 
       if (!user) {
