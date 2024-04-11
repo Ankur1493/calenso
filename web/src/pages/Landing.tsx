@@ -5,7 +5,7 @@ import { GridLayout } from "../components/GridLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Connect from "../components/Connect";
-import { IsConnecClicked } from "../slices/isClickedSlice";
+import { IsConnectClicked } from "../slices/isClickedSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
@@ -16,27 +16,33 @@ function Landing() {
     (state: RootState) => state.isClicked.isConnectClicked
   );
 
+  const isConnected = useSelector(
+    (state: RootState) => state.isClicked.isConnected
+  );
+
   useEffect(() => {
     let intervalId = null;
-
     const handleConnectClick = () => {
-      dispatch(IsConnecClicked());
+      dispatch(IsConnectClicked());
     };
 
-    if (!isConnectClicked) {
+    if (!isConnectClicked && !isConnected) {
       intervalId = setInterval(() => {
         handleConnectClick();
-      }, 5000);
+      }, 2000);
     }
-
     return () => {
       clearInterval(intervalId);
     };
-  }, [isConnectClicked, dispatch]);
+  }, [isConnectClicked, isConnected, dispatch]);
 
   return (
     <div className="relative">
-      <div className={`${isConnectClicked ? "blur-sm opacity-40" : ""}`}>
+      <div
+        className={`${
+          isConnectClicked && !isConnected ? "blur-sm opacity-40" : ""
+        }`}
+      >
         <div className="flex justify-between px-2 md:px-12 lg:px-16 py-10">
           <div className="py-2">
             <h1>
@@ -186,7 +192,7 @@ function Landing() {
           </div>
         </div>
       </div>
-      {isConnectClicked && <Connect />}
+      {isConnectClicked && !isConnected && <Connect />}
     </div>
   );
 }
