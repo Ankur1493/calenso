@@ -4,7 +4,7 @@ const initialState = {
   isMeetingFormClicked: false,
   isAvailabilityClicked: false,
   isDetailsClicked: false,
-  isConnectClicked: true,
+  isConnectClicked: false,
 };
 
 const isClickedSlice = createSlice({
@@ -26,6 +26,10 @@ const isClickedSlice = createSlice({
   },
 });
 
-export const { IsMeetingFormClicked, IsAvailabilityClicked, IsDetailsClicked } =
-  isClickedSlice.actions;
+export const {
+  IsMeetingFormClicked,
+  IsAvailabilityClicked,
+  IsDetailsClicked,
+  IsConnecClicked,
+} = isClickedSlice.actions;
 export default isClickedSlice.reducer;

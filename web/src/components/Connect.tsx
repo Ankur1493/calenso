@@ -2,8 +2,16 @@ import React from "react";
 import calender_img from "../assets/images/calender_img.png";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useDispatch } from "react-redux";
+import { IsConnecClicked } from "../slices/isClickedSlice";
 
 function Connect() {
+  const dispatch = useDispatch();
+
+  const handleConnectClick = () => {
+    dispatch(IsConnecClicked());
+  };
+
   return (
     <div className="flex justify-center fixed inset-0 items-center z-20">
       <div className="bg-second px-8 pt-4 w-[450px] rounded-2xl border border-gray-400 ">
@@ -11,7 +19,7 @@ function Connect() {
           <button
             className="inline-flex items-center bg-input bg-opacity-10 text-sm font-medium relative rounded-md text-mainText h-9 px-4 py-2.5 whitespace-nowrap "
             data-testid="cancel"
-            onClick={}
+            onClick={handleConnectClick}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

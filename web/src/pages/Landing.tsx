@@ -5,12 +5,34 @@ import { GridLayout } from "../components/GridLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import Connect from "../components/Connect";
+import { IsConnecClicked } from "../slices/isClickedSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function Landing() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
   const isConnectClicked = useSelector(
     (state: RootState) => state.isClicked.isConnectClicked
   );
+
+  useEffect(() => {
+    let intervalId = null;
+
+    const handleConnectClick = () => {
+      dispatch(IsConnecClicked());
+    };
+
+    if (!isConnectClicked) {
+      intervalId = setInterval(() => {
+        handleConnectClick();
+      }, 5000);
+    }
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [isConnectClicked, dispatch]);
 
   return (
     <div className="relative">
