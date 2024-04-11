@@ -63,7 +63,7 @@ function Landing() {
                   to={"/register"}
                   className="cursos-pointer w-full flex justify-center"
                 >
-                  <p className="font-heading font-semibold text-2xl ">Login</p>
+                  <p className="font-heading font-semibold text-2xl ">Sign up</p>
                 </Link>
               </div>
             )}
