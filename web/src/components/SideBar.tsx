@@ -13,7 +13,7 @@ function SideBar() {
       <div className="flex flex-col justify-between border-r-2 border-secondText w-60 gap-3">
         <div>
           <div className="flex justify-center align-center pb-4">
-            <LogoutProfile username={userInfo.username} />
+            <LogoutProfile username={userInfo.username} profileUrl={userInfo.profilePicture ? userInfo.profilePicture : null} />
           </div>
           <div>
             <div className="px-2 mt-3">
