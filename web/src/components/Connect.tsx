@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { IsConnectClicked, IsConnected } from "../slices/isClickedSlice";
 import { Link } from "react-router-dom";
@@ -54,7 +53,10 @@ function Connect() {
             <Link
               to="http://localhost:8000/auth/google"
               className="inline-flex items-end text-sm font-medium relative rounded-md transition h-9 px-4 py-2.5 bg-mainText text-main font-heading hover:bg-opacity-80"
-              onClick={handleConnected}
+              onClick={() => {
+                handleConnected()
+                handleConnectClick()
+              }}
             >
               Connect
             </Link>

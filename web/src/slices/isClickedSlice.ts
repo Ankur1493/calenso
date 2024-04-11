@@ -5,8 +5,9 @@ const initialState = {
   isAvailabilityClicked: false,
   isDetailsClicked: false,
   isConnectClicked: false,
-  isConnected: false,
+  isConnected: localStorage.getItem("isClicked") ? true : false,
 };
+
 
 const isClickedSlice = createSlice({
   name: "isClicked",
@@ -25,6 +26,7 @@ const isClickedSlice = createSlice({
       state.isConnectClicked = !state.isConnectClicked;
     },
     IsConnected(state) {
+      localStorage.setItem("isClicked", 'true');
       state.isConnected = true;
     },
   },

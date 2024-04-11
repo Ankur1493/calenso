@@ -41,11 +41,10 @@ function HomeLayout() {
   return (
     <div className="relative">
       <div
-        className={`bg-second flex h-screen ${
-          isMeetingClicked || (isConnectClicked && !isConnected)
-            ? "blur-sm opacity-90"
-            : ""
-        }`}
+        className={`bg-second flex h-screen ${isMeetingClicked || (isConnectClicked && !isConnected)
+          ? "blur-sm opacity-90"
+          : ""
+          }`}
       >
         <SideBar />
         <div className="w-full bg-home ">
