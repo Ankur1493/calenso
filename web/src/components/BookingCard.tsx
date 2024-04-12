@@ -1,6 +1,17 @@
 import React from "react";
 
 function BookingCard({ booking }) {
+  const formatDate = (ISOString) => {
+    const date = new Date(ISOString);
+    const options = { weekday: "short", month: "short", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  const formatTime = (ISOString) => {
+    const date = new Date(ISOString);
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
+
   return (
     <div className="p-2 px-6">
       <div className="group bg-second flex w-full max-w-full items-center justify-between overflow-hidden px-4 py-5 sm:px-6 border border-gray-400 rounded-[8px]">
@@ -10,19 +21,24 @@ function BookingCard({ booking }) {
               className="text-mainText font-heading "
               data-testid="event-type-title-705355"
             >
-              Fri, 12 Apr
+              {formatDate(booking.startTime)}
             </p>
             <p
               className="text-input text-[15px] opacity-80 font-heading"
               data-testid="event-type-title-705355"
             >
-              {booking.startTime} - {booking.endTime}
+              {formatTime(booking.startTime)} - {formatTime(booking.endTime)}
             </p>
           </div>
           <div className="text-subtle ml-16">
-            <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
+            <ul className="flex flex-col flex-wrap gap-x-2">
               <li>
                 <span className="text-mainText font-heading font-medium ">
+                  {booking.title}
+                </span>
+              </li>
+              <li>
+                <span className="text-input font-heading text-[15px] ">
                   {booking.description}
                 </span>
               </li>
