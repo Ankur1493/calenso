@@ -1,6 +1,5 @@
-// Bookings.js
 import React, { useState } from "react";
-import BookMeetingCard from "./BookMeetingCard";
+import BookingType from "./BookingType";
 
 function Bookings() {
   const [filter, setFilter] = useState("upcoming");
@@ -30,24 +29,30 @@ function Bookings() {
               <div className="mb-4 h-9 max-w-full lg:mb-5">
                 <nav className="flex max-h-9 space-x-12 rounded-md">
                   <button
-                    className={`bg-emphasis text-mainText font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
-                      filter === "upcoming" ? "font-bold" : ""
+                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-md ${
+                      filter === "upcoming"
+                        ? "font-semibold text-mainText underline underline-offset-4 decoration-2"
+                        : ""
                     }`}
                     onClick={() => setFilter("upcoming")}
                   >
                     Upcoming
                   </button>
                   <button
-                    className={`bg-emphasis text-mainText font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
-                      filter === "past" ? "font-bold" : ""
+                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-md ${
+                      filter === "past"
+                        ? "font-semibold text-mainText underline underline-offset-4 decoration-2"
+                        : ""
                     }`}
                     onClick={() => setFilter("past")}
                   >
                     Past
                   </button>
                   <button
-                    className={`bg-emphasis text-mainText font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
-                      filter === "cancelled" ? "font-bold" : ""
+                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-md ${
+                      filter === "cancelled"
+                        ? "font-semibold text-mainText underline underline-offset-4 decoration-2"
+                        : ""
                     }`}
                     onClick={() => setFilter("cancelled")}
                   >
@@ -59,7 +64,7 @@ function Bookings() {
           </div>
         </div>
       </div>
-      <BookMeetingCard filter={filter} />
+      <BookingType filter={filter} />
     </div>
   );
 }

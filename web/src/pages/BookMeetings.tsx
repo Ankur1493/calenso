@@ -1,5 +1,5 @@
 import React from "react";
-import BookMeetingCard from "../components/BookMeetingCard";
+import BookMeetingCard from "../components/BookingType";
 
 function BookMeetings() {
   return (

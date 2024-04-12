@@ -1,4 +1,3 @@
-// BookMeetingCard.js
 import React, { useEffect, useState } from "react";
 import { useBookingsQuery } from "../slices/bookingApiSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +11,7 @@ const formatDate = (ISOString) => {
   return date.toLocaleDateString("en-US", options);
 };
 
-function BookMeetingCard({ filter }) {
+function BookingType({ filter }) {
   const dispatch = useDispatch();
   const { data: bookings = [], isLoading, isError } = useBookingsQuery();
   const selectedBooking = useSelector(
@@ -29,8 +28,8 @@ function BookMeetingCard({ filter }) {
   const filteredBookings = () => {
     console.log("Selected bookings:", selectedBooking);
     console.log("Filter:", filter);
-    if (!selectedBooking) return []; // Check if selectedBooking is undefined or null
-    const currentDate = new Date(); // Get the current date
+    if (!selectedBooking) return [];
+    const currentDate = new Date();
     switch (filter) {
       case "upcoming":
         return selectedBooking.filter(
@@ -123,4 +122,4 @@ function BookMeetingCard({ filter }) {
   );
 }
 
-export default BookMeetingCard;
+export default BookingType;
