@@ -1,44 +1,119 @@
-import React from "react";
+// BookMeetingCard.js
+import React, { useEffect, useState } from "react";
+import { useBookingsQuery } from "../slices/bookingApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setBookings } from "../slices/bookingSlice";
+import BookingCard from "./BookingCard";
+import { RootState } from "../store";
 
-function BookMeetingCard() {
+const formatDate = (ISOString) => {
+  const date = new Date(ISOString);
+  const options = { weekday: "short", month: "short", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+};
+
+function BookMeetingCard({ filter }) {
+  const dispatch = useDispatch();
+  const { data: bookings = [], isLoading, isError } = useBookingsQuery();
+  const selectedBooking = useSelector(
+    (state: RootState) => state?.bookings?.bookings
+  );
+
+  useEffect(() => {
+    const bookingArr = bookings?.bookings?.map((book) => book);
+    dispatch(setBookings(bookingArr));
+  }, [bookings, dispatch]);
+
+  if (isLoading) return <p>Loading...</p>;
+
+  const filteredBookings = () => {
+    if (!selectedBooking) return []; // Check if selectedBooking is undefined or null
+    switch (filter) {
+      case "upcoming":
+        return selectedBooking.filter(
+          (booking) => new Date(formatDate(booking.startTime)) > new Date()
+        );
+      case "past":
+        return selectedBooking.filter(
+          (booking) => new Date(formatDate(booking.startTime)) < new Date()
+        );
+      case "cancelled":
+        return selectedBooking.filter((booking) => booking.canceled);
+      default:
+        return [];
+    }
+  };
+
   return (
-    <div>
-      <div className="border border-gray-400 rounded-md bg-input bg-opacity-20">
-        <div className="block w-full p-5">
-          <a data-testid="event-type-link" href="/ankur-sharma/15min">
-            <div className="flex flex-wrap items-center">
-              <h2 className=" text-mainText font-heading pr-2 text-sm font-semibold">
-                15 Min Meeting
-              </h2>
-            </div>
-            <div className="text-subtle">
-              <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
-                <li>
-                  <div className="font-medium font-heading text-mainText inline-flex items-center justify-center rounded gap-x-1 bg-subtle py-1 px-1.5 text-xs leading-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className="lucide lucide-clock h-3 w-3 stroke-[3px]"
-                      data-testid="start-icon"
-                    >
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    15m
+    <div className="px-4">
+      {isError ? (
+        <p>Error fetching bookings: {isError.message}</p>
+      ) : (
+        <div>
+          {filteredBookings().length > 0 ? (
+            filteredBookings().map((booking) => (
+              <div key={booking._id}>
+                <BookingCard booking={booking} />
+              </div>
+            ))
+          ) : (
+            <main className="w-full">
+              <div className="flex w-full flex-col relative;">
+                <div className="flex items-center justify-center pt-2 xl:pt-0">
+                  <div className="flex w-full select-none flex-col items-center justify-center rounded-lg p-7 lg:p-20 border-subtle border border-dashed">
+                    <div className="bg-emphasis flex h-[72px] w-[72px] items-center justify-center rounded-full text-mainText">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-default inline-block h-10 w-10 stroke-[1.3px]"
+                      >
+                        <rect
+                          width="18"
+                          height="18"
+                          x="3"
+                          y="4"
+                          rx="2"
+                          ry="2"
+                        ></rect>
+                        <line x1="16" x2="16" y1="2" y2="6"></line>
+                        <line x1="8" x2="8" y1="2" y2="6"></line>
+                        <line x1="3" x2="21" y1="10" y2="10"></line>
+                      </svg>
+                    </div>
+                    <div className="flex max-w-[420px] flex-col items-center">
+                      <h2 className="font-heading text-mainText text-center text-xl mt-6">
+                        No{" "}
+                        {filter === "upcoming"
+                          ? "upcoming"
+                          : filter === "past"
+                          ? "past"
+                          : "cancelled"}{" "}
+                        bookings
+                      </h2>
+                      <div className="font-heading text-mainText mb-8 mt-8 text-center text-sm font-normal leading-6 opacity-80">
+                        You have no{" "}
+                        {filter === "upcoming"
+                          ? "upcoming"
+                          : filter === "past"
+                          ? "past"
+                          : "cancelled"}{" "}
+                        bookings.
+                      </div>
+                    </div>
                   </div>
-                </li>
-              </ul>
-            </div>
-          </a>
+                </div>
+              </div>
+            </main>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

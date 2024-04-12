@@ -13,7 +13,7 @@ function BookingCard({ booking }) {
   };
 
   return (
-    <div className="p-2 px-6">
+    <div className="p-2">
       <div className="group bg-second flex w-full max-w-full items-center justify-between overflow-hidden px-4 py-5 sm:px-6 border border-gray-400 rounded-[8px]">
         <div className="flex flex-row">
           <div className="text-left">
