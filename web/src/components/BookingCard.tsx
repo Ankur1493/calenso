@@ -1,6 +1,6 @@
 import React from "react";
 
-function BookingCard() {
+function BookingCard({ booking }) {
   return (
     <div className="p-2 px-6">
       <div className="group bg-second flex w-full max-w-full items-center justify-between overflow-hidden px-4 py-5 sm:px-6 border border-gray-400 rounded-[8px]">
@@ -16,14 +16,14 @@ function BookingCard() {
               className="text-input text-[15px] opacity-80 font-heading"
               data-testid="event-type-title-705355"
             >
-              09:00 - 09:45
+              {booking.startTime} - {booking.endTime}
             </p>
           </div>
           <div className="text-subtle ml-16">
             <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
               <li>
                 <span className="text-mainText font-heading font-medium ">
-                  abchkjejkn between Udit Kapoor and Ankur Sharma
+                  {booking.description}
                 </span>
               </li>
             </ul>

@@ -15,9 +15,11 @@ function EventTypes() {
     isLoading,
     refetch,
   } = useMeetingsQuery();
+  
   const selectedMeetings = useSelector(
     (state: RootState) => state?.meetings?.meetings
   );
+
   const handleMeetingClick = () => {
     dispatch(IsMeetingFormClicked());
   };
