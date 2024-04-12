@@ -30,7 +30,7 @@ function Bookings() {
               <div className="mb-4 h-9 max-w-full lg:mb-5">
                 <nav className="flex max-h-9 space-x-12 rounded-md">
                   <button
-                    className={`bg-emphasis text-emphasis inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
+                    className={`bg-emphasis text-mainText font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
                       filter === "upcoming" ? "font-bold" : ""
                     }`}
                     onClick={() => setFilter("upcoming")}
@@ -38,7 +38,7 @@ function Bookings() {
                     Upcoming
                   </button>
                   <button
-                    className={`bg-emphasis text-emphasis inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
+                    className={`bg-emphasis text-mainText font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
                       filter === "past" ? "font-bold" : ""
                     }`}
                     onClick={() => setFilter("past")}
@@ -46,7 +46,7 @@ function Bookings() {
                     Past
                   </button>
                   <button
-                    className={`bg-emphasis text-emphasis inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
+                    className={`bg-emphasis text-mainText font-heading inline-flex items-center justify-center md:mb-0 px-4 py-2.5 text-sm ${
                       filter === "cancelled" ? "font-bold" : ""
                     }`}
                     onClick={() => setFilter("cancelled")}

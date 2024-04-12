@@ -27,15 +27,20 @@ function BookMeetingCard({ filter }) {
   if (isLoading) return <p>Loading...</p>;
 
   const filteredBookings = () => {
+    console.log("Selected bookings:", selectedBooking);
+    console.log("Filter:", filter);
     if (!selectedBooking) return []; // Check if selectedBooking is undefined or null
+    const currentDate = new Date(); // Get the current date
     switch (filter) {
       case "upcoming":
         return selectedBooking.filter(
-          (booking) => new Date(formatDate(booking.startTime)) > new Date()
+          (booking) =>
+            new Date(booking.startTime) > currentDate && !booking.canceled
         );
       case "past":
         return selectedBooking.filter(
-          (booking) => new Date(formatDate(booking.startTime)) < new Date()
+          (booking) =>
+            new Date(booking.startTime) < currentDate && !booking.canceled
         );
       case "cancelled":
         return selectedBooking.filter((booking) => booking.canceled);
