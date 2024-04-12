@@ -55,10 +55,17 @@ export const getAllBookings = async (req: Request, res: Response) => {
 
 export const createBooking = async (req: Request, res: Response) => {
   try {
-    const user = req.user;
-    const { START_TIME, guestUser, meetingId } = req.body
+    const guestUser = req.user;
+    const { START_TIME, meetingId } = req.body
 
-    if (!START_TIME || !guestUser) {
+    if (!guestUser) {
+      return res.status(409).json({
+        status: "failed",
+        message: "you are not authenticated"
+      })
+    }
+
+    if (!START_TIME || !meetingId) {
       return res.status(400).json({
         status: "failed",
         message: "fill all the fields"
@@ -66,23 +73,7 @@ export const createBooking = async (req: Request, res: Response) => {
     }
     const startTime = new Date(START_TIME);
 
-    if (!user) {
-      return res.status(400).json({
-        status: "failed",
-        message: "user not authorized"
-      })
-    }
-    const DBuser = await User.findById(user._id)
-    if (!DBuser) {
-      return res.status(400).json({
-        status: "failed",
-        message: "user galat hai"
-      })
-    }
-    const userEmail = DBuser.email as string;
-    const accessToken = DBuser.googleAccessToken as string;
-
-    const meeting = await Meeting.findById(meetingId).populate('availability');
+    const meeting = await Meeting.findById(meetingId).populate('availability')
     if (!meeting) {
       return res.status(400).json({
         status: "failed",
@@ -90,19 +81,38 @@ export const createBooking = async (req: Request, res: Response) => {
       })
     }
     const { title, info, duration } = meeting;
-    if (!title || !info) {
+    if (!title || !info || !duration) {
       return res.status(500).json({
         status: "Failed",
         message: "this one's on us try again"
       })
     }
+
     const endTime = new Date(startTime.getTime() + duration * 60000);
 
+    const ownerUser = await User.findById(meeting.user_id);
+    if (!ownerUser) {
+      return res.status(400).json({
+        status: "failed",
+        message: "the meeting owner doesn't exist"
+      })
+    }
+
+    const ownerUserEmail = ownerUser.email as string;
+    const accessToken = guestUser.googleAccessToken as string;
+
+    if (!accessToken) {
+      return res.status(400).json({
+        status: "failed",
+        message: "you have not connected your calendar"
+      })
+    }
+
     const eventStatus = await createEvent({
-      title: title,
+      title,
       description: info,
-      firstUser: userEmail,
-      guestUser,
+      firstUser: guestUser.email,
+      guestUser: ownerUserEmail,
       startTime,
       endTime,
       accessToken
@@ -114,30 +124,33 @@ export const createBooking = async (req: Request, res: Response) => {
         message: "try again, problem in creating event in your calendar"
       })
     }
+
     const bookingBody = await Booking.create({
       meeting_id: meetingId,
       title,
       description: info,
-      first_user: userEmail,
-      guestUser,
+      first_user: ownerUserEmail,
+      guestUser: guestUser.email,
       startTime,
       endTime,
       event: eventStatus
     })
 
     if (!bookingBody) {
+      await deleteEvent(eventStatus.calendarEventId as string, accessToken);
       return res.status(500).json({
         message: "this one's on us try again",
         status: "failed"
       })
     }
+
     await User.findOneAndUpdate(
-      { email: userEmail },
+      { email: ownerUserEmail },
       { $push: { bookings: bookingBody._id } },
       { new: true }
     );
     await User.findOneAndUpdate(
-      { email: guestUser },
+      { email: guestUser.email },
       { $push: { bookings: bookingBody._id } },
       { new: true }
     );
