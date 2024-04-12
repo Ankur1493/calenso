@@ -48,6 +48,8 @@ export const createEvent = async ({
             requestId: uuid(),
           },
         },
+        colorId: "3",
+
         reminders: {
           useDefault: false,
           overrides: [

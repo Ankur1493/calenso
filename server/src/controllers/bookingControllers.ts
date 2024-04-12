@@ -1,8 +1,9 @@
-import { Request, Response, json } from "express"
+import { Request, Response } from "express"
 import Booking from "../models/BookingsModel"
 import Meeting from "../models/meetingsModel";
 import { createEvent, deleteEvent } from "../utils/googleCalendarFunctions";
 import User from "../models/userModel";
+import isValidObjectId from '../utils/isValidObjectId';
 
 
 export const getAllBookings = async (req: Request, res: Response) => {
@@ -65,10 +66,10 @@ export const createBooking = async (req: Request, res: Response) => {
       })
     }
 
-    if (!START_TIME || !meetingId) {
+    if (!START_TIME || !meetingId || !isValidObjectId(meetingId)) {
       return res.status(400).json({
         status: "failed",
-        message: "fill all the fields"
+        message: "fill all the fields properly"
       })
     }
     const startTime = new Date(START_TIME);
@@ -176,6 +177,12 @@ export const cancelBooking = async (req: Request, res: Response) => {
       return res.status(409).json({
         status: "failed",
         message: "not authorized"
+      })
+    }
+    if(!isValidObjectId(id)){
+      return res.status(400).json({
+        status: "failed",
+        message: "don't interfere with id's"
       })
     }
 

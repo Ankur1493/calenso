@@ -3,7 +3,7 @@ import Availability from "../models/availabilityModel"
 import Meeting from "../models/meetingsModel"
 import User from "../models/userModel"
 import { updateAvailability } from "./availabilityControllers"
-
+import isValidObjectId from "../utils/isValidObjectId"
 
 export const getAllMeetings = async (req: Request, res: Response) => {
   try {
@@ -46,6 +46,12 @@ export const getMeeting = async (req: Request, res: Response) => {
 
   try {
     const meetingId = req.params.id;
+    if(!isValidObjectId(meetingId)){
+      return res.status(400).json({
+        status: "failed",
+        message: "don't interfere with id's"
+      })
+    }
     const meeting = await Meeting.findById(meetingId).populate("availability");
     if (!meeting) {
       return res.status(400).json({
@@ -152,6 +158,13 @@ export const updateMeeting = async (req: Request, res: Response) => {
     const meetingId = req.params.id;
     const { meetingInfo, availabilitySchedule } = req.body;
 
+    if(!isValidObjectId(meetingId)){
+      return res.status(400).json({
+        status: "failed",
+        message: "don't interfere with id's"
+      })
+    }
+
     const meeting = await Meeting.findById(meetingId);
 
     if (!meeting) {
@@ -200,6 +213,12 @@ export const updateMeeting = async (req: Request, res: Response) => {
 export const deleteMeeting = async (req: Request, res: Response) => {
   try {
     const meetingId = req.params.id;
+    if(!isValidObjectId(meetingId)){
+      return res.status(400).json({
+        status: "failed",
+        message: "don't interfere with id's"
+      })
+    }
 
     const meeting = await Meeting.findByIdAndDelete(meetingId);
     if (!meeting) {
