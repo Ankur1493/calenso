@@ -18,7 +18,7 @@ function MeetingDetails() {
     error,
   } = useMeetingDetailsQuery(id);
 
-  useEffect(() => { }, [id]);
+  useEffect(() => {}, [id]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -42,10 +42,8 @@ function MeetingDetails() {
           </h3>
         </div>
 
-        {/* Action Buttons */}
         <div className="mt-4 hidden sm:mt-0 sm:flex">
           <div className="flex justify-between space-x-2 rtl:space-x-reverse">
-            {/* Copy Button */}
             <button
               data-state="closed"
               type="button"
@@ -75,36 +73,6 @@ function MeetingDetails() {
               </svg>
             </button>
 
-            {/* Edit Button */}
-            <button
-              type="button"
-              data-testid="event-type-edit-705355"
-              className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default "
-              onMouseEnter={() => setShowEditTooltip(true)}
-              onMouseLeave={() => setShowEditTooltip(false)}
-            >
-              {showEditTooltip && (
-                <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
-                  Edit
-                </span>
-              )}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-4 w-4"
-              >
-                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-              </svg>
-            </button>
-
-            {/* Delete Button */}
             <button
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default hover:bg-red-400"
               onMouseEnter={() => setShowDeleteTooltip(true)}
@@ -147,7 +115,12 @@ function MeetingDetails() {
       {/* Meeting Information */}
       <div className="border-subtle space-y-6 rounded-lg border p-6 mt-6">
         <div className="">
-          <label className="text-mainText font-heading mb-2 block text-sm font-medium leading-none" htmlFor="title">Title</label>
+          <label
+            className="text-mainText font-heading mb-2 block text-sm font-medium leading-none"
+            htmlFor="title"
+          >
+            Title
+          </label>
           <input
             id="title"
             placeholder=""
@@ -208,25 +181,46 @@ function MeetingDetails() {
 
         {/* Availability */}
         <div className="">
-          <label className="text-mainText font-heading mb-2 block text-sm font-medium leading-none" htmlFor="info">Availability</label>
+          <label
+            className="text-mainText font-heading mb-2 block text-sm font-medium leading-none"
+            htmlFor="info"
+          >
+            Availability
+          </label>
           <div className="border-subtle space-y-4 border rounded-2xl p-3">
             <ol className="table border-collapse text-sm">
               {days.map((day) => {
-                const schedule = meetingDetails.meeting.availability.availableSchedule.find((item: any) => item.DAY === day);
+                const schedule =
+                  meetingDetails.meeting.availability.availableSchedule.find(
+                    (item: any) => item.DAY === day
+                  );
 
                 return (
-                  <li key={day} className="my-4 flex border-transparent last:mb-2">
-                    <span className="w-20 font-medium sm:w-32 text-mainText font-heading">{day}</span>
+                  <li
+                    key={day}
+                    className="my-4 flex border-transparent last:mb-2"
+                  >
+                    <span className="w-20 font-medium sm:w-32 text-mainText font-heading">
+                      {day}
+                    </span>
                     <div className="space-y-3 text-right pl-20">
                       {schedule && schedule.START_TIME && schedule.END_TIME ? (
                         <div className="text-mainText font-heading flex items-center leading-4">
-                          <span className="w-16 sm:w-28 sm:text-left">{schedule.START_TIME}</span>
-                          <span className="ms-4 text-mainText font-heading">-</span>
-                          <div className="ml-6 sm:w-28">{schedule.END_TIME}</div>
+                          <span className="w-16 sm:w-28 sm:text-left">
+                            {schedule.START_TIME}
+                          </span>
+                          <span className="ms-4 text-mainText font-heading">
+                            -
+                          </span>
+                          <div className="ml-6 sm:w-28">
+                            {schedule.END_TIME}
+                          </div>
                         </div>
                       ) : (
                         <div className="text-subtle flex items-center leading-4">
-                          <span className="ml-6 sm:ml-0 text-mainText font-heading text-opacity-50">Unavailable</span>
+                          <span className="ml-6 sm:ml-0 text-mainText font-heading text-opacity-50">
+                            Unavailable
+                          </span>
                         </div>
                       )}
                     </div>

@@ -102,33 +102,6 @@ function MeetingCard({ meeting }) {
               </svg>
             </button>
             <button
-              type="button"
-              data-testid="event-type-edit-705355"
-              className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default "
-              onMouseEnter={() => setShowEditTooltip(true)}
-              onMouseLeave={() => setShowEditTooltip(false)}
-            >
-              {showEditTooltip && (
-                <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
-                  Edit
-                </span>
-              )}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-4 w-4"
-              >
-                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-              </svg>
-            </button>
-            <button
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default hover:bg-red-400"
               onMouseEnter={() => setShowDeleteTooltip(true)}
               onMouseLeave={() => setShowDeleteTooltip(false)}
