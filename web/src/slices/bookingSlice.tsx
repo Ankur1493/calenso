@@ -13,6 +13,15 @@ const bookingSlice = createSlice({
     setBookings: (state, action) => {
       state.bookings = action.payload;
     },
+
+    markBookingCanceled: (state, action) => {
+      const bookingId = action.payload;
+      const index = state.bookings.findIndex(booking => booking._id === bookingId);
+      if (index !== -1) {
+        state.bookings[index].canceled = true;
+      }
+    },
+
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -22,5 +31,5 @@ const bookingSlice = createSlice({
   },
 });
 
-export const { setBookings, setLoading, setError } = bookingSlice.actions;
+export const { setBookings, setLoading, setError, markBookingCanceled } = bookingSlice.actions;
 export default bookingSlice.reducer;
