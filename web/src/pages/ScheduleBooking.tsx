@@ -19,7 +19,7 @@ function ScheduleBooking() {
   return (
     <div className="flex justify-center items-center">
       <div className="flex bg-second w-10/12 justify-center items-center p-16 border border-gray-400 rounded-md border-opacity-40">
-        <div className="flex flex-col border border-gray-200 border-opacity-40 rounded-md">
+        <div className="flex flex-col border border-gray-200 border-opacity-60 rounded-md">
           <div className="flex border-b border-gray-200 border-opacity-40">
             <div
               className="p-6 pr-20 bg-second border-r border-r-gray-200 border-opacity-40 "
@@ -126,21 +126,31 @@ function ScheduleBooking() {
               <div></div>
             </div>
           </div>
-
-          <div className="p-6">
-            <div className="mb-2 flex items-center">
-              <label className="text-mainText font-heading mb-2 text-sm font-medium leading-none !mb-0 flex">
-                <span>Additional notes</span>
-                <span className="text-emphasis -mb-1 ml-1 text-sm font-medium leading-none"></span>
-              </label>
+          <div className="p-6 pt-8">
+            <div>
+              <div className="mb-2 flex items-center">
+                <label className="text-mainText font-heading mb-2 text-sm font-medium leading-none !mb-0 flex">
+                  <span>Additional notes</span>
+                  <span className="text-emphasis -mb-1 ml-1 text-sm font-medium leading-none"></span>
+                </label>
+              </div>
+              <textarea
+                placeholder="Please share anything that will help prepare for our meeting."
+                rows="3"
+                name="notes"
+                label="Additional notes"
+                className="hover:border-emphasis border-input bg-transparent placeholder:text-muted text-mainText text-opacity-60 focus:ring-brand-default focus:border-subtle mb-2 block w-full rounded-md border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-1"
+              ></textarea>
             </div>
-            <textarea
-              placeholder="Please share anything that will help prepare for our meeting."
-              rows="3"
-              name="notes"
-              label="Additional notes"
-              className="hover:border-emphasis border-default bg-default placeholder:text-muted text-emphasis disabled:hover:border-default disabled:bg-subtle focus:ring-brand-default focus:border-subtle mb-2 block w-full rounded-md border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:cursor-not-allowed"
-            ></textarea>
+            <div className="flex items-end justify-end">
+              <button
+                data-testid="confirm-book-button"
+                type="submit"
+                className="whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition disabled:cursor-not-allowed bg-mainText font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main h-9 px-4 py-2.5"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
