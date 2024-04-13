@@ -1,16 +1,39 @@
+import { toast } from "react-toastify";
 import meet from "../assets/icons/meet.png";
-
+import { useCancelBookingMutation } from "../slices/bookingApiSlice";
+import { useDispatch } from "react-redux";
+import { markBookingCanceled } from "../slices/bookingSlice";
 function BookingCard({ booking }) {
   const formatDate = (ISOString) => {
     const date = new Date(ISOString);
     const options = { weekday: "short", month: "short", day: "numeric" };
     return date.toLocaleDateString("en-US", options);
   };
+  const dispatch = useDispatch();
 
   const formatTime = (ISOString) => {
     const date = new Date(ISOString);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
+
+  const [cancel, { isLoading, isError }] = useCancelBookingMutation();
+
+  const cancelBooking = async () => {
+    const bookingId = booking._id;
+    try {
+      const response = await cancel(bookingId).unwrap();
+      if (response) {
+        dispatch(markBookingCanceled(bookingId));
+        toast.success("booking canceled");
+      }
+    } catch (err) {
+      toast.error(err?.data?.message || err?.error);
+    }
+  }
+
+  if (isLoading) {
+    return (<div className="text-2xl text-mainText w-full flex justify-center items-center py-8">Loading...</div>)
+  }
 
   return (
     <div className="p-2">
@@ -62,7 +85,7 @@ function BookingCard({ booking }) {
                       alt="Cal Video logo"
                     />
                     <span className="text-blue-400 font-heading">
-                      Join Cal Video
+                      Join Event
                     </span>
                   </div>
                 </a>
@@ -73,10 +96,9 @@ function BookingCard({ booking }) {
           {booking && !booking.canceled && (
             <div className="mt-4 hidden sm:mt-0 sm:flex">
               <div className="flex justify-between space-x-2 rtl:space-x-reverse rounded-md border hover:border-black border-default  hover:bg-red-400 hover:text-home">
-                <a
+                <button
                   className="inline-flex items-center text-sm font-medium relative rounded-md text-mainText hover:text-home h-9 px-4 py-2.5 whitespace-nowrap gap-x-1 "
-                  data-testid="cancel"
-                  href="/home/bookings"
+                  onClick={cancelBooking}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +118,7 @@ function BookingCard({ booking }) {
                   <span className="font-heading text-mainText">
                     Cancel event
                   </span>
-                </a>
+                </button>
               </div>
             </div>
           )}

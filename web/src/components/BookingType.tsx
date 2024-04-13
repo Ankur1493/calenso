@@ -26,8 +26,6 @@ function BookingType({ filter }) {
   if (isLoading) return <p>Loading...</p>;
 
   const filteredBookings = () => {
-    console.log("Selected bookings:", selectedBooking);
-    console.log("Filter:", filter);
     if (!selectedBooking) return [];
     const currentDate = new Date();
     switch (filter) {
@@ -97,8 +95,8 @@ function BookingType({ filter }) {
                         {filter === "upcoming"
                           ? "upcoming"
                           : filter === "past"
-                          ? "past"
-                          : "cancelled"}{" "}
+                            ? "past"
+                            : "cancelled"}{" "}
                         bookings
                       </h2>
                       <div className="font-heading text-mainText mb-8 mt-8 text-center text-sm font-normal leading-6 opacity-80">
@@ -106,8 +104,8 @@ function BookingType({ filter }) {
                         {filter === "upcoming"
                           ? "upcoming"
                           : filter === "past"
-                          ? "past"
-                          : "cancelled"}{" "}
+                            ? "past"
+                            : "cancelled"}{" "}
                         bookings.
                       </div>
                     </div>

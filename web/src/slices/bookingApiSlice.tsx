@@ -10,7 +10,13 @@ export const bookingApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    cancelBooking: builder.mutation({
+      query: (meetingId) => ({
+        url: `${BOOKINGS_URL}/${meetingId}`,
+        method: "DELETE",
+      })
+    })
   }),
 });
 
-export const { useBookingsQuery } = bookingApiSlice;
+export const { useBookingsQuery, useCancelBookingMutation } = bookingApiSlice;
