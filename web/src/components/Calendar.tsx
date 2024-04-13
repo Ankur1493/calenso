@@ -15,12 +15,12 @@ const CalendarComponent = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center">
       <style>
         {`
           .react-calendar {
             max-width: 100%;
-            background: #1E1F20;
+            background: transparent !important;
             border: none;
           }
           
@@ -38,15 +38,14 @@ const CalendarComponent = () => {
             font-family: 'Poppins', sans-serif;
           }
           
-          .react-calendar__navigation__label:hover{
-            background: transparent !important;
+           .react-calendar__navigation__label:hover
+           { background: transparent !important;
           }
 
-          .react-calendar__navigation__arrow:hover{
-            background: input !important;
-            opacity: 0.4;
-            color: black;
-            border-radius: 5px;
+          .react-calendar__navigation__arrow:hover {
+            background: #D9D9D9;
+            background-opacity-0.6;
+            color: #000000;
           }
 
           .react-calendar__tile {
@@ -57,7 +56,9 @@ const CalendarComponent = () => {
           }
           
           .react-calendar__tile--active {
-            background: #1E1F20; 
+            background: #D9D9D9 !important;
+            color: #000000;
+            border-radius: 5px;
           }
           
           .react-calendar__tile--hasActive {
@@ -77,7 +78,7 @@ const CalendarComponent = () => {
           }
 
           .react-calendar__month-view__weekdays__weekday {
-            color: #ffffff;
+            color: #D9D9D9;
             opacity: 0.7;
             padding-bottom: 20px;
           }
@@ -87,6 +88,7 @@ const CalendarComponent = () => {
         onChange={onChange}
         value={date}
         className="rounded-lg p-4 bg-second"
+        tileClassName={tileClassName}
       />
     </div>
   );
