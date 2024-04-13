@@ -16,11 +16,21 @@ function ScheduleBooking() {
   const handleTimeSelect = (time) => {
     setSelectedTime(time);
   };
+
+  const handleSubmit = () => {
+    console.log("Selected Date:", selectedDate);
+    console.log(
+      "Selected Day:",
+      selectedDate.toLocaleDateString("en-US", { weekday: "long" })
+    );
+    console.log("Selected Time:", selectedTime);
+  };
+
   return (
     <div className="flex justify-center items-center">
-      <div className="flex bg-second w-10/12 justify-center items-center p-16 border border-gray-400 rounded-md border-opacity-40">
+      <div className="flex bg-second w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
         <div className="flex flex-col border border-gray-200 border-opacity-60 rounded-md">
-          <div className="flex border-b border-gray-200 border-opacity-40">
+          <div className="flex border-b border-gray-200 border-opacity-100">
             <div
               className="p-6 pr-20 bg-second border-r border-r-gray-200 border-opacity-40 "
               data-testid="event-meta"
@@ -135,8 +145,7 @@ function ScheduleBooking() {
                 </label>
               </div>
               <textarea
-                placeholder="Please share anything that will help prepare for our meeting."
-                rows="3"
+                placeholder="Please share anything regarding this meeting."
                 name="notes"
                 label="Additional notes"
                 className="hover:border-emphasis border-input bg-transparent placeholder:text-muted text-mainText text-opacity-60 focus:ring-brand-default focus:border-subtle mb-2 block w-full rounded-md border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-1"
@@ -146,6 +155,7 @@ function ScheduleBooking() {
               <button
                 data-testid="confirm-book-button"
                 type="submit"
+                onClick={handleSubmit}
                 className="whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition disabled:cursor-not-allowed bg-mainText font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main h-9 px-4 py-2.5"
               >
                 Submit
