@@ -23,7 +23,7 @@ function App() {
             <Route path="bookings" element={<Bookings />} />
           </Route>
           <Route path="/:username" element={<DispalyOwnerMeetings />} />
-          <Route path="/schedule/:id" element={<ScheduleBooking />} />
+          <Route path="/:username/:id" element={<ScheduleBooking />} />
         </Routes>
       </Router>
       <ToastContainer />
