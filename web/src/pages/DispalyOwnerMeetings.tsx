@@ -13,7 +13,11 @@ const DispalyOwnerMeetings = () => {
   const { username } = useParams();
   const { data, isLoading, isError } = useDisplayMeetingsQuery(username);
   if (isLoading) {
+<<<<<<< HEAD
     return <div className="text-2xl text-white">Loading</div>;
+=======
+    return (<div className="text-2xl text-white h-screen">Loading</div>)
+>>>>>>> 2803badb93b1f1f450208ef33097607414be4622
   }
 
   if (isError) {

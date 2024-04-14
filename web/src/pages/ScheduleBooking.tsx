@@ -65,7 +65,7 @@ function ScheduleBooking() {
                 <li className="-mr-1 inline-block">
                   <a
                     data-state="closed"
-                    href="/ankur"
+                    href={`/${User.username}`}
                   >
                     <span
                       data-testid="avatar"
@@ -185,10 +185,10 @@ function ScheduleBooking() {
                     data-testid="confirm-book-button"
                     type="submit"
                     onClick={handleSubmit}
-                    className="whitespace-nowrap w-full py-3 text-center text-sm font-medium relative rounded-md transition disabled:cursor-not-allowed bg-input bg-opacity-50 hover:bg-opacity-90 font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main"
+                    className="whitespace-nowrap w-full py-3 text-center text-sm font-medium relative rounded-lg transition disabled:cursor-not-allowed bg-input bg-opacity-50 hover:bg-opacity-90 font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main"
                   >
                     Schedule Meeting
-                  </button>) : (<div className="rounded-md w-full cursor-not-allowed text-center border text-sm py-3">Select date and time</div>)}
+                  </button>) : (<div className="rounded-lg w-full cursor-not-allowed text-white font-medium text-center border text-sm py-3">Select date and time</div>)}
             </div>
           </div>
         </div>
