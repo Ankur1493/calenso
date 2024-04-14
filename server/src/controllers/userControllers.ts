@@ -3,6 +3,7 @@ import User from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import Meeting from "../models/meetingsModel";
 dotenv.config();
 
 const SECRET_KEY = process.env.SECRET as string;
@@ -133,6 +134,13 @@ export const userLogout = (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
   try {
     const username = req.params.username;
+    const meetingId = req.params.meetingId
+    if (!meetingId) {
+      return res.status(400).json({
+        status: "failed",
+        message: "try again"
+      })
+    }
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(400).json({
@@ -140,11 +148,27 @@ export const getUser = async (req: Request, res: Response) => {
         message: "user doesn't exist",
       });
     }
+    const authorizedMeeting = user.meetings.findIndex(meeting => meeting.toString() === meetingId);
+    if (authorizedMeeting === -1) {
+      return res.status(400).json({
+        status: "failed",
+        message: "wrong meeting accessed"
+      })
+    }
+
+    const meeting = await Meeting.findById(meetingId).populate("availability");
+    if (!meeting) {
+      return res.status(400).json({
+        status: "failed",
+        message: "try again"
+      })
+    }
 
     res.status(200).json({
       message: "here's your user",
       username: user.username,
       userProfile: user.profilePicUrl,
+      meeting
     });
   } catch (err) {
     return res.status(400).json({

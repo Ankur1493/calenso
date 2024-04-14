@@ -26,12 +26,17 @@ function ScheduleBooking() {
   };
 
   const { username, id: meetingId } = useParams();
+<<<<<<< HEAD
   const {
     data: User,
     isError: queryError,
     isLoading: queryLoading,
   } = useGetUserDetailsQuery(username);
   const [createBooking, { isError, isLoading }] = useCreateBookingMutation();
+=======
+  const { data: User, isError: queryError, isLoading: queryLoading } = useGetUserDetailsQuery({ username, meetingId })
+  const [createBooking, { isError, isLoading }] = useCreateBookingMutation()
+>>>>>>> c2cccaa (modified user details to get availability of a meeting)
 
   useEffect(() => {
     if (selectedDate && selectedTime) {
@@ -119,7 +124,7 @@ function ScheduleBooking() {
                 data-testid="event-title"
                 className="text-mainText font-heading text-xl font-semibold my-6"
               >
-                15 Min Meeting
+                {User && User.meeting.title}
               </h1>
               <div className="space-y-4 font-medium rtl:-mr-2">
                 <div className="flex items-start justify-start text-sm text-text">
@@ -139,7 +144,7 @@ function ScheduleBooking() {
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <div className="relative z-10 max-w-full break-words text-mainText font-heading">
-                    30 mins
+                    {User && User.meeting.duration} minutes
                   </div>
                 </div>
                 <div className="flex items-start justify-start text-sm text-text">
