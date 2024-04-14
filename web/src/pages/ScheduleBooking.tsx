@@ -26,17 +26,9 @@ function ScheduleBooking() {
   };
 
   const { username, id: meetingId } = useParams();
-<<<<<<< HEAD
-  const {
-    data: User,
-    isError: queryError,
-    isLoading: queryLoading,
-  } = useGetUserDetailsQuery(username);
-  const [createBooking, { isError, isLoading }] = useCreateBookingMutation();
-=======
+
   const { data: User, isError: queryError, isLoading: queryLoading } = useGetUserDetailsQuery({ username, meetingId })
   const [createBooking, { isError, isLoading }] = useCreateBookingMutation()
->>>>>>> c2cccaa (modified user details to get availability of a meeting)
 
   useEffect(() => {
     if (selectedDate && selectedTime) {
