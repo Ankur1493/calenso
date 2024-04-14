@@ -14,7 +14,7 @@ const DispalyOwnerMeetings = () => {
   const { username } = useParams();
   const { data, isLoading, isError } = useDisplayMeetingsQuery(username)
   if (isLoading) {
-    return (<div className="text-2xl text-white">Loading</div>)
+    return (<div className="text-2xl text-white h-screen">Loading</div>)
   }
 
   if (isError) {
