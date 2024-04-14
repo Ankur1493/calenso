@@ -28,8 +28,13 @@ const DispalyOwnerMeetings = () => {
         <h1 className="text-3xl text-white mt-5">{data.username}</h1>
       </div>
       {data.meetings && data.meetings.length > 0 && data.meetings.map((meeting: meeting) => (
-        <DisplayMeetingCard username={username} id={meeting._id} title={meeting.title} duration={meeting.duration} info={meeting.info} />
+        <DisplayMeetingCard username={username || ""} id={meeting._id} title={meeting.title} duration={meeting.duration} info={meeting.info} />
       ))}
+      <div>
+        {data.status === "success" && !data.meetings && (
+          <div className="text-white text-3xl">User Have No meetings, We'll notify them to create some events</div>
+        )}
+      </div>
     </div>
   )
 }

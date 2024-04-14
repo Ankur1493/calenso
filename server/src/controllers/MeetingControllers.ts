@@ -249,10 +249,7 @@ export const deleteMeeting = async (req: Request, res: Response) => {
 export const displayAllUserMeetings = async (req: Request, res: Response) => {
   try {
     const username1 = req.params.username;
-    console.log(req.params.username)
-    console.log(username1)
     const userExists = await User.findOne({ username: username1 }).populate({ path: "meetings", select: "-availability -user_id" })
-    console.log(userExists)
     if (!userExists) {
       return res.status(400).json({
         status: "failed",
@@ -263,7 +260,10 @@ export const displayAllUserMeetings = async (req: Request, res: Response) => {
     if (meetings.length < 1) {
       return res.status(200).json({
         status: "success",
-        message: "User have not createad any event"
+        message: "User have not createad any event",
+        username: userExists.username,
+        userProfile: userExists.profilePicUrl ? userExists.profilePicUrl : null
+
       })
     }
 

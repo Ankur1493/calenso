@@ -4,6 +4,8 @@ import { meetingTime } from "../constants/constants";
 import TimeCard from "../components/TimeCard";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useGetUserDetailsQuery } from "../slices/usersApiSlice";
+import { useParams } from "react-router-dom";
 
 
 function ScheduleBooking() {
@@ -13,6 +15,8 @@ function ScheduleBooking() {
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
   };
+  const { username } = useParams();
+  const { data: User, isError, isLoading } = useGetUserDetailsQuery(username)
 
   const handleTimeSelect = (time: null | string) => {
     setSelectedTime(time);
@@ -31,6 +35,14 @@ function ScheduleBooking() {
     toast.success("meeting booked")
   };
 
+  if (isLoading) {
+    return (<div className="text-2xl text-white">Loading</div>)
+  }
+
+  if (isError) {
+    return (<div className="text-2xl text-white h-screen">Error</div>)
+  }
+
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <div className="flex bg-second w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
@@ -44,7 +56,7 @@ function ScheduleBooking() {
                 <li className="-mr-1 inline-block">
                   <a
                     data-state="closed"
-                    href="https://cal.com/ankur-sharma?redirect=false"
+                    href="/ankur"
                   >
                     <span
                       data-testid="avatar"
@@ -53,14 +65,14 @@ function ScheduleBooking() {
                       <img
                         alt="Ankur Sharma"
                         className="aspect-square rounded-full w-6 h-6 min-w-6 min-h-6"
-                        src="https://lh3.googleusercontent.com/a/ACg8ocL8zHgRMu9d_CrZt2fNCGZPWOcuALthFOyWL-oHCWmZmEA=s96-c"
+                        src={User ? User.userProfile : ""}
                       />
                     </span>
                   </a>
                 </li>
               </ul>
               <p className="text-input text-opacity-50 mt-2 text-sm font-heading font-semibold">
-                Ankur Sharma
+                {User ? User.username : ""}
               </p>
               <h1
                 data-testid="event-title"
