@@ -15,20 +15,6 @@ function MeetingCard({ meeting }) {
   return (
     <div className="p-2 px-6">
       <div className="group bg-second flex w-full max-w-full items-center justify-between overflow-hidden px-4 py-4 sm:px-6 border border-gray-400 rounded-[8px]">
-        <button className="bg-second absolute left-0  -ml-4 mt-8 hidden h-6 w-6  scale-0 items-center justify-center rounded-md border p-1 transition-all ">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-5 w-5"
-          ></svg>
-        </button>
         <Link
           to={`/home/meeting/${meeting._id}`}
           className="flex-1 overflow-hidden pr-4 text-sm"

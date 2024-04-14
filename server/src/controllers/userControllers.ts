@@ -1,15 +1,15 @@
-import { Request, Response } from "express"
-import User from "../models/userModel"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
+import { Request, Response } from "express";
+import User from "../models/userModel";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 dotenv.config();
 
-const SECRET_KEY = process.env.SECRET as string
+const SECRET_KEY = process.env.SECRET as string;
 
 const createToken = (_id: string): string => {
   return jwt.sign({ _id }, SECRET_KEY, { expiresIn: "10d" });
-}
+};
 
 export const userLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -17,7 +17,7 @@ export const userLogin = async (req: Request, res: Response) => {
     if (!email || !password) {
       return res.status(400).json({
         status: "failed",
-        message: "Fill all the necessary details"
+        message: "Fill all the necessary details",
       });
     }
 
@@ -26,7 +26,7 @@ export const userLogin = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(409).json({
         status: "failed",
-        message: "user doesn't exist"
+        message: "user doesn't exist",
       });
     }
 
@@ -35,7 +35,7 @@ export const userLogin = async (req: Request, res: Response) => {
     if (!match) {
       return res.status(400).json({
         status: "failed",
-        message: "email or password is wrong"
+        message: "email or password is wrong",
       });
     }
 
@@ -44,22 +44,22 @@ export const userLogin = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
-      maxAge: 2 * 24 * 60 * 60 * 1000 // 2days
+      maxAge: 2 * 24 * 60 * 60 * 1000, // 2days
     });
 
     return res.status(200).json({
       message: "Welcome Back",
       username: user.username,
       email: user.email,
-      profilePicture: user.profilePicUrl ? user.profilePicUrl : null
+      profilePicture: user.profilePicUrl ? user.profilePicUrl : null,
     });
   } catch (err) {
     return res.status(500).json({
       status: "failed",
-      message: "Try Again, this one is our fault"
+      message: "Try Again, this one is our fault",
     });
   }
-}
+};
 
 export const userSignup = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -67,39 +67,42 @@ export const userSignup = async (req: Request, res: Response) => {
     if (!username || !email || !password) {
       return res.status(400).json({
         status: "failed",
-        message: "Fill all the necessary details"
+        message: "Fill all the necessary details",
       });
     }
 
     const exists = await User.findOne({ email });
-    const existingUsername = await User.findOne({ username })
+    const existingUsername = await User.findOne({ username });
 
     if (existingUsername) {
       return res.status(409).json({
         status: "failed",
-        message: "username already taken, try another"
+        message: "username already taken, try another",
       });
-
     }
 
     if (exists) {
       return res.status(409).json({
         status: "failed",
-        message: "email already in use"
+        message: "email already in use",
       });
     }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ username, email, password: hashedPassword });
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
 
     const token = createToken(user._id.toString());
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
-      maxAge: 2 * 24 * 60 * 60 * 1000 // 2days
+      maxAge: 2 * 24 * 60 * 60 * 1000, // 2days
     });
 
     return res.status(200).json({
@@ -113,53 +116,48 @@ export const userSignup = async (req: Request, res: Response) => {
       message: "try again",
     });
   }
-}
+};
 
 export const userLogout = (req: Request, res: Response) => {
-
   res.cookie("jwt", "", {
     httpOnly: true,
-    expires: new Date(0)
-  })
+    expires: new Date(0),
+  });
 
   res.status(200).json({
     status: "success",
-    message: "user logged out"
-  })
-
-}
+    message: "user logged out",
+  });
+};
 
 export const getUser = async (req: Request, res: Response) => {
   try {
-    const username = req.params.username
-    console.log(username)
+    const username = req.params.username;
     const user = await User.findOne({ username });
-    console.log(user)
     if (!user) {
       return res.status(400).json({
         status: "failed",
-        message: "user doesn't exist"
-      })
+        message: "user doesn't exist",
+      });
     }
 
     res.status(200).json({
       message: "here's your user",
       username: user.username,
-      userProfile: user.profilePicUrl
+      userProfile: user.profilePicUrl,
     });
   } catch (err) {
     return res.status(400).json({
       status: "failed",
-      message: "user not found, try again"
-    })
+      message: "user not found, try again",
+    });
   }
-}
+};
 
 export const updateUser = async (req: Request, res: Response) => {
   res.status(200).json({ message: "user updated" });
-}
+};
 
 export const deleteUser = async (req: Request, res: Response) => {
   res.status(200).json({ message: "user deleted" });
-}
-
+};
