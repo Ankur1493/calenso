@@ -116,6 +116,14 @@ export const createBooking = async (req: Request, res: Response) => {
       })
     }
     const startTime = new Date(START_TIME);
+    const currentTime = Date.now();
+
+    if ((startTime.getTime() - currentTime) < 0) {
+      return res.status(400).json({
+        status: "failed",
+        message: "select date and time which is ahead of us"
+      })
+    }
 
     const meeting = await Meeting.findById(meetingId).populate('availability')
     if (!meeting) {
@@ -151,6 +159,22 @@ export const createBooking = async (req: Request, res: Response) => {
         message: "you have not connected your calendar"
       })
     }
+
+    const overlappingBookings = await Booking.find({
+      $or: [
+        { first_user: guestUser.email, $or: [{ startTime: { $lt: endTime }, endTime: { $gt: startTime } }] },
+        { guestUser: guestUser.email, $or: [{ startTime: { $lt: endTime }, endTime: { $gt: startTime } }] },
+        { first_user: ownerUserEmail, $or: [{ startTime: { $lt: endTime }, endTime: { $gt: startTime } }] },
+        { guestUser: ownerUserEmail, $or: [{ startTime: { $lt: endTime }, endTime: { $gt: startTime } }] }
+      ]
+    });
+    if (overlappingBookings && overlappingBookings.length > 0) {
+      return res.status(409).json({
+        status: "failed",
+        message: "One or both users are already booked in the requested time slot"
+      })
+    }
+
 
     const eventStatus = await createEvent({
       title,

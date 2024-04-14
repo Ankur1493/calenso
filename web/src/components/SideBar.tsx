@@ -28,7 +28,7 @@ function SideBar() {
             </div>
           </div>
         </div>
-        <div className=" p-2 mb-6 flex justify-center items-center">
+        <div className=" p-2 px-5 mb-6 flex justify-center items-center">
           <button
             id="logout"
             className="border text-[24px] text-white hover:text-black [&amp;[aria-current='page']]:bg-emphasis text-default group flex items-center justify-center rounded-[30px] gap-2 py-3 font-medium transition [&amp;[aria-current='page']]:text-emphasis mt-0.5 w-full text-sm hover:text-emphasis hover:bg-input hover:bg-opacity-70 "

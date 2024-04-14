@@ -41,7 +41,7 @@ const BookingDetails = () => {
 
   return (
     <div className="flex justify-center items-center h-screen w-screen">
-      <div className="flex flex-col items-center py-10 bg-home border rounded-[20px] border-gray-400 h-3/4 w-1/3 text-white">
+      <div className="flex flex-col items-center py-5 bg-home border rounded-[20px] border-gray-400 h-3/4 w-1/3 text-white">
         <span className="flex justify-start w-full px-4 cursor-pointer" onClick={() => navigate(-1)}>Go Back</span>
         <div className="text-3xl font-semibold mb-8">{Booking.title}</div>
         <div className="flex w-3/4 border-b border-b-gray-500 pb-4 justify-between">
