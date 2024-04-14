@@ -9,7 +9,7 @@ router.post("/signup", userSignup);
 router.post("/logout", authenticate, userLogout);
 
 // User Details
-router.get("/:username", getUser)
+router.get("/:username/:meetingId", getUser)
 router.patch("/:userId", updateUser)
 router.delete("/:userId", deleteUser)
 export { router as userRoutes };

@@ -24,9 +24,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       })
     }),
     getUserDetails: builder.query({
-      query: (username) => ({
-        url: `${AUTH_URL}/${username}`,
-        method: "GET"
+      query: (data) => ({
+        url: `${AUTH_URL}/${data?.username}/${data.meetingId}`,
+        method: "GET",
       })
     })
   })
