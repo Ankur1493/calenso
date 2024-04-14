@@ -9,7 +9,7 @@ import Bookings from "./components/Bookings";
 import MeetingDetails from "./components/MeetingDetails";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import DispalyOwnerMeetings from "./pages/DispalyOwnerMeetings";
-import BookingDetails from "./components/BookingDetails";
+import BookingDetails from "./pages/BookingDetails";
 
 function App() {
   return (
