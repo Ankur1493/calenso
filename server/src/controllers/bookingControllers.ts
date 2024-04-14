@@ -54,6 +54,49 @@ export const getAllBookings = async (req: Request, res: Response) => {
   }
 };
 
+export const getBookingDetails = async (req: Request, res: Response) => {
+  try {
+
+    const bookingId = req.params.id as string;
+    const user = req.user;
+    if (!user) {
+      return res.status(409).json({
+        status: "failed",
+        message: "you are not authorized"
+      })
+    }
+    const DBuser = await User.findById(user?._id).populate("bookings");
+
+    if (!DBuser) {
+      return res.status(409).json({
+        status: "failed",
+        message: "you are not authorized"
+      })
+    }
+
+    const bookingExists = DBuser.bookings.findIndex(booking => booking._id.toString() == bookingId);
+    if (bookingExists === -1) {
+      return res.status(400).json({
+        status: "failed",
+        message: "try accessing own booking for fun"
+      })
+    }
+
+    const booking = DBuser.bookings[bookingExists];
+    return res.status(200).json({
+      status: "success",
+      message: "Here's your booking",
+      booking
+    })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({
+      status: "failed",
+      message: "try again failed to connect with calendar"
+    })
+  }
+}
+
 export const createBooking = async (req: Request, res: Response) => {
   try {
     const guestUser = req.user;
@@ -179,7 +222,7 @@ export const cancelBooking = async (req: Request, res: Response) => {
         message: "not authorized"
       })
     }
-    if(!isValidObjectId(id)){
+    if (!isValidObjectId(id)) {
       return res.status(400).json({
         status: "failed",
         message: "don't interfere with id's"
