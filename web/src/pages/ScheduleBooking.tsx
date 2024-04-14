@@ -1,19 +1,20 @@
-import React from "react";
 import meet from "../assets/icons/meet.png";
-import Calendar from "react-calendar";
+import Calendar from "../components/Calendar";
 import { meetingTime } from "../constants/constants";
 import TimeCard from "../components/TimeCard";
 import { useState } from "react";
+import { toast } from "react-toastify";
+
 
 function ScheduleBooking() {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const handleDateChange = (date) => {
+  const [additionalNotes, setAdditonalNotes] = useState("");
+  const handleDateChange = (date: Date) => {
     setSelectedDate(date);
   };
 
-  const handleTimeSelect = (time) => {
+  const handleTimeSelect = (time: null | string) => {
     setSelectedTime(time);
   };
 
@@ -24,10 +25,14 @@ function ScheduleBooking() {
       selectedDate.toLocaleDateString("en-US", { weekday: "long" })
     );
     console.log("Selected Time:", selectedTime);
+    setSelectedTime(null);
+    setSelectedDate(new Date())
+    setAdditonalNotes("")
+    toast.success("meeting booked")
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center w-screen h-screen">
       <div className="flex bg-second w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
         <div className="flex flex-col border border-gray-200 border-opacity-60 rounded-md">
           <div className="flex border-b border-gray-200 border-opacity-100">
@@ -81,7 +86,7 @@ function ScheduleBooking() {
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <div className="relative z-10 max-w-full break-words text-mainText font-heading">
-                    15 mins
+                    30 mins
                   </div>
                 </div>
                 <div className="flex items-start justify-start text-sm text-text">
@@ -97,7 +102,7 @@ function ScheduleBooking() {
                           className="line-clamp-1 text-mainText font-heading"
                           data-state="closed"
                         >
-                          Calenso Video
+                          Google Meet
                         </p>
                       </div>
                     </div>
@@ -139,7 +144,7 @@ function ScheduleBooking() {
           <div className="p-6 pt-8">
             <div>
               <div className="mb-2 flex items-center">
-                <label className="text-mainText font-heading mb-2 text-sm font-medium leading-none !mb-0 flex">
+                <label className="text-mainText font-heading mb-2 text-sm font-medium leading-none  flex">
                   <span>Additional notes</span>
                   <span className="text-emphasis -mb-1 ml-1 text-sm font-medium leading-none"></span>
                 </label>
@@ -147,8 +152,9 @@ function ScheduleBooking() {
               <textarea
                 placeholder="Please share anything regarding this meeting."
                 name="notes"
-                label="Additional notes"
                 className="hover:border-emphasis border-input bg-transparent placeholder:text-muted text-mainText text-opacity-60 focus:ring-brand-default focus:border-subtle mb-2 block w-full rounded-md border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-1"
+                value={additionalNotes}
+                onChange={(e) => (setAdditonalNotes(e.target.value))}
               ></textarea>
             </div>
             <div className="flex items-end justify-end">

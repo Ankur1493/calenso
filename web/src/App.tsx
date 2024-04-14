@@ -7,13 +7,12 @@ import HomeLayout from "./pages/HomeLayout";
 import EventTypes from "./components/EventTypes";
 import Bookings from "./components/Bookings";
 import MeetingDetails from "./components/MeetingDetails";
-import Calendar from "./components/Calendar";
 import ScheduleBooking from "./pages/ScheduleBooking";
 
 function App() {
   return (
     <div className="w-full bg-black bg-dot-white/[0.2] relative ">
-      {/* <Router>
+      <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/register" element={<Authentication />} />
@@ -22,11 +21,11 @@ function App() {
             <Route path="event-types" element={<EventTypes />}></Route>
             <Route path="bookings" element={<Bookings />} />
           </Route>
+          <Route path="/schedule/:id" element={<ScheduleBooking />} />
         </Routes>
       </Router>
-      <ToastContainer /> */}
-      <Calendar />
-      <ScheduleBooking />
+      <ToastContainer />
+
     </div>
   );
 }
