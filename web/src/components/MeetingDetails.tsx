@@ -17,7 +17,7 @@ function MeetingDetails() {
     error,
   } = useMeetingDetailsQuery(id);
 
-  useEffect(() => { }, [id]);
+  useEffect(() => {}, [id]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -104,7 +104,6 @@ function MeetingDetails() {
         </div>
       </header>
 
-      {/* Meeting Details */}
       <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
         <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-mainText inline truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl">
           {meetingDetails.title}
@@ -130,7 +129,6 @@ function MeetingDetails() {
           />
         </div>
 
-        {/* Other meeting details... */}
         <div className="">
           <label
             className="text-mainText font-heading mb-2 block text-sm font-medium leading-none"
@@ -178,7 +176,6 @@ function MeetingDetails() {
           />
         </div>
 
-        {/* Availability */}
         <div className="">
           <label
             className="text-mainText font-heading mb-2 block text-sm font-medium leading-none"

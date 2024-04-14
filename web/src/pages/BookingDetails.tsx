@@ -106,8 +106,9 @@ const BookingDetails = () => {
             <a
               href={Booking.event.meetLink}
               target="_blank"
-              className={`${!isOccured ? "w-full" : "w-1/3"
-                } flex justify-center py-2 rounded-lg font-heading hover:bg-gray-500 hover:text-black duration-200 border-gray-500 border`}
+              className={`${
+                !isOccured ? "w-full" : "w-1/3"
+              } flex justify-center py-2 rounded-lg font-heading hover:bg-gray-500 hover:text-black duration-200 border-gray-500 border`}
             >
               Join Event
             </a>

@@ -26,8 +26,12 @@ function ScheduleBooking() {
   };
 
   const { username, id: meetingId } = useParams();
-  const { data: User, isError: queryError, isLoading: queryLoading } = useGetUserDetailsQuery(username)
-  const [createBooking, { isError, isLoading }] = useCreateBookingMutation()
+  const {
+    data: User,
+    isError: queryError,
+    isLoading: queryLoading,
+  } = useGetUserDetailsQuery(username);
+  const [createBooking, { isError, isLoading }] = useCreateBookingMutation();
 
   useEffect(() => {
     if (selectedDate && selectedTime) {
@@ -49,37 +53,45 @@ function ScheduleBooking() {
   };
 
   const handleSubmit = async () => {
-    const [hours, minutes] = selectedTime?.split(':').map(Number);
+    const [hours, minutes] = selectedTime?.split(":").map(Number);
     const combinedDateTime = selectedDate;
     combinedDateTime.setHours(hours, minutes, 0, 0);
-    const START_TIME = `${combinedDateTime.getFullYear()}-${String(combinedDateTime.getMonth() + 1).padStart(2, '0')}-${String(combinedDateTime.getDate()).padStart(2, '0')}T${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
+    const START_TIME = `${combinedDateTime.getFullYear()}-${String(
+      combinedDateTime.getMonth() + 1
+    ).padStart(2, "0")}-${String(combinedDateTime.getDate()).padStart(
+      2,
+      "0"
+    )}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+      2,
+      "0"
+    )}:00`;
     try {
       console.log(`"START_TIME": "${START_TIME}"`);
-      console.log(meetingId)
-      const response = await createBooking({ START_TIME, meetingId }).unwrap()
-      setSelectedTime(null)
-      setSelectedDate(new Date())
-      setAdditonalNotes("")
-      navigate(`/bookings/${response?.bookingId}`)
-      toast.success(response.message)
+      console.log(meetingId);
+      const response = await createBooking({ START_TIME, meetingId }).unwrap();
+      setSelectedTime(null);
+      setSelectedDate(new Date());
+      setAdditonalNotes("");
+      navigate(`/bookings/${response?.bookingId}`);
+      toast.success(response.message);
     } catch (err) {
-      toast.error(err?.data?.message || err?.error)
+      toast.error(err?.data?.message || err?.error);
     }
   };
 
   if (isLoading || queryLoading) {
-    return (<div className="text-2xl text-white">Loading</div>)
+    return <div className="text-2xl text-white">Loading</div>;
   }
 
   if (queryError) {
-    return (<div className="text-2xl text-white h-screen">Error</div>)
+    return <div className="text-2xl text-white h-screen">Error</div>;
   }
 
   return (
     <div className="flex justify-center items-center w-screen h-screen overflow-y-auto">
       <div className="flex bg-second w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
         <div className="flex flex-col border border-gray-200 border-opacity-60 rounded-md">
-          <div className="flex border-b border-gray-200 border-opacity-100">
+          <div className="flex  flex-wrap border-b border-gray-200 border-opacity-100">
             <div
               className="p-6 pr-20 bg-second border-r border-r-gray-200 border-opacity-40 "
               data-testid="event-meta"
