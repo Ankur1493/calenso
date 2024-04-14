@@ -2,7 +2,7 @@ import meet from "../assets/icons/meet.png";
 import Calendar from "../components/Calendar";
 import { meetingTime } from "../constants/constants";
 import TimeCard from "../components/TimeCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useGetUserDetailsQuery } from "../slices/usersApiSlice";
 import { useParams } from "react-router-dom";
@@ -12,6 +12,7 @@ function ScheduleBooking() {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [additionalNotes, setAdditonalNotes] = useState("");
+  const [selectedDetails, setSelectedDetails] = useState(false);
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
   };
@@ -21,6 +22,14 @@ function ScheduleBooking() {
   const handleTimeSelect = (time: null | string) => {
     setSelectedTime(time);
   };
+
+  useEffect(() => {
+    if (selectedDate && selectedTime) {
+      setSelectedDetails(true)
+    } else {
+      setSelectedDetails(false)
+    }
+  }, [selectedTime, selectedDate, selectedDetails])
 
   const handleSubmit = () => {
     console.log("Selected Date:", selectedDate);
@@ -169,15 +178,17 @@ function ScheduleBooking() {
                 onChange={(e) => (setAdditonalNotes(e.target.value))}
               ></textarea>
             </div>
-            <div className="flex items-end justify-end">
-              <button
-                data-testid="confirm-book-button"
-                type="submit"
-                onClick={handleSubmit}
-                className="whitespace-nowrap inline-flex items-center text-sm font-medium relative rounded-md transition disabled:cursor-not-allowed bg-mainText font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main h-9 px-4 py-2.5"
-              >
-                Submit
-              </button>
+            <div className="flex w-full justify-center items-center">
+              {
+                selectedDetails ? (
+                  <button
+                    data-testid="confirm-book-button"
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="whitespace-nowrap w-full py-3 text-center text-sm font-medium relative rounded-md transition disabled:cursor-not-allowed bg-input bg-opacity-50 hover:bg-opacity-90 font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main"
+                  >
+                    Schedule Meeting
+                  </button>) : (<div className="rounded-md w-full cursor-not-allowed text-center border text-sm py-3">Select date and time</div>)}
             </div>
           </div>
         </div>
