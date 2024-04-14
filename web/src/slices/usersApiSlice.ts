@@ -22,7 +22,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${AUTH_URL}/logout`,
         method: "POST",
       })
-    })
+    }),
   })
 })
 

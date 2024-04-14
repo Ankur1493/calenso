@@ -36,8 +36,15 @@ export const meetingsApiSlice = apiSlice.injectEndpoints({
         url: `${MEETINGS_URL}/${id}`,
         method: "DELETE"
       })
+    }),
+    displayMeetings: builder.query({
+      query: (username) => ({
+        url: `${MEETINGS_URL}/display/${username}`,
+        method: "GET"
+      })
     })
+
   }),
 });
 
-export const { useMeetingsQuery, useMeetingDetailsQuery, useCreateMeetingMutation, useEditMeetingMutation, useDeleteMeetingMutation } = meetingsApiSlice;
+export const { useMeetingsQuery, useMeetingDetailsQuery, useCreateMeetingMutation, useEditMeetingMutation, useDeleteMeetingMutation, useDisplayMeetingsQuery } = meetingsApiSlice;

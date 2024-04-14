@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/all", authenticate, getAllMeetings);
 router.get("/:id", authenticate, getMeeting);
-router.get("/display/:username", authenticate, displayAllUserMeetings);
+router.get("/display/:username", displayAllUserMeetings);
 router.post("/create", authenticate, createMeeting);
 router.delete("/:id", authenticate, deleteMeeting);
 router.patch("/:id", authenticate, updateMeeting)
