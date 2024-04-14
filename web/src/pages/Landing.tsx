@@ -4,14 +4,14 @@ import calender from "../assets/images/landing-cal-1.jpeg";
 import { GridLayout } from "../components/GridLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { MovingCards } from "../components/MovingCards";
 
 function Landing() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className="relative">
-      <div
-      >
+      <div>
         <div className="flex justify-between px-2 md:px-12 lg:px-16 py-10">
           <div className="py-2">
             <h1>
@@ -63,7 +63,9 @@ function Landing() {
                   to={"/register"}
                   className="cursos-pointer w-full flex justify-center"
                 >
-                  <p className="font-heading font-semibold text-2xl ">Sign up</p>
+                  <p className="font-heading font-semibold text-2xl ">
+                    Sign up
+                  </p>
                 </Link>
               </div>
             )}
@@ -155,10 +157,8 @@ function Landing() {
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-center mt-16 lg:mt-24 pb-16 px-6">
-          <div className="w-8xl">
-            <img src={calender} alt="" className="rounded-3xl w-full" />
-          </div>
+        <div className="flex items-center justify-center mt-16 lg:mt-24 pb-16 w-full">
+          <MovingCards />
         </div>
       </div>
     </div>

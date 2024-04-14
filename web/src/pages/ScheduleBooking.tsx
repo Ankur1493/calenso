@@ -7,29 +7,29 @@ import { toast } from "react-toastify";
 import { useGetUserDetailsQuery } from "../slices/usersApiSlice";
 import { useParams } from "react-router-dom";
 
-
 function ScheduleBooking() {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [additionalNotes, setAdditonalNotes] = useState("");
   const [selectedDetails, setSelectedDetails] = useState(false);
+
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
   };
   const { username } = useParams();
-  const { data: User, isError, isLoading } = useGetUserDetailsQuery(username)
+  const { data: User, isError, isLoading } = useGetUserDetailsQuery(username);
 
-  const handleTimeSelect = (time: null | string) => {
+  const handleTimeSelect = (time: string | null) => {
     setSelectedTime(time);
   };
 
   useEffect(() => {
     if (selectedDate && selectedTime) {
-      setSelectedDetails(true)
+      setSelectedDetails(true);
     } else {
-      setSelectedDetails(false)
+      setSelectedDetails(false);
     }
-  }, [selectedTime, selectedDate, selectedDetails])
+  }, [selectedTime, selectedDate, selectedDetails]);
 
   const handleSubmit = () => {
     console.log("Selected Date:", selectedDate);
@@ -39,21 +39,21 @@ function ScheduleBooking() {
     );
     console.log("Selected Time:", selectedTime);
     setSelectedTime(null);
-    setSelectedDate(new Date())
-    setAdditonalNotes("")
-    toast.success("meeting booked")
+    setSelectedDate(new Date());
+    setAdditonalNotes("");
+    toast.success("meeting booked");
   };
 
   if (isLoading) {
-    return (<div className="text-2xl text-white">Loading</div>)
+    return <div className="text-2xl text-white">Loading</div>;
   }
 
   if (isError) {
-    return (<div className="text-2xl text-white h-screen">Error</div>)
+    return <div className="text-2xl text-white h-screen">Error</div>;
   }
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
+    <div className="flex justify-center items-center w-screen h-screen overflow-y-auto">
       <div className="flex bg-second w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
         <div className="flex flex-col border border-gray-200 border-opacity-60 rounded-md">
           <div className="flex border-b border-gray-200 border-opacity-100">
@@ -63,10 +63,7 @@ function ScheduleBooking() {
             >
               <ul className="flex items-center">
                 <li className="-mr-1 inline-block">
-                  <a
-                    data-state="closed"
-                    href={`/${User.username}`}
-                  >
+                  <a data-state="closed" href={`/${User.username}`}>
                     <span
                       data-testid="avatar"
                       className="bg-emphasis item-center relative inline-flex aspect-square justify-center rounded-full align-top overflow-hidden border-subtle w-6 h-6 min-w-6 min-h-6"
@@ -134,7 +131,7 @@ function ScheduleBooking() {
 
             <div>
               <Calendar
-                onChange={(date) => {
+                onChange={(date: Date) => {
                   handleDateChange(date);
                 }}
               />
@@ -175,20 +172,24 @@ function ScheduleBooking() {
                 name="notes"
                 className="hover:border-emphasis border-input bg-transparent placeholder:text-muted text-mainText text-opacity-60 focus:ring-brand-default focus:border-subtle mb-2 block w-full rounded-md border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-1"
                 value={additionalNotes}
-                onChange={(e) => (setAdditonalNotes(e.target.value))}
+                onChange={(e) => setAdditonalNotes(e.target.value)}
               ></textarea>
             </div>
             <div className="flex w-full justify-center items-center">
-              {
-                selectedDetails ? (
-                  <button
-                    data-testid="confirm-book-button"
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="whitespace-nowrap w-full py-3 text-center text-sm font-medium relative rounded-lg transition disabled:cursor-not-allowed bg-input bg-opacity-50 hover:bg-opacity-90 font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main"
-                  >
-                    Schedule Meeting
-                  </button>) : (<div className="rounded-lg w-full cursor-not-allowed text-white font-medium text-center border text-sm py-3">Select date and time</div>)}
+              {selectedDetails ? (
+                <button
+                  data-testid="confirm-book-button"
+                  type="submit"
+                  onClick={handleSubmit}
+                  className="whitespace-nowrap w-full py-3 text-center text-sm font-medium relative rounded-lg transition disabled:cursor-not-allowed bg-input bg-opacity-50 hover:bg-opacity-90 font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main"
+                >
+                  Schedule Meeting
+                </button>
+              ) : (
+                <div className="rounded-lg w-full cursor-not-allowed text-white font-medium text-center border text-sm py-3">
+                  Select date and time
+                </div>
+              )}
             </div>
           </div>
         </div>
