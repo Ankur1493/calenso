@@ -10,7 +10,6 @@ function MeetingCard({ meeting }) {
   const { handleDeleteMeeting } = Delete({ id: meeting._id });
 
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
-  const [showEditTooltip, setShowEditTooltip] = useState(false);
   const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
 
   return (

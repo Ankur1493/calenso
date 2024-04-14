@@ -9,6 +9,7 @@ import Bookings from "./components/Bookings";
 import MeetingDetails from "./components/MeetingDetails";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import DispalyOwnerMeetings from "./pages/DispalyOwnerMeetings";
+import BookingDetails from "./components/BookingDetails";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="event-types" element={<EventTypes />}></Route>
             <Route path="bookings" element={<Bookings />} />
           </Route>
+          <Route path="bookings/:id" element={<BookingDetails />} />
           <Route path="/:username" element={<DispalyOwnerMeetings />} />
           <Route path="/:username/:id" element={<ScheduleBooking />} />
         </Routes>

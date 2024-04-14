@@ -15,7 +15,7 @@ function EventTypes() {
     isLoading,
     refetch,
   } = useMeetingsQuery();
-  
+
   const selectedMeetings = useSelector(
     (state: RootState) => state?.meetings?.meetings
   );
@@ -107,7 +107,7 @@ function EventTypes() {
         </header>
       </div>
       {isError ? (
-        <p>Error fetching meetings</p>
+        <p className="text-white text-2xl">Error fetching meetings</p>
       ) : (
         <div>
           {selectedMeetings && selectedMeetings.length > 0 ? (

@@ -54,7 +54,7 @@ function BookingType({ filter }) {
         <div>
           {filteredBookings().length > 0 ? (
             filteredBookings().map((booking) => (
-              <div key={booking._id}>
+              <div>
                 <BookingCard booking={booking} />
               </div>
             ))
@@ -115,8 +115,9 @@ function BookingType({ filter }) {
             </main>
           )}
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
 

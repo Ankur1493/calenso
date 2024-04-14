@@ -6,7 +6,6 @@ import { days } from "../constants/constants";
 
 function MeetingDetails() {
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
-  const [showEditTooltip, setShowEditTooltip] = useState(false);
   const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
 
   const { id } = useParams();
@@ -18,7 +17,7 @@ function MeetingDetails() {
     error,
   } = useMeetingDetailsQuery(id);
 
-  useEffect(() => {}, [id]);
+  useEffect(() => { }, [id]);
 
   if (isLoading) {
     return <div>Loading...</div>;

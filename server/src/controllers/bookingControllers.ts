@@ -89,7 +89,7 @@ export const getBookingDetails = async (req: Request, res: Response) => {
       booking
     })
   } catch (err) {
-    console.log(err)
+    console.error(err)
     return res.status(500).json({
       status: "failed",
       message: "try again failed to connect with calendar"
