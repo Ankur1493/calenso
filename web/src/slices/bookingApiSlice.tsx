@@ -10,6 +10,16 @@ export const bookingApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createBooking: builder.mutation({
+      query: (data) => {
+        console.log('Attempting to create booking with data:', data);
+        return {
+          url: `${BOOKINGS_URL}`,
+          method: "POST",
+          body: data
+        };
+      }
+    }),
     bookingDetails: builder.query({
       query: (id) => ({
         url: `${BOOKINGS_URL}/${id}`,
@@ -25,4 +35,4 @@ export const bookingApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useBookingsQuery, useBookingDetailsQuery, useCancelBookingMutation } = bookingApiSlice;
+export const { useBookingsQuery, useCreateBookingMutation, useBookingDetailsQuery, useCancelBookingMutation } = bookingApiSlice;

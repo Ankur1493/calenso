@@ -226,6 +226,7 @@ export const createBooking = async (req: Request, res: Response) => {
     return res.status(200).json({
       status: "success",
       message: "booking createad",
+      bookingId: bookingBody._id
     })
   } catch (err) {
     console.log(err)
