@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Landing from "./pages/Landing";
 import Authentication from "./pages/Authentication";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomeLayout from "./pages/HomeLayout";
@@ -11,8 +11,11 @@ import MeetingDetails from "./components/MeetingDetails";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import DispalyOwnerMeetings from "./pages/DispalyOwnerMeetings";
 import BookingDetails from "./pages/BookingDetails";
+import ErrorPage from "./pages/Error";
 
 function App() {
+  const [serverStability, setServerStability] = useState(true);
+
   useEffect(() => {
     const checkServerHealth = () => {
       fetch("http://localhost:8000/health")
@@ -20,22 +23,27 @@ function App() {
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
+          setServerStability(true);
         })
         .catch((error) => {
           console.error("Error checking server health:", error.message);
-          toast.error("we are facing a server downtime, try again later");
+          setServerStability(false);
         });
     };
 
     checkServerHealth();
 
-    const intervalId = setInterval(checkServerHealth, 30000);
+    const intervalId = setInterval(checkServerHealth, 10000);
 
     return () => clearInterval(intervalId);
   }, []);
 
+  if (!serverStability) {
+    return <ErrorPage />;
+  }
+
   return (
-    <div className="w-full bg-black bg-dot-white/[0.2] relative ">
+    <div className="w-full bg-black bg-dot-white/[0.2] relative">
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -56,3 +64,4 @@ function App() {
 }
 
 export default App;
+
