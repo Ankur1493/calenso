@@ -30,7 +30,7 @@ const AvailabilityForm = () => {
     if (!updatedAvailability[dayIndex]) {
       updatedAvailability[dayIndex] = {
         DAY: days[dayIndex],
-        START_TIME: "",
+        START_TIME: "00:00",
         END_TIME: "",
       };
     }
@@ -52,12 +52,16 @@ const AvailabilityForm = () => {
 
   const handleSubmit = async () => {
     const availabilityData = availability.filter((day) => day !== undefined);
+    console.log(availabilityData)
+    if (availabilityData.length === 0) {
+      toast.error("you need to mark atleast one day available")
+      return;
+    }
     dispatch(
       setActiveAvailabilitySchedule({ availabilitySchedule: availabilityData })
     );
     try {
       const response = await createNewMeeting();
-      console.log("Meeting created successfully:", response);
       navigate(`/home/meeting/${response.meetingId}`);
       dispatch(clearActiveMeetingInfo());
       dispatch(clearActiveAvailabilitySchedule());
@@ -90,9 +94,8 @@ const AvailabilityForm = () => {
                         onClick={() => handleSelected(index)}
                       />
                       <div
-                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${
-                          activeDays[index] ? "peer-checked:bg-gray-200" : ""
-                        }`}
+                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${activeDays[index] ? "peer-checked:bg-gray-200" : ""
+                          }`}
                       ></div>
                     </label>
                   </div>

@@ -6,6 +6,7 @@ import {
   IsAvailabilityClicked,
 } from "../slices/isClickedSlice";
 import { setActiveMeetingInfo } from "../slices/meetingSlice";
+import { toast } from "react-toastify"
 
 function MeetingForm() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -13,12 +14,12 @@ function MeetingForm() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState("");
+  const [duration, setDuration] = useState<Number>();
 
   useEffect(() => {
     if (meetingInfo) {
       setTitle(meetingInfo.title);
-      setDuration(String(meetingInfo.duration));
+      setDuration(meetingInfo.duration);
       setDescription(meetingInfo.info);
     }
   }, [meetingInfo]);
@@ -47,6 +48,10 @@ function MeetingForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (title === "" || duration === 0 || description === "") {
+      toast.error("Add all fields");
+      return;
+    }
     dispatch(
       setActiveMeetingInfo({
         meetingInfo: {
@@ -128,7 +133,6 @@ function MeetingForm() {
                 value={duration}
                 onChange={handleDurationChange}
                 placeholder="15"
-                min="5"
               />
               <div className="w-3/12 bg-secondText bg-opacity-20 h-full flex justify-center align-center rounded-e py-2 border border-gray-400">
                 <span className="text-mainText ">Minutes</span>

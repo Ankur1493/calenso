@@ -16,7 +16,7 @@ const SideLinks = ({ name, svg, link, target }: props) => {
     setActive(location.pathname);
   }, [location.pathname]);
 
-  if (link = "/") {
+  if (link === "/mistake") {
     const { userInfo } = useSelector((state: RootState) => state.auth);
     link = `/${userInfo.username}`
   }

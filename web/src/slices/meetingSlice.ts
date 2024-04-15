@@ -52,14 +52,12 @@ const meetingSlice = createSlice({
       state.activeMeetingInfo = {
         meetingInfo: action.payload.meetingInfo,
       };
-      console.log(state.activeMeetingInfo)
     },
     setActiveAvailabilitySchedule: (
       state, action: PayloadAction<{ availabilitySchedule: AvailabilitySchedule[] }>) => {
       state.activeAvailabilitySchedule = {
         availabilitySchedule: action.payload.availabilitySchedule,
       };
-      console.log(state.activeAvailabilitySchedule)
     },
     clearActiveMeetingInfo: (state) => {
       state.activeMeetingInfo = null;

@@ -156,7 +156,12 @@ function Landing() {
               className="flex items-center justify-center p-6 w-full lg:w-8/12 bg-second rounded-3xl md:p-4 md:w-full"
             >
               <div className="flex justify-center text-mainText text-3xl lg:text-2xl xl:text-3xl font-secondHeading w-full">
-                <p>Claim username</p>
+                {userInfo ? (
+                  <p>Go to App</p>
+                )
+                  : (
+                    <p>Claim username</p>
+                  )}
               </div>
             </button>
           </div>
