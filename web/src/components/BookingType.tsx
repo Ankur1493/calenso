@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useBookingsQuery } from "../slices/bookingApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setBookings } from "../slices/bookingSlice";
 import BookingCard from "./BookingCard";
 import { RootState } from "../store";
+import LoadingComponent from "./Loader";
 
 const formatDate = (ISOString) => {
   const date = new Date(ISOString);
@@ -22,8 +23,6 @@ function BookingType({ filter }) {
     const bookingArr = bookings?.bookings?.map((book) => book);
     dispatch(setBookings(bookingArr));
   }, [bookings, dispatch]);
-
-  if (isLoading) return <p>Loading...</p>;
 
   const filteredBookings = () => {
     if (!selectedBooking) return [];
@@ -45,6 +44,9 @@ function BookingType({ filter }) {
         return [];
     }
   };
+  if (isLoading) {
+    return <div className="h-screen w-screen"> <LoadingComponent /> </div>;
+  }
 
   return (
     <div className="px-4">

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useGetUserDetailsQuery } from "../slices/usersApiSlice";
 import { useCreateBookingMutation } from "../slices/bookingApiSlice";
 import { useParams, useNavigate } from "react-router-dom";
+import LoadingComponent from "../components/Loader";
 
 function ScheduleBooking() {
   const [selectedTime, setSelectedTime] = useState(null);
@@ -70,11 +71,7 @@ function ScheduleBooking() {
       "0"
     )}:00`;
     try {
-      console.log(`"START_TIME": "${START_TIME}"`);
-      console.log(meetingId);
       const response = await createBooking({ START_TIME, meetingId }).unwrap();
-      console.log(User.meeting.availability.availableSchedule);
-
       setSelectedTime(null);
       setSelectedDate(new Date());
       setAdditonalNotes("");
@@ -86,7 +83,7 @@ function ScheduleBooking() {
   };
 
   if (isLoading || queryLoading) {
-    return <div className="text-2xl text-white">Loading</div>;
+    return <div className="h-screen w-screen"> <LoadingComponent /> </div>;
   }
 
   if (isError || queryError) {

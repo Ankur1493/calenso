@@ -6,6 +6,7 @@ import { setMeetingIds } from "../slices/meetingSlice";
 import { useEffect } from "react";
 import { Meeting } from "../interfaces/interfaces";
 import { RootState } from "../store";
+import LoadingComponent from "./Loader";
 
 function EventTypes() {
   const dispatch = useDispatch();
@@ -45,7 +46,9 @@ function EventTypes() {
     }
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return <div className="w-screen  h-screen"> <LoadingComponent /> </div>;
+  }
 
   return (
     <div>

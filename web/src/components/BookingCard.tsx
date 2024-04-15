@@ -4,6 +4,7 @@ import { useCancelBookingMutation } from "../slices/bookingApiSlice";
 import { useDispatch } from "react-redux";
 import { markBookingCanceled } from "../slices/bookingSlice";
 import { Link } from "react-router-dom";
+import LoadingComponent from "./Loader";
 function BookingCard({ booking }) {
   const formatDate = (ISOString) => {
     const date = new Date(ISOString);
@@ -34,9 +35,7 @@ function BookingCard({ booking }) {
 
   if (isLoading) {
     return (
-      <div className="text-2xl text-mainText w-full flex justify-center items-center py-8">
-        Loading...
-      </div>
+      <LoadingComponent />
     );
   }
 

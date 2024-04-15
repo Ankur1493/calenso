@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useDisplayMeetingsQuery } from "../slices/meetingsApiSlice";
 import DisplayMeetingCard from "../components/DisplayMeetingCard";
+import LoadingComponent from "../components/Loader";
 
 interface meeting {
   _id: string;
@@ -13,7 +14,7 @@ const DispalyOwnerMeetings = () => {
   const { username } = useParams();
   const { data, isLoading, isError } = useDisplayMeetingsQuery(username);
   if (isLoading) {
-    return <div className="text-2xl text-white h-screen">Loading</div>;
+    return <div className="w-screen  h-screen"> <LoadingComponent /> </div>;
   }
 
   if (isError) {

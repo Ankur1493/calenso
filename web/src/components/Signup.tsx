@@ -6,6 +6,7 @@ import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { RootState } from "../store";
 import { IsConnected } from "../slices/isClickedSlice";
+import LoadingComponent from "./Loader";
 
 function Signup() {
   const localName = useParams().username;
@@ -31,6 +32,9 @@ function Signup() {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+  if (isLoading) {
+    return <div className="w-screen  h-screen"> <LoadingComponent /> </div>;
+  }
 
   useEffect(() => {
     if (userInfo) {
