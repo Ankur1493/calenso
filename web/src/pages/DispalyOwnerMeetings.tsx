@@ -28,7 +28,7 @@ const DispalyOwnerMeetings = () => {
 
   return (
     <div className="h-screen w-screen overflow-y-auto flex flex-col justify-center items-center">
-      <div className="mt-20 mb-12 flex flex-col justify-center items-center">
+      <div className="mt-42 mb-12 flex flex-col justify-center items-center">
         <img
           src={data ? data.userProfile : ""}
           alt="User Profile"
@@ -49,7 +49,7 @@ const DispalyOwnerMeetings = () => {
         ))}
       <div>
         {data.status === "success" && !data.meetings && (
-          <div className="text-white text-3xl">
+          <div className="text-white text-2xl md:text-3xl text-center">
             User Have No meetings, We'll notify them to create some events
           </div>
         )}
