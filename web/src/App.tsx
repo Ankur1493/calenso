@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import Landing from "./pages/Landing";
 import Authentication from "./pages/Authentication";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomeLayout from "./pages/HomeLayout";
@@ -12,6 +13,27 @@ import DispalyOwnerMeetings from "./pages/DispalyOwnerMeetings";
 import BookingDetails from "./pages/BookingDetails";
 
 function App() {
+  useEffect(() => {
+    const checkServerHealth = () => {
+      fetch("http://localhost:8000/health")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .catch((error) => {
+          console.error("Error checking server health:", error.message);
+          toast.error("we are facing a server downtime, try again later");
+        });
+    };
+
+    checkServerHealth();
+
+    const intervalId = setInterval(checkServerHealth, 30000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="w-full bg-black bg-dot-white/[0.2] relative ">
       <Router>
@@ -29,7 +51,6 @@ function App() {
         </Routes>
       </Router>
       <ToastContainer />
-
     </div>
   );
 }
