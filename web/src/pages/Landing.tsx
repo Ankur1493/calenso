@@ -157,7 +157,7 @@ function Landing() {
             >
               <div className="flex justify-center text-mainText text-3xl lg:text-2xl xl:text-3xl font-secondHeading w-full">
                 {userInfo ? (
-                  <p>Go to App</p>
+                  <p>Go to Application</p>
                 )
                   : (
                     <p>Claim username</p>
