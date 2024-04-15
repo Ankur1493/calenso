@@ -83,7 +83,7 @@ export const getMeeting = async (req: Request, res: Response) => {
 export const createMeeting = async (req: Request, res: Response) => {
   const { meetingInfo, availabilitySchedule } = req.body;
   try {
-    if (!meetingInfo || !availabilitySchedule) {
+    if (!meetingInfo || availabilitySchedule.length === 0) {
       return res.status(400).json({
         status: "failed",
         message: "fill all the necessary details"
@@ -100,6 +100,12 @@ export const createMeeting = async (req: Request, res: Response) => {
     }
 
     const { title, duration, info } = meetingInfo;
+    if (!title || !duration || !info) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Fill all the fields"
+      })
+    }
     const availabilityId = availability._id;
     const user = req.user;
 
@@ -227,8 +233,10 @@ export const deleteMeeting = async (req: Request, res: Response) => {
         message: "Meeting not found"
       });
     }
+    console.log(meeting.availability._id)
 
-    await Availability.findByIdAndDelete(meeting.availability);
+    const deleted = await Availability.findByIdAndDelete(meeting.availability._id);
+    console.log(`deleted --------------- ${deleted}`)
 
     await User.findByIdAndUpdate(meeting.user_id, { $pull: { meetings: meeting._id } });
 

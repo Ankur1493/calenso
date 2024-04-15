@@ -30,8 +30,13 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     }
     next();
   } catch (err) {
-    return res.status(400).json({
+    res.cookie("jwt", "", {
+      httpOnly: true,
+      expires: new Date(0)
+    });
+    return res.status(401).json({
       error: "not authorized",
+      message: "Session expired. Please log in again."
     });
   }
 };
