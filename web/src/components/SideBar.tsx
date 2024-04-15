@@ -14,7 +14,12 @@ function SideBar() {
       <div className="flex flex-col justify-between border-r-2 border-secondText w-60 gap-3">
         <div>
           <div className="flex justify-center align-center py-6 pb-4">
-            <LogoutProfile username={userInfo.username} profileUrl={userInfo.profilePicture ? userInfo.profilePicture : null} />
+            <LogoutProfile
+              username={userInfo.username}
+              profileUrl={
+                userInfo.profilePicture ? userInfo.profilePicture : null
+              }
+            />
           </div>
           <div>
             <div>
@@ -25,6 +30,9 @@ function SideBar() {
             </div>
             <div>
               <SideLinks {...navOptions[2].bookingPage} />
+            </div>
+            <div>
+              <SideLinks {...navOptions[3].landingPage} />
             </div>
           </div>
         </div>

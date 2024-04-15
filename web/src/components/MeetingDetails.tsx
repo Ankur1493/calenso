@@ -3,8 +3,13 @@ import { useMeetingDetailsQuery } from "../slices/meetingsApiSlice";
 import { useParams } from "react-router-dom";
 import Delete from "../Hooks/Delete";
 import { days } from "../constants/constants";
+import useCopyToClipboard from "../Hooks/Copy";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 function MeetingDetails() {
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
 
@@ -16,6 +21,9 @@ function MeetingDetails() {
     isError,
     error,
   } = useMeetingDetailsQuery(id);
+
+  const meetingLink = `http://localhost:5173/${userInfo.username}/${id}`;
+  const { isCopied, copyToClipboard } = useCopyToClipboard(meetingLink);
 
   useEffect(() => {}, [id]);
 
@@ -33,8 +41,7 @@ function MeetingDetails() {
 
   return (
     <div className="bg-home h-full px-6 py-3 ">
-      <header className="group bg-transparent flex w-full max-w-full items-center justify-between overflow-hidden py-2 ">
-        {/* Title */}
+      <header className="group bg-transparent flex w-full max-w-full items-center justify-between overflow-hidden py-2 pt-6 ">
         <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
           <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-mainText inline truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl">
             {meetingDetails.meeting.title}
@@ -46,13 +53,14 @@ function MeetingDetails() {
             <button
               data-state="closed"
               type="button"
+              onClick={copyToClipboard}
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default"
               onMouseEnter={() => setShowCopyTooltip(true)}
               onMouseLeave={() => setShowCopyTooltip(false)}
             >
               {showCopyTooltip && (
                 <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
-                  Copy
+                  {isCopied ? "Copied!" : "Copy"}
                 </span>
               )}
               <svg
