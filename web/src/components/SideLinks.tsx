@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { RootState } from "../store";
 interface props {
   name?: string;
   svg?: string;
@@ -14,16 +16,20 @@ const SideLinks = ({ name, svg, link, target }: props) => {
     setActive(location.pathname);
   }, [location.pathname]);
 
+  if (link = "/") {
+    const { userInfo } = useSelector((state: RootState) => state.auth);
+    link = `/${userInfo.username}`
+  }
+
   return (
     <div className="px-2 mt-3">
       <Link
         to={link ? link : "/"}
         target={target}
-        className={`${
-          active == link
-            ? "bg-input bg-opacity-20"
-            : "hover:bg-input hover:bg-opacity-10 hover:text-emphasis"
-        } todesktop:py-[7px] text-default group flex items-center rounded-md px-8 py-3 font-medium transition [&amp;[aria-current='page']]:bg-emphasis [&amp;[aria-current='page']]:text-emphasis mt-0.5 text-sm hover:bg-subtle todesktop:[&amp;[aria-current='page']]:bg-emphasis`}
+        className={`${active == link
+          ? "bg-input bg-opacity-20"
+          : "hover:bg-input hover:bg-opacity-10 hover:text-emphasis"
+          } todesktop:py-[7px] text-default group flex items-center rounded-md px-8 py-3 font-medium transition [&amp;[aria-current='page']]:bg-emphasis [&amp;[aria-current='page']]:text-emphasis mt-0.5 text-sm hover:bg-subtle todesktop:[&amp;[aria-current='page']]:bg-emphasis`}
       >
         <div dangerouslySetInnerHTML={{ __html: svg ? svg : "" }} />
         <span className="hidden ml-4 w-full justify-between text-[19px] lg:flex">
