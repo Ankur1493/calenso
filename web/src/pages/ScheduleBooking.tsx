@@ -1,7 +1,7 @@
 import meet from "../assets/icons/meet.png";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import { isSameMonth } from "date-fns";
+import { isSameMonth, isSameDay } from "date-fns"; // Import isSameDay
 import { meetingTime } from "../constants/constants";
 import TimeCard from "../components/TimeCard";
 import { useEffect, useState } from "react";
@@ -12,9 +12,10 @@ import { useParams, useNavigate } from "react-router-dom";
 
 function ScheduleBooking() {
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState();
   const [additionalNotes, setAdditonalNotes] = useState("");
   const [selectedDetails, setSelectedDetails] = useState(false);
+  const [availableDates, setAvailableDates] = useState([]); // State to store available dates
 
   const navigate = useNavigate();
   const handleDateChange = (newDate) => {
@@ -27,8 +28,12 @@ function ScheduleBooking() {
 
   const { username, id: meetingId } = useParams();
 
-  const { data: User, isError: queryError, isLoading: queryLoading } = useGetUserDetailsQuery({ username, meetingId })
-  const [createBooking, { isError, isLoading }] = useCreateBookingMutation()
+  const {
+    data: User,
+    isError: queryError,
+    isLoading: queryLoading,
+  } = useGetUserDetailsQuery({ username, meetingId });
+  const [createBooking, { isError, isLoading }] = useCreateBookingMutation();
 
   useEffect(() => {
     if (selectedDate && selectedTime) {
@@ -38,15 +43,17 @@ function ScheduleBooking() {
     }
   }, [selectedTime, selectedDate]);
 
-  if (isLoading) {
-    return <div className="text-2xl text-white">Loading</div>;
-  }
+  const tileClassName = ({ date }) => {
+    const isAvailableDate = User.meeting.availability.availableSchedule.some(
+      (schedule) => {
+        const { DAY, START_TIME } = schedule;
+        const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "long" });
+        const startTime = new Date(`1970-01-01T${START_TIME}`);
+        return dayOfWeek === DAY && date.getTime() >= startTime.getTime();
+      }
+    );
 
-  if (isError) {
-    return <div className="text-2xl text-white h-screen">Error</div>;
-  }
-  const tileClassName = ({ date, view }) => {
-    return view === "month" && isSameMonth(date, new Date());
+    return isAvailableDate ? "clickable-date" : "not-clickable-date";
   };
 
   const handleSubmit = async () => {
@@ -66,6 +73,8 @@ function ScheduleBooking() {
       console.log(`"START_TIME": "${START_TIME}"`);
       console.log(meetingId);
       const response = await createBooking({ START_TIME, meetingId }).unwrap();
+      console.log(User.meeting.availability.availableSchedule);
+
       setSelectedTime(null);
       setSelectedDate(new Date());
       setAdditonalNotes("");
@@ -80,7 +89,7 @@ function ScheduleBooking() {
     return <div className="text-2xl text-white">Loading</div>;
   }
 
-  if (queryError) {
+  if (isError || queryError) {
     return <div className="text-2xl text-white h-screen">Error</div>;
   }
 
@@ -127,9 +136,9 @@ function ScheduleBooking() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="lucide lucide-clock relative z-20 mr-2 mt-[2px] h-4 w-4 flex-shrink-0 rtl:ml-2 text-mainText"
                   >
                     <circle cx="12" cy="12" r="10"></circle>
@@ -193,39 +202,54 @@ function ScheduleBooking() {
             color: #000000;
           }
 
-          .react-calendar__tile {
-            background: transparent;
-            transition: opacity 0.2s ease;
-            border: none;
-            color: #fff
-          }
-          
-          .react-calendar__tile--active {
-            background: #D9D9D9 !important;
-            color: #000000;
-            border-radius: 5px;
-          }
-          
-          .react-calendar__tile--hasActive {
-            background: transparent; 
-          }
-          
-          .react-calendar__tile:hover {
-            border: none; 
-            background: input !important;
-            opacity:0.4;
-            color: black;
-            border-radius: 5px
-          }
-          
-          .text-white {
-            color: #FFFFFF; 
-          }
-
           .react-calendar__month-view__weekdays__weekday {
             color: #D9D9D9;
             opacity: 0.7;
             padding-bottom: 20px;
+            font:"Poppins", "sans-serif"
+          }
+
+          .react-calendar__tile {
+            background: transparent;
+            transition: opacity 0.2s ease;
+            border: none;
+            color: #fff;
+          }
+
+          .clickable-date {
+            border: none; 
+            background-color: #929599 !important;
+            opacity: 0.5;
+            color: black;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+
+          .clickable-date:hover{
+            background-color: #121212 !important;
+            color: white;
+            opacity:1;
+          }
+
+          .react-calendar__tile--active {
+            background: #121212 !important;
+            color: #fff;
+            opacity: 1;
+            border-radius: 5px;
+          }
+          
+          .react-calendar__tile--hasActive {
+            color: black; 
+          }
+
+          .not-clickable-date {
+            cursor: not-allowed !important;
+            pointer-events: none; 
+          }
+          
+          .not-clickable-date:hover {
+            background-color: transparent !important;
+            color: inherit !important;
           }
         `}
               </style>
@@ -233,11 +257,12 @@ function ScheduleBooking() {
                 onChange={(date: Date) => {
                   handleDateChange(date);
                 }}
+                tileClassName={tileClassName}
               />
             </div>
 
             <div className="flex flex-col w-[200px] border-l border-gray-400 border-opacity-40">
-              <div className="p-4">
+              <div className="p-4 h-14">
                 <span className="font-heading text-mainText ">
                   {selectedDate &&
                     selectedDate.toLocaleDateString("en-US", {
@@ -281,12 +306,12 @@ function ScheduleBooking() {
                   data-testid="confirm-book-button"
                   type="submit"
                   onClick={handleSubmit}
-                  className="whitespace-nowrap w-full py-3 text-center text-sm font-medium relative rounded-lg transition disabled:cursor-not-allowed bg-input bg-opacity-50 hover:bg-opacity-90 font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main"
+                  className="whitespace-nowrap w-full py-3 text-center text-sm font-medium relative rounded-lg transition disabled:cursor-not-allowed bg-input bg-opacity-50 hover:bg-opacity-90 font-heading hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-default text-main font-heading"
                 >
                   Schedule Meeting
                 </button>
               ) : (
-                <div className="rounded-lg w-full cursor-not-allowed text-white font-medium text-center border text-sm py-3">
+                <div className="rounded-lg w-full cursor-not-allowed text-mainText font-heading bg-home font-medium text-center border text-sm py-3">
                   Select date and time
                 </div>
               )}
