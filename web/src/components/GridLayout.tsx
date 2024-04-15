@@ -2,15 +2,15 @@ import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
 
 import booking from "../assets/images/booking.png";
 import meeting from "../assets/images/meeting.png";
-import bookings from "../assets/images/bookings.png"
-import create from "../assets/images/create.png"
-import displayMeeting from "../assets/images/displayMeetings.jpeg"
-import bookingDetails from "../assets/images/bookingDetails.png"
-import claimUsername from "../assets/images/claimUsername.jpeg"
+import bookings from "../assets/images/bookings.png";
+import create from "../assets/images/create.png";
+import displayMeeting from "../assets/images/displayMeetings.jpeg";
+import bookingDetails from "../assets/images/bookingDetails.png";
+import claimUsername from "../assets/images/claimUsername.jpeg";
 
 export function GridLayout() {
   return (
-    <BentoGrid className="max-w-8xl mx-20 ">
+    <BentoGrid className="max-w-8xl mx-8 md:mx-20 ">
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
@@ -44,7 +44,8 @@ const items = [
   },
   {
     title: "Get instant confirmation",
-    description: "After you create a booking, you will get an confirmation with all the details",
+    description:
+      "After you create a booking, you will get an confirmation with all the details",
     header: <Skeleton image1={bookingDetails} />,
   },
   {
@@ -54,7 +55,8 @@ const items = [
   },
   {
     title: "Have meetings which suits you both",
-    description: "Earlier we had to go through a lot of hassle to have a discussion at a same time, it can be anything from interviews to appointments, now let us take care of that",
+    description:
+      "Earlier we had to go through a lot of hassle to have a discussion at a same time, it can be anything from interviews to appointments, now let us take care of that",
     header: <Skeleton image1={meeting} />,
   },
   {
@@ -64,12 +66,14 @@ const items = [
   },
   {
     title: "Let others book a slot",
-    description: "You can and should share this page with others to let them interact with you",
+    description:
+      "You can and should share this page with others to let them interact with you",
     header: <Skeleton image1={displayMeeting} />,
   },
   {
     title: "Start your journey by claiming a username",
-    description: "Claim a username and let's start this journey and celebrate every milestone. Let the adventure begin!",
+    description:
+      "Claim a username and let's start this journey and celebrate every milestone. Let the adventure begin!",
     header: <Skeleton image1={claimUsername} />,
   },
 ];

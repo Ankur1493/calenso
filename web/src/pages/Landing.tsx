@@ -10,20 +10,20 @@ import { toast } from "react-toastify";
 
 function Landing() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const localName = userInfo?.username || ""
-  const [username, setUsername] = useState(localName)
+  const localName = userInfo?.username || "";
+  const [username, setUsername] = useState(localName);
   const navigate = useNavigate();
   const handleUsernameSubmission = () => {
     if (username.length > 0) {
       if (!userInfo) {
-        navigate(`/register/${username}`)
+        navigate(`/register/${username}`);
       } else {
-        navigate("/home/event-types")
+        navigate("/home/event-types");
       }
     } else {
-      toast.error("write a proper username")
+      toast.error("write a proper username");
     }
-  }
+  };
   return (
     <div className="relative">
       <div>
@@ -151,7 +151,10 @@ function Landing() {
             </div>
           </div>
           <div className="w-11/12 lg:w-4/12 flex justify-center items-center">
-            <button onClick={handleUsernameSubmission} className="flex items-center justify-center p-6 w-full lg:w-8/12 bg-second rounded-3xl md:p-4 md:w-full">
+            <button
+              onClick={handleUsernameSubmission}
+              className="flex items-center justify-center p-6 w-full lg:w-8/12 bg-second rounded-3xl md:p-4 md:w-full"
+            >
               <div className="flex justify-center text-mainText text-3xl lg:text-2xl xl:text-3xl font-secondHeading w-full">
                 <p>Claim username</p>
               </div>
@@ -165,7 +168,7 @@ function Landing() {
             </p>
           </div>
         </div>
-        <div className="mt-12 md:mt-24 px-6">
+        <div className="mt-12 md:mt-24 md:px-6">
           <GridLayout />
         </div>
         <div className="flex justify-center mt-16 md:mt-32">
