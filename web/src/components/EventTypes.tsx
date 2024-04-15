@@ -36,18 +36,23 @@ function EventTypes() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const profilePicture = params.get('profilePicture');
+    const profilePicture = params.get("profilePicture");
     if (profilePicture) {
-      const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       userInfo.profilePicture = profilePicture;
-      localStorage.setItem('userInfo', JSON.stringify(userInfo));
-      localStorage.setItem("isConnected", "true")
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      localStorage.setItem("isConnected", "true");
       dispatch(IsConnected());
     }
   }, []);
 
   if (isLoading) {
-    return <div className="w-screen  h-screen"> <LoadingComponent /> </div>;
+    return (
+      <div className="w-screen  h-screen">
+        {" "}
+        <LoadingComponent />{" "}
+      </div>
+    );
   }
 
   return (
@@ -55,11 +60,11 @@ function EventTypes() {
       <div className="flex items-center px-6 py-8 ">
         <header className="flex w-full max-w-full items-center truncate">
           <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
-            <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-emphasis truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl hidden text-mainText">
+            <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-emphasis truncate font-semibold tracking-wide sm:text-xl xl:max-w-full text-xl text-mainText">
               Event Types
             </h3>
             <p
-              className="font-heading hidden text-sm md:block text-mainText"
+              className="font-heading text-sm text-mainText"
               data-testid="subtitle"
             >
               Create events to share for people to book on your calendar.

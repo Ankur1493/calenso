@@ -8,13 +8,13 @@ function Bookings() {
     <div>
       <div className="max-w-full px-2 pt-8 lg:px-6">
         <div className="flex items-center">
-          <header className="flex w-full max-w-full items-center truncate">
-            <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
-              <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-mainText truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl hidden">
+          <header className="flex w-full max-w-full items-center">
+            <div className="w-full ">
+              <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-mainText truncate font-semibold tracking-wide sm:text-xl xl:max-w-full text-xl">
                 Bookings
               </h3>
               <p
-                className="font-heading text-mainText hidden text-sm md:block"
+                className="font-heading text-mainText text-sm"
                 data-testid="subtitle"
               >
                 See upcoming and past events booked through your event type

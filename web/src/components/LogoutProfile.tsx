@@ -1,17 +1,23 @@
 import { useState } from "react";
 import Logout from "../Hooks/Logout";
 
-const LogoutProfile = ({ username, profileUrl }: { username: string, profileUrl?: string }) => {
+const LogoutProfile = ({
+  username,
+  profileUrl,
+}: {
+  username: string;
+  profileUrl?: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { handleLogout } = Logout();
   return (
     <div className="relative">
       <button
-        className="bg-second text-white font-bold mt-2 w-40 py-1 px-3 rounded-[8px] text-[20px] inline-flex items-center hover:bg-input hover:bg-opacity-40"
+        className="bg-second text-white font-bold mt-2 lg:w-40 py-1 px-3 rounded-[8px] text-[20px] inline-flex items-center hover:bg-input hover:bg-opacity-40"
         onClick={() => setIsOpen(!isOpen)}
       >
         <img src={profileUrl} className="w-6 rounded-[20px] mr-3" />
-        <span className="font-heading mr-1">{username}</span>
+        <span className="font-heading mr-1 hidden lg:block">{username}</span>
         <svg
           className=" w-full h-4"
           fill="none"
