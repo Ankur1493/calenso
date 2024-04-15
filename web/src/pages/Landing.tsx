@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import github from "../assets/icons/github.png";
-import calender from "../assets/images/landing-cal-1.jpeg";
+import calender from "../assets/images/landing.png";
 import { GridLayout } from "../components/GridLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";

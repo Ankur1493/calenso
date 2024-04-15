@@ -1,29 +1,23 @@
 import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
-import {
-  IconArrowWaveRightUp,
-  IconBoxAlignRightFilled,
-  IconBoxAlignTopLeft,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
 
 import booking from "../assets/images/booking.png";
 import meeting from "../assets/images/meeting.png";
-import successBooking from "../assets/images/successBooking.png";
+import bookings from "../assets/images/bookings.png"
+import create from "../assets/images/create.png"
+import displayMeeting from "../assets/images/displayMeetings.jpeg"
+import bookingDetails from "../assets/images/bookingDetails.png"
+import claimUsername from "../assets/images/claimUsername.jpeg"
 
 export function GridLayout() {
   return (
-    <BentoGrid className="max-w-7xl mx-auto">
+    <BentoGrid className="max-w-8xl mx-20 ">
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
           title={item.title}
           description={item.description}
           header={item.header}
-          icon={item.icon}
-          className={i === 3 || i === 6 ? "md:col-span-2" : ""}
+          className={i === 3 || i === 6 ? " md:col-span-2 m-1" : "m-1"}
         />
       ))}
     </BentoGrid>
@@ -44,46 +38,38 @@ const Skeleton = ({ image1 }) => (
 );
 const items = [
   {
-    title: "The Dawn of Innovation",
-    description: "Explore the birth of groundbreaking ideas.",
+    title: "Schedule events with others",
+    description: "Book a time with other users to interact with them",
     header: <Skeleton image1={booking} />,
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Digital Revolution",
-    description: "Dive into the transformative power of technology.",
-    header: <Skeleton image1={successBooking} />,
-    icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
+    title: "Get instant confirmation",
+    description: "After you create a booking, you will get an confirmation with all the details",
+    header: <Skeleton image1={bookingDetails} />,
   },
   {
-    title: "The Art of Design",
-    description: "Discover the beauty of thoughtful and functional design.",
+    title: "Interact with great UI",
+    description: "Discover the beauty of thoughtful and functional design",
+    header: <Skeleton image1={bookings} />,
+  },
+  {
+    title: "Have meetings which suits you both",
+    description: "Earlier we had to go through a lot of hassle to have a discussion at a same time, it can be anything from interviews to appointments, now let us take care of that",
     header: <Skeleton image1={meeting} />,
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Power of Communication",
-    description:
-      "Understand the impact of effective communication in our lives.",
-    header: <Skeleton image1={meeting} />,
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    title: "Customize acc. to your schedule",
+    description: "You can easily create an event, which works for you",
+    header: <Skeleton image1={create} />,
   },
   {
-    title: "The Pursuit of Knowledge",
-    description: "Join the quest for understanding and enlightenment.",
-    header: <Skeleton image1={booking} />,
-    icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
+    title: "Let others book a slot",
+    description: "You can and should share this page with others to let them interact with you",
+    header: <Skeleton image1={displayMeeting} />,
   },
   {
-    title: "The Joy of Creation",
-    description: "Experience the thrill of bringing ideas to life.",
-    header: <Skeleton image1={successBooking} />,
-    icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
-  },
-  {
-    title: "The Spirit of Adventure",
-    description: "Embark on exciting journeys and thrilling discoveries.",
-    header: <Skeleton image1={successBooking} />,
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    title: "Start your journey by claiming a username",
+    description: "Claim a username and let's start this journey and celebrate every milestone. Let the adventure begin!",
+    header: <Skeleton image1={claimUsername} />,
   },
 ];

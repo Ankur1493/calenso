@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Login from '../components/Login'
 import Signup from '../components/Signup'
-import calender from "../assets/images/landing-cal-1.jpeg";
+import landingImage from "../assets/images/landing.png"
 
 function Authentication() {
   const [alreadySigned, setAlreadySigned] = useState(false)
@@ -15,7 +15,7 @@ function Authentication() {
           <div className="flex justify-start items-start h-full">
             <div className="w-1/2 h-full rounded-3xl shadow-sm shadow-gray-600">
               <div className='h-[600px] bg-input rounded-t-3xl'>
-                <img src={calender} className='w-full h-full border-b-[0.5px] border-b-gray-400' />
+                <img src={landingImage} className='w-full h-full border-b-[0.5px] border-b-gray-400' />
               </div>
               <div className='flex flex-row my-6 px-4'>
                 <div className='px-2 w-4/12'><p>We will take care of your meetings you focus on completing your task</p></div>
