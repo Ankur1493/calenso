@@ -14,6 +14,7 @@ function MeetingCard({ meeting }) {
 
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
+  const [showPreviewTooltip, setShowPreviewTooltip] = useState(false);
 
   const meetingLink = `http://localhost:5173/${userInfo.username}/${meeting._id}`;
   const { isCopied, copyToClipboard } = useCopyToClipboard(meetingLink);
@@ -67,8 +68,15 @@ function MeetingCard({ meeting }) {
             <Link
               to={`/${userInfo.username}/${meeting._id}`}
               target="_blank"
+              onMouseEnter={() => setShowPreviewTooltip(true)}
+              onMouseLeave={() => setShowPreviewTooltip(false)}
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default hover:bg-home"
             >
+              {showPreviewTooltip && (
+                <span className="tooltip absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-[12px] px-2 py-1 ">
+                  Preview
+                </span>
+              )}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
