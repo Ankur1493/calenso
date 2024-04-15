@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSignupMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
@@ -8,7 +8,8 @@ import { RootState } from "../store";
 import { IsConnected } from "../slices/isClickedSlice";
 
 function Signup() {
-  const [username, setUsername] = useState("");
+  const localName = useParams().username;
+  const [username, setUsername] = useState(localName || "");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

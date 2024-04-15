@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/register" element={<Authentication />} />
+          <Route path="/register/:username?" element={<Authentication />} />
           <Route path="/Home" element={<HomeLayout />}>
             <Route path="meeting/:id" element={<MeetingDetails />} />
             <Route path="event-types" element={<EventTypes />}></Route>
