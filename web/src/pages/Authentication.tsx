@@ -54,7 +54,7 @@ function Authentication() {
                 - - - - - &nbsp; OR &nbsp; - - - - -
               </span>
               <p
-                className="my-4 cursor-pointer text-[20px] w-64 text-mainText text-md font-heading font-semibold"
+                className="my-4 cursor-pointer text-[20px] w-64 text-mainText text-center text-md font-heading font-semibold"
                 onClick={() => {
                   handleSign();
                 }}

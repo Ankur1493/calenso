@@ -83,7 +83,12 @@ function ScheduleBooking() {
   };
 
   if (isLoading || queryLoading) {
-    return <div className="h-screen w-screen"> <LoadingComponent /> </div>;
+    return (
+      <div className="h-screen w-screen">
+        {" "}
+        <LoadingComponent />{" "}
+      </div>
+    );
   }
 
   if (isError || queryError) {
@@ -91,12 +96,12 @@ function ScheduleBooking() {
   }
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen overflow-y-auto">
-      <div className="flex bg-second w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
+    <div className="flex justify-center items-center w-screen h-screen overflow-y-auto pt-56 md:pt-0">
+      <div className="flex bg-second mx-4 lg:mx-0 my-4 mt-80 md:mt-0 lg:w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
         <div className="flex flex-col border border-gray-200 border-opacity-60 rounded-md">
-          <div className="flex  flex-wrap border-b border-gray-200 border-opacity-100">
+          <div className="flex justify-center flex-wrap md:flex-nowrap border-b border-gray-200 border-opacity-100">
             <div
-              className="p-6 pr-20 bg-second border-r border-r-gray-200 border-opacity-40 "
+              className="p-6 pr-20 bg-second border-b border-b-gray-200 md:border-r md:border-b-none border-r-gray-200 border-opacity-40 "
               data-testid="event-meta"
             >
               <ul className="flex items-center">
@@ -166,7 +171,7 @@ function ScheduleBooking() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center mt-12 md:mt-0">
               <style>
                 {`
           .react-calendar {
@@ -258,8 +263,8 @@ function ScheduleBooking() {
               />
             </div>
 
-            <div className="flex flex-col w-[200px] border-l border-gray-400 border-opacity-40">
-              <div className="p-4 h-14">
+            <div className="flex flex-col w-[200px] border-t md:border-l md:border-t-none mt-16 md:mt-0 border-gray-400 border-opacity-40">
+              <div className="md:p-4 h-14">
                 <span className="font-heading text-mainText ">
                   {selectedDate &&
                     selectedDate.toLocaleDateString("en-US", {
