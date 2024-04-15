@@ -151,6 +151,14 @@ export const createBooking = async (req: Request, res: Response) => {
     }
 
     const ownerUserEmail = ownerUser.email as string;
+    if (ownerUserEmail === guestUser.email) {
+      return res.status(400).json({
+        status: "failed",
+        message: "You can't create a booking with yourself"
+      })
+    }
+
+
     const accessToken = guestUser.googleAccessToken as string;
 
     if (!accessToken) {
