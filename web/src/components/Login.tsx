@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { IsConnected } from "../slices/isClickedSlice";
-import LoadingComponent from "./Loader";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -23,9 +22,6 @@ function Login() {
       navigate("/home/event-types");
     }
   }, [userInfo, navigate]);
-  if (isLoading) {
-    return <div className="w-screen  h-screen"> <LoadingComponent /> </div>;
-  }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
