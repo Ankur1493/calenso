@@ -39,6 +39,9 @@ function BookingCard({ booking }) {
     );
   }
 
+  const currentDate = new Date();
+  const cancelStatus = new Date(booking.startTime) < currentDate && !booking.canceled
+
   return (
     <div className="p-2">
       <div className="group bg-second flex w-full max-w-full items-center justify-between overflow-hidden px-4 py-5 sm:px-6 border border-gray-400 rounded-[8px]">
@@ -104,7 +107,7 @@ function BookingCard({ booking }) {
             </div>
           )}
 
-          {booking && !booking.canceled && (
+          {booking && !booking.canceled && !cancelStatus && (
             <div className="mt-4 hidden sm:mt-0 sm:flex">
               <div className="flex justify-between space-x-2 rtl:space-x-reverse rounded-md border hover:border-black border-default  hover:bg-red-400 hover:text-home">
                 <button
