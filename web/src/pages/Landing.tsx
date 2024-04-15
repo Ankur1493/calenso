@@ -1,14 +1,29 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import github from "../assets/icons/github.png";
 import calender from "../assets/images/landing.png";
 import { GridLayout } from "../components/GridLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { MovingCards } from "../components/MovingCards";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Landing() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-
+  const localName = userInfo?.username || ""
+  const [username, setUsername] = useState(localName)
+  const navigate = useNavigate();
+  const handleUsernameSubmission = () => {
+    if (username.length > 0) {
+      if (!userInfo) {
+        navigate(`/register/${username}`)
+      } else {
+        navigate("/home/event-types")
+      }
+    } else {
+      toast.error("write a proper username")
+    }
+  }
   return (
     <div className="relative">
       <div>
@@ -125,15 +140,18 @@ function Landing() {
             <div className="w-9/12 h-full rounded-e-3xl p-8 bg-input">
               <div className="flex items-center h-full">
                 <input
+                  disabled={userInfo ? true : false}
                   type="text"
                   placeholder="Calenso123"
-                  className="border-none decoration-none w-full md:text-1xl xl:text-2xl bg-transparent focus:outline-none"
+                  className="border-none font-heading decoration-none w-full md:text-1xl xl:text-2xl bg-transparent focus:outline-none"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             </div>
           </div>
           <div className="w-11/12 lg:w-4/12 flex justify-center items-center">
-            <button className="flex items-center justify-center p-6 w-full lg:w-8/12 bg-second rounded-3xl md:p-4 md:w-full">
+            <button onClick={handleUsernameSubmission} className="flex items-center justify-center p-6 w-full lg:w-8/12 bg-second rounded-3xl md:p-4 md:w-full">
               <div className="flex justify-center text-mainText text-3xl lg:text-2xl xl:text-3xl font-secondHeading w-full">
                 <p>Claim username</p>
               </div>
