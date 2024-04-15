@@ -14,7 +14,12 @@ const DispalyOwnerMeetings = () => {
   const { username } = useParams();
   const { data, isLoading, isError } = useDisplayMeetingsQuery(username);
   if (isLoading) {
-    return <div className="w-screen  h-screen"> <LoadingComponent /> </div>;
+    return (
+      <div className="w-screen  h-screen">
+        {" "}
+        <LoadingComponent />{" "}
+      </div>
+    );
   }
 
   if (isError) {
@@ -22,8 +27,8 @@ const DispalyOwnerMeetings = () => {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center">
-      <div className="mb-12 flex flex-col justify-center items-center">
+    <div className="h-screen w-screen overflow-y-auto flex flex-col justify-center items-center">
+      <div className="mt-20 mb-12 flex flex-col justify-center items-center">
         <img
           src={data ? data.userProfile : ""}
           alt="User Profile"
