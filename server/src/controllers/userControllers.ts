@@ -53,7 +53,7 @@ export const userLogin = async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
       profilePicture: user.profilePicUrl ? user.profilePicUrl : null,
-      firstName: user.firstName ? user.firstName : null
+      firstName: user.firstName ? user.firstName : null,
     });
   } catch (err) {
     return res.status(500).json({
@@ -135,12 +135,12 @@ export const userLogout = (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => {
   try {
     const username = req.params.username;
-    const meetingId = req.params.meetingId
+    const meetingId = req.params.meetingId;
     if (!meetingId) {
       return res.status(400).json({
         status: "failed",
-        message: "try again"
-      })
+        message: "try again",
+      });
     }
     const user = await User.findOne({ username });
     if (!user) {
@@ -149,27 +149,31 @@ export const getUser = async (req: Request, res: Response) => {
         message: "user doesn't exist",
       });
     }
-    const authorizedMeeting = user.meetings.findIndex(meeting => meeting.toString() === meetingId);
+    const authorizedMeeting = user.meetings.findIndex(
+      (meeting) => meeting.toString() === meetingId
+    );
     if (authorizedMeeting === -1) {
       return res.status(400).json({
         status: "failed",
-        message: "wrong meeting accessed"
-      })
+        message: "wrong meeting accessed",
+      });
     }
 
     const meeting = await Meeting.findById(meetingId).populate("availability");
     if (!meeting) {
       return res.status(400).json({
         status: "failed",
-        message: "try again"
-      })
+        message: "try again",
+      });
     }
 
     res.status(200).json({
       message: "here's your user",
       username: user.username,
       userProfile: user.profilePicUrl,
-      meeting
+      firstName: user.firstName ? user.firstName : null,
+      lastName: user.lastName ? user.lastName : null,
+      meeting,
     });
   } catch (err) {
     return res.status(400).json({

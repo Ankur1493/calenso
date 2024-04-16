@@ -91,6 +91,10 @@ function ScheduleBooking() {
     );
   }
 
+  const name = User.firstName
+    ? `${User.firstName} ${User.lastName}`
+    : User.username;
+
   if (isError || queryError) {
     return <div className="text-2xl text-white h-screen">Error</div>;
   }
@@ -109,11 +113,11 @@ function ScheduleBooking() {
                   <a data-state="closed" href={`/${User.username}`}>
                     <span
                       data-testid="avatar"
-                      className="bg-emphasis item-center relative inline-flex aspect-square justify-center rounded-full align-top overflow-hidden border-subtle w-6 h-6 min-w-6 min-h-6"
+                      className="bg-emphasis item-center relative inline-flex aspect-square justify-center rounded-full align-top overflow-hidden border-subtle w-10 h-10 min-w-6 min-h-6"
                     >
                       <img
                         alt="Ankur Sharma"
-                        className="aspect-square rounded-full w-6 h-6 min-w-6 min-h-6"
+                        className="aspect-square rounded-full w-full min-w-6 min-h-6"
                         src={User ? User.userProfile : ""}
                       />
                     </span>
@@ -121,7 +125,7 @@ function ScheduleBooking() {
                 </li>
               </ul>
               <p className="text-input text-opacity-50 mt-2 text-sm font-heading font-semibold">
-                {User ? User.username : ""}
+                {name}
               </p>
               <h1
                 data-testid="event-title"

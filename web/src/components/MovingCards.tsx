@@ -1,5 +1,7 @@
 import React from "react";
 import InfiniteMovingCards from "./ui/infiniteMovingCards";
+import doctor from "../assets/images/doctor-patient.jpg";
+import employee from "../assets/images/employee-candidate.png";
 
 export function MovingCards() {
   return (
