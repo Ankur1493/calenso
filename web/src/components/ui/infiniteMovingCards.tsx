@@ -87,25 +87,27 @@ const InfiniteMovingCards: React.FC<Props> = ({
             style={{
               background: "#1E1F20",
             }}
-            key={item.name}
+            key={item.title}
           >
             <blockquote>
-              <div
-                aria-hidden="true"
-                className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100% + 4px)] w-[calc(100% + 4px)]"
-              ></div>
-              <span className="relative z-20 text-sm leading-[1.6] text-gray-100 font-normal">
-                {item.quote}
-              </span>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                <span className="flex flex-col gap-1">
-                  <span className="text-sm leading-[1.6] text-gray-400 font-normal">
-                    {item.name}
-                  </span>
-                  <span className="text-sm leading-[1.6] text-gray-400 font-normal">
-                    {item.title}
-                  </span>
-                </span>
+              <div className="flex justify-center items-center mt-8">
+                <div className="flex flex-row">
+                  <div className="w-1/2 h-full">
+                    <img src={item.image} alt="Description of the image" />
+                  </div>
+                  <div className="w-1/2 flex flex-col ml-6">
+                    <div className="flex justify-center items-center">
+                      <span className="text-2xl leading-[1.6] text-mainText font-heading">
+                        {item.title}
+                      </span>
+                    </div>
+                    <div className="flex">
+                      <span className="text-sm text-justify leading-[1.6] text-gray-400 font-heading">
+                        {item.quote}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </blockquote>
           </li>
