@@ -26,7 +26,7 @@ function MeetingDetails() {
   const meetingLink = `http://localhost:5173/${userInfo.username}/${id}`;
   const { isCopied, copyToClipboard } = useCopyToClipboard(meetingLink);
 
-  useEffect(() => { }, [id]);
+  useEffect(() => {}, [id]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -42,14 +42,14 @@ function MeetingDetails() {
 
   return (
     <div className="bg-home h-full px-6 py-3 ">
-      <header className="group bg-transparent flex w-full max-w-full items-center justify-between overflow-hidden py-2 pt-6 ">
+      <header className="group bg-transparent flex w-full max-w-full items-center justify-between overflow-hidden py-2 pt-12 md:pt-6 ">
         <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
           <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-mainText inline truncate font-semibold tracking-wide sm:text-xl md:block xl:max-w-full text-xl">
             {meetingDetails.meeting.title}
           </h3>
         </div>
 
-        <div className="mt-4 hidden sm:mt-0 sm:flex">
+        <div className="mt-4 sm:mt-0 sm:flex">
           <div className="flex justify-between space-x-2 rtl:space-x-reverse">
             <Link
               to={`/${userInfo.username}/${id}`}
@@ -148,7 +148,6 @@ function MeetingDetails() {
         </h3>
       </div>
 
-      {/* Meeting Information */}
       <div className="border-subtle space-y-6 rounded-lg border p-6 mt-6">
         <div className="">
           <label
@@ -237,7 +236,7 @@ function MeetingDetails() {
                     <span className="w-20 font-medium sm:w-32 text-mainText font-heading">
                       {day}
                     </span>
-                    <div className="space-y-3 text-right pl-20">
+                    <div className="space-y-3 text-right pl-8 md:pl-20">
                       {schedule && schedule.START_TIME && schedule.END_TIME ? (
                         <div className="text-mainText font-heading flex items-center leading-4">
                           <span className="w-16 sm:w-28 sm:text-left">

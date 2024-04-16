@@ -11,17 +11,6 @@ interface props {
 const SideLinks = ({ name, svg, link, target }: props) => {
   const location = useLocation();
   const [active, setActive] = useState(location.pathname);
-  const [isSidebarVisible, setSidebarVisible] = useState(
-    window.innerWidth <= 1100
-  );
-  useEffect(() => {
-    const handleResize = () => {
-      setSidebarVisible(window.innerWidth <= 1100);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     setActive(location.pathname);
@@ -37,17 +26,17 @@ const SideLinks = ({ name, svg, link, target }: props) => {
       <Link
         to={link ? link : "/"}
         target={target}
-        className={`${active == link
-          ? "bg-input bg-opacity-20"
-          : "hover:bg-input hover:bg-opacity-10 hover:text-emphasis"
-          } text-default group flex items-center justify-center rounded-md px-8 py-3 font-medium transition mt-0.5 text-sm hover:bg-subtle`}
+        className={`${
+          active == link
+            ? "bg-input bg-opacity-20"
+            : "hover:bg-input hover:bg-opacity-10 hover:text-emphasis"
+        } text-default group flex items-center justify-center rounded-md px-8 py-3 font-medium transition mt-0.5 text-sm hover:bg-subtle`}
       >
         <div dangerouslySetInnerHTML={{ __html: svg ? svg : "" }} />
-        {
-          !isSidebarVisible &&
-          <span className="ml-2 lg:ml-4 lg:w-full justify-between text-lg lg:flex">
-            <div className="text-mainText">{name}</div>
-          </span>}
+
+        <span className="ml-2 lg:ml-4 lg:w-full justify-between text-lg lg:flex">
+          <div className="text-mainText">{name}</div>
+        </span>
       </Link>
     </div>
   );

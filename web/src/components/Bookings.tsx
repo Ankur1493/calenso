@@ -6,7 +6,7 @@ function Bookings() {
 
   return (
     <div>
-      <div className="max-w-full px-2 pt-8 lg:px-6">
+      <div className="max-w-full px-2 pt-12 md:pt-8 lg:px-6">
         <div className="flex items-center">
           <header className="flex w-full max-w-full items-center">
             <div className="w-full ">

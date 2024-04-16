@@ -57,7 +57,7 @@ function EventTypes() {
 
   return (
     <div>
-      <div className="flex items-center px-6 py-8 ">
+      <div className="flex items-center px-6 py-12 md:py-8 ">
         <header className="flex w-full max-w-full items-center truncate">
           <div className="w-full truncate ltr:mr-4 rtl:ml-4 md:block">
             <h3 className="font-heading max-w-28 sm:max-w-72 md:max-w-80 text-emphasis font-semibold  sm:text-xl xl:max-w-full text-xl text-mainText">

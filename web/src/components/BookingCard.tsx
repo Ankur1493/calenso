@@ -34,13 +34,12 @@ function BookingCard({ booking }) {
   };
 
   if (isLoading) {
-    return (
-      <LoadingComponent />
-    );
+    return <LoadingComponent />;
   }
 
   const currentDate = new Date();
-  const cancelStatus = new Date(booking.startTime) < currentDate && !booking.canceled
+  const cancelStatus =
+    new Date(booking.startTime) < currentDate && !booking.canceled;
 
   return (
     <div className="p-2">
@@ -65,7 +64,7 @@ function BookingCard({ booking }) {
                 {formatTime(booking.startTime)} - {formatTime(booking.endTime)}
               </p>
             </div>
-            <div className="text-subtle ml-16">
+            <div className="text-subtle w-80 ml-16">
               <ul className="flex flex-col flex-wrap gap-x-2">
                 <li>
                   <span className="text-mainText font-heading font-medium ">

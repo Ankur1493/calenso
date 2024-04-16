@@ -53,7 +53,7 @@ function HomeLayout() {
     <div className="relative">
       {window.innerWidth < 768 && (
         <button
-          className="fixed top-4 right-4 z-50 bg-gray-800 rounded-full p-2 text-white"
+          className="fixed top-4 right-6 z-50 bg-gray-800 rounded-full p-2 text-white"
           onClick={() => setSidebarVisible(!isSidebarVisible)}
         >
           <svg
@@ -85,17 +85,19 @@ function HomeLayout() {
       )}
 
       <div
-        className={`bg-second flex h-screen ${isMeetingClicked || (isConnectClicked && !isConnected)
+        className={`bg-second flex h-screen ${
+          isMeetingClicked || (isConnectClicked && !isConnected)
             ? "blur-sm opacity-90"
             : ""
-          }`}
+        }`}
       >
         {isSidebarVisible && (
           <div
-            className={`w-1/5 bg-sidebar ${window.innerWidth >= 768
+            className={`w-1/5 bg-sidebar ${
+              window.innerWidth >= 768
                 ? "h-screen"
                 : "absolute inset-0 w-56 z-10"
-              }`}
+            }`}
           >
             <SideBar />
           </div>
