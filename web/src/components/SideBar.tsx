@@ -11,7 +11,7 @@ function SideBar() {
 
   return (
     <div className="bg-sidebar flex h-screen md:static">
-      <div className="flex flex-col justify-between border-r-2 border-secondText w-60 gap-3">
+      <div className="flex flex-col justify-between border-r-2 border-secondText w-full gap-3">
         <div>
           <div className="flex justify-center align-center py-6 pb-4">
             <LogoutProfile

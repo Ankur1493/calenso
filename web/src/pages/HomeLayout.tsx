@@ -23,11 +23,11 @@ function HomeLayout() {
 
   const [isSidebarVisible, setSidebarVisible] = useState(
     window.innerWidth >= 768
-  ); // Initially set sidebar visible if screen is larger than or equal to md
+  );
 
   useEffect(() => {
     const handleResize = () => {
-      setSidebarVisible(window.innerWidth >= 768); // Show sidebar if screen is larger than or equal to md
+      setSidebarVisible(window.innerWidth >= 768);
     };
 
     window.addEventListener("resize", handleResize);
@@ -85,19 +85,17 @@ function HomeLayout() {
       )}
 
       <div
-        className={`bg-second flex h-screen ${
-          isMeetingClicked || (isConnectClicked && !isConnected)
+        className={`bg-second flex h-screen ${isMeetingClicked || (isConnectClicked && !isConnected)
             ? "blur-sm opacity-90"
             : ""
-        }`}
+          }`}
       >
         {isSidebarVisible && (
           <div
-            className={`w-1/5 bg-sidebar ${
-              window.innerWidth >= 768
+            className={`w-1/5 bg-sidebar ${window.innerWidth >= 768
                 ? "h-screen"
                 : "absolute inset-0 w-56 z-10"
-            }`}
+              }`}
           >
             <SideBar />
           </div>
