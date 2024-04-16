@@ -10,8 +10,8 @@ function SideBar() {
   const { handleLogout } = Logout();
 
   return (
-    <div className="bg-sidebar flex h-screen md:static md:h-auto">
-      <div className="flex flex-col justify-between border-r-2 border-secondText lg:w-60 gap-3">
+    <div className="bg-sidebar flex h-screen md:static">
+      <div className="flex flex-col justify-between border-r-2 border-secondText w-60 gap-3">
         <div>
           <div className="flex justify-center align-center py-6 pb-4">
             <LogoutProfile

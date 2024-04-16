@@ -65,20 +65,20 @@ function HomeLayout() {
             <path
               d="M3 12h18"
               stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <path
               d="M3 6h18"
               stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
             <path
               d="M3 18h18"
               stroke="white"
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
           </svg>
         </button>
@@ -91,15 +91,21 @@ function HomeLayout() {
             : ""
         }`}
       >
-        <div className="w-full bg-home overflow-y-auto h-screen">
-          <Outlet />
-        </div>
-
         {isSidebarVisible && (
-          <div className="absolute top-0 left-0 h-screen">
+          <div
+            className={`w-1/5 bg-sidebar ${
+              window.innerWidth >= 768
+                ? "h-screen"
+                : "absolute inset-0 w-56 z-10"
+            }`}
+          >
             <SideBar />
           </div>
         )}
+
+        <div className="w-full bg-home overflow-y-auto h-screen">
+          <Outlet />
+        </div>
       </div>
 
       {isMeetingClicked && <CreateMeeting />}
