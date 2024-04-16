@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useDisplayMeetingsQuery } from "../slices/meetingsApiSlice";
 import DisplayMeetingCard from "../components/DisplayMeetingCard";
 import LoadingComponent from "../components/Loader";
-import noProfile from "../assets/images/noProfile.png"
+import noProfile from "../assets/images/noProfile.png";
 
 interface meeting {
   _id: string;
@@ -26,7 +26,9 @@ const DispalyOwnerMeetings = () => {
   if (isError) {
     return <div className="text-2xl text-white h-screen">Error</div>;
   }
-  const name = data.firstName ? `${data.firstName} ${data.lastName}` : data.username
+  const name = data.firstName
+    ? `${data.firstName} ${data.lastName}`
+    : data.username;
 
   return (
     <div className="h-screen w-screen overflow-y-auto flex flex-col justify-center items-center">
@@ -42,11 +44,12 @@ const DispalyOwnerMeetings = () => {
         data.meetings.length > 0 &&
         data.meetings.map((meeting: meeting) => (
           <DisplayMeetingCard
-            username={username || ""}
+            key={meeting._id}
             id={meeting._id}
             title={meeting.title}
             duration={meeting.duration}
             info={meeting.info}
+            username={username || ""}
           />
         ))}
       <div>

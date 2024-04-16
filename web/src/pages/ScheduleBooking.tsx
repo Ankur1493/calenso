@@ -1,26 +1,56 @@
 import meet from "../assets/icons/meet.png";
 import "react-calendar/dist/Calendar.css";
 import Calendar from "react-calendar";
-import { isSameMonth, isSameDay } from "date-fns"; // Import isSameDay
-import { meetingTime } from "../constants/constants";
 import TimeCard from "../components/TimeCard";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useGetUserDetailsQuery } from "../slices/usersApiSlice";
 import { useCreateBookingMutation } from "../slices/bookingApiSlice";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import LoadingComponent from "../components/Loader";
+import { useNavigate } from "react-router-dom";
+
+function getScheduleForSelectedDate(selectedDate, availableSchedules) {
+  const selectedDay = selectedDate.toLocaleDateString("en-us", {
+    weekday: "long",
+  });
+
+  for (const schedule of availableSchedules) {
+    if (schedule.DAY === selectedDay) {
+      return {
+        startTime: schedule.START_TIME,
+        endTime: schedule.END_TIME,
+      };
+    }
+  }
+
+  return null;
+}
 
 function ScheduleBooking() {
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState("");
   const [additionalNotes, setAdditonalNotes] = useState("");
   const [selectedDetails, setSelectedDetails] = useState(false);
-  const [availableDates, setAvailableDates] = useState([]); // State to store available dates
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (selectedDate) {
+      setSelectedDay(
+        selectedDate.toLocaleDateString("en-US", {
+          weekday: "short",
+        })
+      );
+    }
+  }, [selectedDate]);
+
   const handleDateChange = (newDate) => {
     setSelectedDate(newDate);
+    console.log(selectedDate);
+    console.log(User.meeting.availability.availableSchedule);
+    console.log(getScheduleForSelectedDate(selectedDate, availableSchedules));
   };
 
   const handleTimeSelect = (time: string | null) => {
@@ -59,7 +89,7 @@ function ScheduleBooking() {
 
   const handleSubmit = async () => {
     const [hours, minutes] = selectedTime?.split(":").map(Number);
-    const combinedDateTime = selectedDate;
+    const combinedDateTime = new Date(selectedDate);
     combinedDateTime.setHours(hours, minutes, 0, 0);
     const START_TIME = `${combinedDateTime.getFullYear()}-${String(
       combinedDateTime.getMonth() + 1
@@ -75,7 +105,7 @@ function ScheduleBooking() {
       setSelectedTime(null);
       setSelectedDate(new Date());
       setAdditonalNotes("");
-      navigate(`/bookings/${response?.bookingId}`);
+      navigate(`/bookings/${response.bookingId}`);
       toast.success(response.message);
     } catch (err) {
       toast.error(err?.data?.message || err?.error);
@@ -95,8 +125,38 @@ function ScheduleBooking() {
     ? `${User.firstName} ${User.lastName}`
     : User.username;
 
-  if (isError || queryError) {
-    return <div className="text-2xl text-white h-screen">Error</div>;
+  const availableSchedules = User.meeting.availability.availableSchedule;
+
+  const { startTime, endTime } = getScheduleForSelectedDate(
+    selectedDate,
+    availableSchedules
+  );
+  const [startHour, startMinute] = startTime.split(":").map(Number);
+  const [endHour, endMinute] = endTime.split(":").map(Number);
+  const duration = User.meeting.duration; // Assuming this is in minutes
+
+  const intervals = [];
+  const intervalStart = new Date(selectedDate);
+  intervalStart.setHours(startHour, startMinute, 0, 0);
+
+  const scheduleEndTime = new Date(selectedDate);
+  scheduleEndTime.setHours(endHour, endMinute, 0, 0);
+
+  let currentTime = new Date(intervalStart);
+
+  while (
+    currentTime.getTime() + duration * 60000 <=
+    scheduleEndTime.getTime()
+  ) {
+    intervals.push(
+      currentTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+    );
+
+    currentTime = new Date(currentTime.getTime() + duration * 60000);
   }
 
   return (
@@ -116,7 +176,7 @@ function ScheduleBooking() {
                       className="bg-emphasis item-center relative inline-flex aspect-square justify-center rounded-full align-top overflow-hidden border-subtle w-10 h-10 min-w-6 min-h-6"
                     >
                       <img
-                        alt="Ankur Sharma"
+                        alt="Profile"
                         className="aspect-square rounded-full w-full min-w-6 min-h-6"
                         src={User ? User.userProfile : ""}
                       />
@@ -270,22 +330,21 @@ function ScheduleBooking() {
             <div className="flex flex-col w-[200px] border-t md:border-l md:border-t-none mt-16 md:mt-0 border-gray-400 border-opacity-40">
               <div className="md:p-4 h-14">
                 <span className="font-heading text-mainText ">
-                  {selectedDate &&
-                    selectedDate.toLocaleDateString("en-US", {
-                      weekday: "short",
-                    })}{" "}
-                  {selectedDate && selectedDate.getDate()}
+                  {selectedDay &&
+                    selectedDate &&
+                    `${selectedDay} ${selectedDate.getDate()}`}
                 </span>
               </div>
               <div className="w-full flex flex-col items-center h-[282px] overflow-y-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-black">
-                {meetingTime.map((time, index) => (
-                  <TimeCard
-                    key={index}
-                    time={time}
-                    isSelected={selectedTime === time}
-                    onSelect={handleTimeSelect}
-                  />
-                ))}
+                {intervals &&
+                  intervals.map((time, index) => (
+                    <TimeCard
+                      key={index}
+                      time={time}
+                      isSelected={selectedTime === time}
+                      onSelect={handleTimeSelect}
+                    />
+                  ))}
               </div>
               <div></div>
             </div>

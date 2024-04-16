@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useTruncatedDescription from '../Hooks/useTruncateDescription';
+import useTruncatedDescription from "../Hooks/useTruncateDescription";
 
 interface props {
   id: string;
@@ -13,8 +13,11 @@ const DisplayMeetingCard = ({ id, title, duration, info, username }: props) => {
   const truncatedInfo = useTruncatedDescription(info);
 
   return (
-    <div className="lg:h-[100px] h-[150px] border border-gray-400 px-4 my-2 rounded-lg w-10/12 sm:w-8/12 bg-second text-white cursor-pointer" key={id}>
-      <Link to={`/${username}/${id}`}>
+    <div
+      className="lg:h-[100px] h-[150px] border border-gray-400 px-4 my-2 rounded-lg w-10/12 sm:w-8/12 bg-second text-white cursor-pointer"
+      key={id}
+    >
+      <Link to={`/${username}/${id}`} key={id}>
         <div className="flex flex-col justify-around h-full py-2">
           <div className="flex w-full justify-between">
             <div className="text-3xl">{title}</div>
@@ -28,4 +31,3 @@ const DisplayMeetingCard = ({ id, title, duration, info, username }: props) => {
 };
 
 export default DisplayMeetingCard;
-
