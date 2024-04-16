@@ -10,7 +10,7 @@ function SideBar() {
   const { handleLogout } = Logout();
 
   return (
-    <div className="bg-sidebar flex h-screen">
+    <div className="bg-sidebar flex h-screen md:static md:h-auto">
       <div className="flex flex-col justify-between border-r-2 border-secondText lg:w-60 gap-3">
         <div>
           <div className="flex justify-center align-center py-6 pb-4">
@@ -36,10 +36,10 @@ function SideBar() {
             </div>
           </div>
         </div>
-        <div className=" p-2 px-5 mb-6 flex justify-center items-center">
+        <div className="p-2 px-5 mb-6 flex justify-center items-center">
           <button
             id="logout"
-            className="border text-[24px] text-white hover:text-black [&amp;[aria-current='page']]:bg-emphasis text-default group flex items-center justify-center rounded-[30px] gap-2 py-3 font-medium transition [&amp;[aria-current='page']]:text-emphasis mt-0.5 w-full text-sm hover:text-emphasis hover:bg-input hover:bg-opacity-70 "
+            className="border text-[24px] text-white hover:text-black [&amp;[aria-current='page']]:bg-emphasis text-default group flex items-center justify-center rounded-[30px] gap-2 py-3 font-medium transition [&amp;[aria-current='page']]:text-emphasis mt-0.5 w-full text-sm hover:text-emphasis hover:bg-input hover:bg-opacity-70"
             onClick={handleLogout}
           >
             Logout

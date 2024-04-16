@@ -33,8 +33,8 @@ const SideLinks = ({ name, svg, link, target }: props) => {
         } text-default group flex items-center rounded-md px-8 py-3 font-medium transition mt-0.5 text-sm hover:bg-subtle`}
       >
         <div dangerouslySetInnerHTML={{ __html: svg ? svg : "" }} />
-        <span className="hidden lg:ml-4 lg:w-full justify-between text-lg lg:flex">
-          <div className="hidden lg:block text-mainText">{name}</div>
+        <span className="ml-2 lg:ml-4 lg:w-full justify-between text-lg lg:flex">
+          <div className="text-mainText">{name}</div>
         </span>
       </Link>
     </div>

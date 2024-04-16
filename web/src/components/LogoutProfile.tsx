@@ -17,7 +17,7 @@ const LogoutProfile = ({
         onClick={() => setIsOpen(!isOpen)}
       >
         <img src={profileUrl} className="w-6 rounded-[20px] mr-3" />
-        <span className="font-heading mr-1 hidden lg:block">{username}</span>
+        <span className="font-heading mr-1">{username}</span>
         <svg
           className=" w-full h-4"
           fill="none"

@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
-import SideBar from "../components/SideBar";
 import { useSelector } from "react-redux";
 import { RootState } from "../store.ts";
 import CreateMeeting from "../components/CreateMeeting.tsx";
 import { IsConnectClicked } from "../slices/isClickedSlice.ts";
 import Connect from "../components/Connect.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import SideBar from "../components/SideBar";
 
 function HomeLayout() {
   const dispatch = useDispatch();
@@ -14,13 +14,25 @@ function HomeLayout() {
   const isMeetingClicked = useSelector(
     (state: RootState) => state.isClicked.isMeetingFormClicked
   );
-
   const isConnectClicked = useSelector(
     (state: RootState) => state.isClicked.isConnectClicked
   );
   const isConnected = useSelector(
     (state: RootState) => state.isClicked.isConnected
   );
+
+  const [isSidebarVisible, setSidebarVisible] = useState(
+    window.innerWidth >= 768
+  ); // Initially set sidebar visible if screen is larger than or equal to md
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSidebarVisible(window.innerWidth >= 768); // Show sidebar if screen is larger than or equal to md
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     let intervalId = null;
@@ -33,13 +45,45 @@ function HomeLayout() {
         handleConnectClick();
       }, 2000);
     }
-    return () => {
-      clearInterval(intervalId);
-    };
+
+    return () => clearInterval(intervalId);
   }, [isConnectClicked, isConnected, dispatch]);
 
   return (
     <div className="relative">
+      {window.innerWidth < 768 && (
+        <button
+          className="fixed top-4 right-4 z-50 bg-gray-800 rounded-full p-2 text-white"
+          onClick={() => setSidebarVisible(!isSidebarVisible)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M3 12h18"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M3 6h18"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M3 18h18"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      )}
+
       <div
         className={`bg-second flex h-screen ${
           isMeetingClicked || (isConnectClicked && !isConnected)
@@ -47,11 +91,17 @@ function HomeLayout() {
             : ""
         }`}
       >
-        <SideBar />
         <div className="w-full bg-home overflow-y-auto h-screen">
           <Outlet />
         </div>
+
+        {isSidebarVisible && (
+          <div className="absolute top-0 left-0 h-screen">
+            <SideBar />
+          </div>
+        )}
       </div>
+
       {isMeetingClicked && <CreateMeeting />}
       {isConnectClicked && !isConnected && <Connect />}
     </div>
