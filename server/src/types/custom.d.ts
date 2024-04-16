@@ -5,6 +5,8 @@ interface IUser {
   username: string;
   password: string;
   email: string;
+  firstName?: string;
+  lastName?: string;
   profilePicUrl?: string;
   googleId?: string;
   googleAccessToken?: string;

@@ -8,14 +8,18 @@ import { sideLinks as navOptions } from "../constants/constants";
 function SideBar() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const { handleLogout } = Logout();
-
+  const Storage = JSON.parse(localStorage.getItem("userInfo") || "{}");
+  const first = Storage?.firstName || null;
+  console.log(first)
+  console.log(userInfo.firstName)
+  console.log(userInfo.username)
   return (
     <div className="bg-sidebar flex h-screen md:static">
       <div className="flex flex-col justify-between border-r-2 border-secondText w-full gap-3">
         <div>
           <div className="flex justify-center align-center py-6 pb-4">
             <LogoutProfile
-              username={userInfo.username}
+              name={first || userInfo.firstName || userInfo.username}
               profileUrl={
                 userInfo.profilePicture ? userInfo.profilePicture : null
               }

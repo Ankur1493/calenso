@@ -53,6 +53,7 @@ export const userLogin = async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
       profilePicture: user.profilePicUrl ? user.profilePicUrl : null,
+      firstName: user.firstName ? user.firstName : null
     });
   } catch (err) {
     return res.status(500).json({

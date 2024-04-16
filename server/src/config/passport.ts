@@ -23,7 +23,9 @@ passport.use(new GoogleStrategy({
             googleId: profile.id,
             googleAccessToken: accessToken,
             googleRefreshToken: refreshToken,
-            profilePicUrl: profilePicUrl
+            profilePicUrl: profilePicUrl,
+            firstName: profile.name?.givenName || "",
+            lastName: profile.name?.familyName || ""
           }
         },
         { new: true }

@@ -21,7 +21,7 @@ router.get('/callback',
     if (!req.isAuthenticated()) {
       return res.redirect('http://localhost:5173/auth/google/failure');
     }
-    res.redirect(`http://localhost:5173/home/event-types?profilePicture=${req.user.profilePicUrl}`);
+    res.redirect(`http://localhost:5173/home/event-types?profilePicture=${req.user.profilePicUrl}&firstName=${req.user.firstName}`);
   }
 );
 

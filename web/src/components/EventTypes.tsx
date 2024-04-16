@@ -37,9 +37,13 @@ function EventTypes() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const profilePicture = params.get("profilePicture");
+    const firstName = params.get("firstName");
     if (profilePicture) {
       const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
       userInfo.profilePicture = profilePicture;
+      if (firstName) {
+        userInfo.firstName = firstName;
+      }
       localStorage.setItem("userInfo", JSON.stringify(userInfo));
       localStorage.setItem("isConnected", "true");
       dispatch(IsConnected());

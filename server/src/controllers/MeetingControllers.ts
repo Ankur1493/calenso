@@ -270,8 +270,9 @@ export const displayAllUserMeetings = async (req: Request, res: Response) => {
         status: "success",
         message: "User have not createad any event",
         username: userExists.username,
-        userProfile: userExists.profilePicUrl ? userExists.profilePicUrl : null
-
+        userProfile: userExists.profilePicUrl ? userExists.profilePicUrl : null,
+        firstName: userExists.firstName ? userExists.firstName : null,
+        lastName: userExists.lastName ? userExists.lastName : null
       })
     }
 
@@ -280,7 +281,9 @@ export const displayAllUserMeetings = async (req: Request, res: Response) => {
       message: "Here's your Meetings",
       meetings: userExists.meetings,
       username: userExists.username,
-      userProfile: userExists.profilePicUrl ? userExists.profilePicUrl : null
+      userProfile: userExists.profilePicUrl ? userExists.profilePicUrl : null,
+      firstName: userExists.firstName ? userExists.firstName : null,
+      lastName: userExists.lastName ? userExists.lastName : null
     })
 
   } catch (err) {

@@ -2,13 +2,26 @@ import { useState, useEffect } from "react";
 import Logout from "../Hooks/Logout";
 
 const LogoutProfile = ({
-  username,
+  name,
   profileUrl,
 }: {
-  username: string;
+  name: string;
   profileUrl?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSidebarVisible, setSidebarVisible] = useState(
+    window.innerWidth >= 768
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSidebarVisible(window.innerWidth >= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   const { handleLogout } = Logout();
   return (
@@ -18,7 +31,11 @@ const LogoutProfile = ({
         onClick={() => setIsOpen(!isOpen)}
       >
         <img src={profileUrl} className="w-6 rounded-[20px] mr-3" />
-        {<span className="font-heading mr-1">{username}</span>}
+
+        {
+          isSidebarVisible &&
+          <span className="font-heading mr-1">{name}</span>
+        }
         <svg
           className=" w-full h-4"
           fill="none"
@@ -33,7 +50,7 @@ const LogoutProfile = ({
             d="M19 9l-7 7-7-7"
           />
         </svg>
-      </button>
+      </button >
       {isOpen && (
         <div className="origin-top-right absolute left-0 mt-2 w-40 rounded-md shadow-lg bg-second ring-1 ring-black ring-opacity-5">
           <div
@@ -41,13 +58,6 @@ const LogoutProfile = ({
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            <a
-              href="#profile"
-              className="block h-1/2 rounded-t-md px-4 py-2 text-sm text-mainText font-heading hover:bg-input hover:bg-opacity-40"
-              role="menuitem"
-            >
-              Profile
-            </a>
             <button
               onClick={handleLogout}
               className="block h-1/2 w-full text-left rounded-b-md px-4 py-2 text-sm text-mainText font-heading hover:bg-input hover:bg-opacity-40"
@@ -57,7 +67,7 @@ const LogoutProfile = ({
           </div>
         </div>
       )}
-    </div>
+    </div >
   );
 };
 
