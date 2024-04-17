@@ -10,12 +10,13 @@ import LoadingComponent from "./Loader";
 
 function EventTypes() {
   const dispatch = useDispatch();
+  //@ts-ignore
   const {
     data: meetings = [],
     isError,
     isLoading,
     refetch,
-  } = useMeetingsQuery();
+  } = useMeetingsQuery(undefined);
 
   const selectedMeetings = useSelector(
     (state: RootState) => state?.meetings?.meetings

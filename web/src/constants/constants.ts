@@ -14,7 +14,6 @@ export const days = [
 ];
 
 export const timeOptions = [
-  "00:00",
   "01:00",
   "02:00",
   "03:00",
@@ -38,6 +37,7 @@ export const timeOptions = [
   "21:00",
   "22:00",
   "23:00",
+  "00:00"
 ];
 
 const userInfo = localStorage.getItem("userInfo");

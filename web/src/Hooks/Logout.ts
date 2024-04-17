@@ -12,8 +12,8 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await logout().unwrap();
-      dispatch(removeCredentials());
+      const res = await logout(undefined).unwrap();
+      dispatch(removeCredentials(undefined));
       navigate("/register");
       toast.success(res.message);
     } catch (err) {

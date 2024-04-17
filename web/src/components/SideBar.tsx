@@ -10,9 +10,7 @@ function SideBar() {
   const { handleLogout } = Logout();
   const Storage = JSON.parse(localStorage.getItem("userInfo") || "{}");
   const first = Storage?.firstName || null;
-  console.log(first)
-  console.log(userInfo.firstName)
-  console.log(userInfo.username)
+
   return (
     <div className="bg-sidebar flex h-screen md:static">
       <div className="flex flex-col justify-between border-r-2 border-secondText w-full gap-3">

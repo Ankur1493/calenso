@@ -5,13 +5,12 @@ import { useDispatch } from "react-redux";
 import { markBookingCanceled } from "../slices/bookingSlice";
 import { Link } from "react-router-dom";
 import LoadingComponent from "./Loader";
-import { ErrorResponse } from "../interfaces/interfaces";
-import { DateTimeFormatOptions } from "@types/node";
+import { ErrorResponse, Booking } from "../interfaces/interfaces";
 
-function BookingCard({ booking }) {
+function BookingCard({ booking }: { booking: Booking }) {
   const formatDate = (ISOString: string) => {
     const date = new Date(ISOString);
-    const options: DateTimeFormatOptions = {
+    const options: Intl.DateTimeFormatOptions = {
       weekday: "short",
       month: "short",
       day: "numeric",
@@ -47,6 +46,7 @@ function BookingCard({ booking }) {
 
   const currentDate = new Date();
   const cancelStatus =
+    //@ts-ignore
     new Date(booking.startTime) < currentDate && !booking.canceled;
 
   return (
@@ -63,13 +63,15 @@ function BookingCard({ booking }) {
                 className="text-mainText font-heading "
                 data-testid="event-type-title-705355"
               >
-                {formatDate(booking.startTime)}
+                {//@ts-ignore 
+                  formatDate(booking.startTime)}
               </p>
               <p
                 className="text-input text-[15px] opacity-80 font-heading"
                 data-testid="event-type-title-705355"
               >
-                {formatTime(booking.startTime)} - {formatTime(booking.endTime)}
+                { //@ts-ignore
+                  formatTime(booking.startTime)} - {formatTime(booking.endTime)}
               </p>
             </div>
             <div className="text-subtle w-80 ml-16">

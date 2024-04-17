@@ -5,22 +5,26 @@ import { setBookings } from "../slices/bookingSlice";
 import BookingCard from "./BookingCard";
 import { RootState } from "../store";
 import LoadingComponent from "./Loader";
+import { Booking } from "../interfaces/interfaces";
 
-const formatDate = (ISOString) => {
+interface BookingTypeProps {
+  filter: 'upcoming' | 'past' | 'cancelled';
+}
+//@ts-ignore
+const formatDate = (ISOString: string) => {
   const date = new Date(ISOString);
-  const options = { weekday: "short", month: "short", day: "numeric" };
+  const options: Intl.DateTimeFormatOptions = { weekday: "short", month: "short", day: "numeric" };
   return date.toLocaleDateString("en-US", options);
 };
 
-function BookingType({ filter }) {
+function BookingType({ filter }: BookingTypeProps) {
   const dispatch = useDispatch();
-  const { data: bookings = [], isLoading, isError } = useBookingsQuery();
+  const { data: bookings = [], isLoading, isError } = useBookingsQuery(undefined);
   const selectedBooking = useSelector(
     (state: RootState) => state?.bookings?.bookings
   );
-
   useEffect(() => {
-    const bookingArr = bookings?.bookings?.map((book) => book);
+    const bookingArr = bookings?.bookings?.map((book: Booking) => book);
     dispatch(setBookings(bookingArr));
   }, [bookings, dispatch]);
 
@@ -31,11 +35,13 @@ function BookingType({ filter }) {
       case "upcoming":
         return selectedBooking.filter(
           (booking) =>
+            //@ts-ignore
             new Date(booking.startTime) > currentDate && !booking.canceled
         );
       case "past":
         return selectedBooking.filter(
           (booking) =>
+            //@ts-ignore
             new Date(booking.startTime) < currentDate && !booking.canceled
         );
       case "cancelled":
@@ -51,13 +57,14 @@ function BookingType({ filter }) {
   return (
     <div className="px-4">
       {isError ? (
-        <p>Error fetching bookings: {isError.message}</p>
+        <p>Error fetching bookings</p>
       ) : (
         <div>
           {filteredBookings().length > 0 ? (
             filteredBookings().map((booking) => (
-              <div>
-                <BookingCard booking={booking} />
+              < div >
+                {//@ts-ignore
+                  <BookingCard booking={booking} />}
               </div>
             ))
           ) : (

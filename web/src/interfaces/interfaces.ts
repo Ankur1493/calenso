@@ -39,3 +39,23 @@ export interface Meeting {
   duration: number;
   info: string;
 }
+
+export interface Booking {
+  _id: string;
+  canceled: boolean;
+  createdAt: string;
+  description: string;
+  endTime?: string;
+  startTime?: string;
+  first_user: string;
+  guestUser: string;
+  meeting_id: string;
+  title: string;
+  updatedAt: string;
+  event: event;
+}
+
+interface event {
+  calendarEventId: string;
+  meetLink: string;
+}
