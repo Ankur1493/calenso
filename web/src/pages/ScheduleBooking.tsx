@@ -127,38 +127,40 @@ function ScheduleBooking() {
 
   const availableSchedules = User.meeting.availability.availableSchedule;
 
-  const { startTime, endTime } = getScheduleForSelectedDate(
-    selectedDate,
-    availableSchedules
-  );
-  const [startHour, startMinute] = startTime.split(":").map(Number);
-  const [endHour, endMinute] = endTime.split(":").map(Number);
-  const duration = User.meeting.duration; // Assuming this is in minutes
 
-  const intervals = [];
-  const intervalStart = new Date(selectedDate);
-  intervalStart.setHours(startHour, startMinute, 0, 0);
+  const scheduleDetails = getScheduleForSelectedDate(selectedDate, availableSchedules);
 
-  const scheduleEndTime = new Date(selectedDate);
-  scheduleEndTime.setHours(endHour, endMinute, 0, 0);
+  let intervals = [];
 
-  let currentTime = new Date(intervalStart);
+  if (scheduleDetails) {
+    const { startTime, endTime } = scheduleDetails;
+    const [startHour, startMinute] = startTime.split(":").map(Number);
+    const [endHour, endMinute] = endTime.split(":").map(Number);
+    const duration = User.meeting.duration;
 
-  while (
-    currentTime.getTime() + duration * 60000 <=
-    scheduleEndTime.getTime()
-  ) {
-    intervals.push(
-      currentTime.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      })
-    );
+    const intervalStart = new Date(selectedDate);
+    intervalStart.setHours(startHour, startMinute, 0, 0);
 
-    currentTime = new Date(currentTime.getTime() + duration * 60000);
+    const scheduleEndTime = new Date(selectedDate);
+    scheduleEndTime.setHours(endHour, endMinute, 0, 0);
+
+    let currentTime = new Date(intervalStart);
+
+    while (
+      currentTime.getTime() + duration * 60000 <=
+      scheduleEndTime.getTime()
+    ) {
+      intervals.push(
+        currentTime.toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        })
+      );
+
+      currentTime = new Date(currentTime.getTime() + duration * 60000);
+    }
   }
-
   return (
     <div className="flex justify-center items-center w-screen h-screen overflow-y-auto pt-56 md:pt-0">
       <div className="flex bg-second mx-4 lg:mx-0 my-4 mt-80 md:mt-0 lg:w-8/12 justify-center items-center p-12 border border-gray-400 rounded-md border-opacity-40">
@@ -335,8 +337,9 @@ function ScheduleBooking() {
                     `${selectedDay} ${selectedDate.getDate()}`}
                 </span>
               </div>
+
               <div className="w-full flex flex-col items-center h-[282px] overflow-y-auto scrollbar-thin scrollbar-thumb-black scrollbar-track-black">
-                {intervals &&
+                {intervals.length > 0 ? (
                   intervals.map((time, index) => (
                     <TimeCard
                       key={index}
@@ -344,9 +347,11 @@ function ScheduleBooking() {
                       isSelected={selectedTime === time}
                       onSelect={handleTimeSelect}
                     />
-                  ))}
+                  ))
+                ) : (
+                  <div className="text-gray-400 text-center">Select a date to see user available time</div>
+                )}
               </div>
-              <div></div>
             </div>
           </div>
           <div className="p-6 pt-8">
