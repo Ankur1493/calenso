@@ -12,15 +12,18 @@ const BookingDetails = () => {
   const dispatch = useDispatch();
   const { data, isError, isLoading } = useBookingDetailsQuery(bookingId);
   const Booking = data?.booking;
-  const startingIn = getMeetingTimeStatus(Booking?.startTime);
-  const isOccured = Date.now() < new Date(Booking?.startTime).getTime();
+  const startingIn = Booking ? getMeetingTimeStatus(Booking.startTime) : "";
+  const isOccured = Booking
+    ? Date.now() < new Date(Booking.startTime).getTime()
+    : false;
+
   const [cancel, { isLoading: isLoadingCancel, isError: isErrorCancel }] =
     useCancelBookingMutation();
 
   const cancelBooking = async () => {
-    const bookingId = Booking._id;
+    if (!Booking) return;
     try {
-      const response = await cancel(bookingId).unwrap();
+      const response = await cancel(Booking._id).unwrap();
       if (response) {
         dispatch(markBookingCanceled(bookingId));
         toast.success("booking canceled");
