@@ -83,33 +83,35 @@ const InfiniteMovingCards: React.FC<Props> = ({
       >
         {items.map((item, idx) => (
           <li
-            className="w-[350px] max-w-full font-heading relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px] lg:w-[600px] h-[300px]"
+            className="w-[350px] max-w-full font-heading relative rounded-2xl shadow-md border flex-shrink-0 border-slate-700 px-8 py-3 flex justify-center items-center md:w-[450px] lg:w-[600px] h-[300px]"
             style={{
               background: "#1E1F20",
             }}
             key={item.title}
           >
-            <blockquote>
-              <div className="flex justify-center items-center mt-8">
-                <div className="flex flex-row">
-                  <div className="w-1/2 h-full">
-                    <img src={item.image} alt="Description of the image" />
+            <div className="flex justify-center items-center">
+              <div className="flex flex-row h-[200px]">
+                <div className="w-1/2 h-200px flex justify-center items-center ">
+                  <img
+                    src={item.image}
+                    alt="Description of the image"
+                    className="h-full w-full rounded-md"
+                  />
+                </div>
+                <div className="w-2/3 flex flex-col ml-6">
+                  <div className="flex items-left">
+                    <span className="text-2xl leading-[1.6] text-left text-mainText font-heading">
+                      {item.title}
+                    </span>
                   </div>
-                  <div className="w-1/2 flex flex-col ml-6">
-                    <div className="flex justify-center items-center">
-                      <span className="text-2xl leading-[1.6] text-mainText font-heading">
-                        {item.title}
-                      </span>
-                    </div>
-                    <div className="flex">
-                      <span className="text-sm text-justify leading-[1.6] text-gray-400 font-heading">
-                        {item.quote}
-                      </span>
-                    </div>
+                  <div className="flex">
+                    <span className="text-sm text-justify leading-[1.6] text-gray-400 font-heading">
+                      {item.quote}
+                    </span>
                   </div>
                 </div>
               </div>
-            </blockquote>
+            </div>
           </li>
         ))}
       </ul>

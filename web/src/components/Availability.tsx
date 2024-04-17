@@ -52,15 +52,40 @@ const AvailabilityForm = () => {
 
   const handleSubmit = async () => {
     const availabilityData = availability.filter((day) => day !== undefined);
-    console.log(availabilityData)
     if (availabilityData.length === 0) {
-      toast.error("you need to mark atleast one day available")
+      toast.error("you need to mark atleast one day available");
       return;
     }
-    dispatch(
-      setActiveAvailabilitySchedule({ availabilitySchedule: availabilityData })
-    );
+    const timeErrors = [];
     try {
+      const filteredData = availabilityData.map((data) => {
+        const start = Number(data.START_TIME.substring(0, 2));
+        let end = Number(data.END_TIME.substring(0, 2));
+        if (end == 0) end = 24;
+
+        if (start === end) {
+          timeErrors.push(1);
+        }
+        const status = end - start;
+
+        if (status <= 0) {
+          timeErrors.push(1);
+        } else {
+          return data;
+        }
+      });
+
+      if (timeErrors.length > 0) {
+        toast.error("Select a proper time interval");
+        return;
+      }
+
+      console.log(filteredData);
+      dispatch(
+        setActiveAvailabilitySchedule({
+          availabilitySchedule: filteredData,
+        })
+      );
       const response = await createNewMeeting();
       navigate(`/home/meeting/${response.meetingId}`);
       dispatch(clearActiveMeetingInfo());
@@ -69,7 +94,7 @@ const AvailabilityForm = () => {
       dispatch(IsMeetingFormClicked());
       toast.success(response.message);
     } catch (error) {
-      console.error("Error creating meeting:", error);
+      console.error(error);
       toast.error(error?.data?.message || error?.error);
     }
   };
@@ -94,18 +119,19 @@ const AvailabilityForm = () => {
                         onClick={() => handleSelected(index)}
                       />
                       <div
-                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${activeDays[index] ? "peer-checked:bg-gray-200" : ""
-                          }`}
+                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${
+                          activeDays[index] ? "peer-checked:bg-gray-200" : ""
+                        }`}
                       ></div>
                     </label>
                   </div>
-                  <h3 className="ml-[-60px] text-md text-mainText font-heading mb-2 w-2/12">
+                  <h3 className="ml-[0x] lg:ml-[-40px] text-md text-mainText font-heading mb-2 w-2/12">
                     {day}
                   </h3>
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <label className="flex items-center">
                       <select
-                        className="border border-gray-400 bg-transparent text-mainText text-center w-24 rounded py-1"
+                        className="border border-gray-400 bg-transparent text-mainText text-center w-24 lg:w-28 rounded py-1 "
                         onChange={(e) =>
                           handleTimeChange(index, "START_TIME", e.target.value)
                         }
@@ -115,7 +141,7 @@ const AvailabilityForm = () => {
                             <option
                               key={idx}
                               value={time}
-                              className="bg-second text-mainText"
+                              className="bg-second h-[20px] overflow-y-auto text-mainText"
                             >
                               {time}
                             </option>
@@ -127,7 +153,7 @@ const AvailabilityForm = () => {
                     </div>
                     <label className="flex items-center">
                       <select
-                        className="border border-gray-400 bg-transparent text-mainText text-center w-24 rounded py-1"
+                        className="border border-gray-400 bg-transparent text-mainText text-center w-24 lg:w-28 rounded py-1"
                         onChange={(e) =>
                           handleTimeChange(index, "END_TIME", e.target.value)
                         }

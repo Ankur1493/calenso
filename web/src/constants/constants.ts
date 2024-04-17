@@ -3,15 +3,7 @@ export const AUTH_URL = "/user";
 export const MEETINGS_URL = "/meetings";
 export const BOOKINGS_URL = "/bookings";
 
-export const days = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+export const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const timeOptions = [
   "00:00",
