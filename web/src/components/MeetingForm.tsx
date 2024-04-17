@@ -7,6 +7,7 @@ import {
 } from "../slices/isClickedSlice";
 import { setActiveMeetingInfo } from "../slices/meetingSlice";
 import { toast } from "react-toastify"
+import { z } from "zod"
 
 function MeetingForm() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -15,6 +16,12 @@ function MeetingForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState<Number>();
+
+  const meetingSchema = z.object({
+    title: z.string().min(4, { message: "title should be longer than 4 characters" }),
+    description: z.string().min(50, { message: "description should be longer than 100 characters" }).max(200, { message: "description should be less than 250 characters" }),
+    duration: z.number().min(5, { message: "meeting should be longer than 5 minutes" }).max(60, { message: "meeting should be equal or less than 60 minutes" })
+  })
 
   useEffect(() => {
     if (meetingInfo) {
@@ -48,20 +55,28 @@ function MeetingForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (title === "" || duration === 0 || description === "") {
-      toast.error("Add all fields");
-      return;
-    }
-    dispatch(
-      setActiveMeetingInfo({
-        meetingInfo: {
-          title: title,
-          duration: Number(duration),
-          info: description,
-        },
+    const durationNumber = Number(duration)
+    try {
+      meetingSchema.parse({
+        title,
+        duration: durationNumber,
+        description
       })
-    );
-    handleAvailabilityClick();
+      dispatch(
+        setActiveMeetingInfo({
+          meetingInfo: {
+            title: title,
+            duration: Number(duration),
+            info: description,
+          },
+        })
+      );
+      handleAvailabilityClick();
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      }
+    }
   };
 
   return (
