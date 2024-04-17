@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Logout from "../Hooks/Logout";
 
 const LogoutProfile = ({
@@ -9,19 +9,6 @@ const LogoutProfile = ({
   profileUrl?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSidebarVisible, setSidebarVisible] = useState(
-    window.innerWidth >= 768
-  );
-
-  useEffect(() => {
-    const handleResize = () => {
-      setSidebarVisible(window.innerWidth >= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
 
   const { handleLogout } = Logout();
   return (
@@ -31,11 +18,7 @@ const LogoutProfile = ({
         onClick={() => setIsOpen(!isOpen)}
       >
         <img src={profileUrl} className="w-6 rounded-[20px] mr-3" />
-
-        {
-          isSidebarVisible &&
-          <span className="font-heading mr-1">{name}</span>
-        }
+        <span className="font-heading mr-1">{name}</span>
         <svg
           className=" w-full h-4"
           fill="none"

@@ -7,6 +7,7 @@ import { RootState } from "../store";
 import { MovingCards } from "../components/MovingCards";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import FoundersPublicPage from "../components/FoundersPublicPage";
 
 function Landing() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -176,6 +177,7 @@ function Landing() {
         <div className="mt-12 md:mt-24 md:px-6">
           <GridLayout />
         </div>
+        <FoundersPublicPage />
         <div className="flex justify-center mt-16 md:mt-32">
           <div className="w-full px-6 lg:w-7/12 lg:px-0 text-center">
             <p className="font-secondHeading text-mainText text-4xl md:text-5xl xl:text-6xl font-bold">
