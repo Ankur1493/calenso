@@ -9,8 +9,18 @@ import { useCreateBookingMutation } from "../slices/bookingApiSlice";
 import { useParams } from "react-router-dom";
 import LoadingComponent from "../components/Loader";
 import { useNavigate } from "react-router-dom";
+import { ErrorResponse } from "../interfaces/interfaces";
 
-function getScheduleForSelectedDate(selectedDate, availableSchedules) {
+interface Schedule {
+  _id: string;
+  DAY: string;
+  START_TIME: string;
+  END_TIME: string;
+}
+
+function getScheduleForSelectedDate(selectedDate: Date, availableSchedules: Schedule[]): { startTime: string; endTime: string; } | null {
+  console.log(selectedDate)
+  console.log(availableSchedules)
   const selectedDay = selectedDate.toLocaleDateString("en-us", {
     weekday: "long",
   });
@@ -46,14 +56,12 @@ function ScheduleBooking() {
     }
   }, [selectedDate]);
 
-  const handleDateChange = (newDate) => {
+  const handleDateChange = (newDate: Date) => {
     setSelectedDate(newDate);
-    console.log(selectedDate);
-    console.log(User.meeting.availability.availableSchedule);
-    console.log(getScheduleForSelectedDate(selectedDate, availableSchedules));
   };
 
   const handleTimeSelect = (time: string | null) => {
+    //@ts-ignore
     setSelectedTime(time);
   };
 
@@ -61,10 +69,9 @@ function ScheduleBooking() {
 
   const {
     data: User,
-    isError: queryError,
     isLoading: queryLoading,
   } = useGetUserDetailsQuery({ username, meetingId });
-  const [createBooking, { isError, isLoading }] = useCreateBookingMutation();
+  const [createBooking, { isLoading }] = useCreateBookingMutation();
 
   useEffect(() => {
     if (selectedDate && selectedTime) {
@@ -73,10 +80,10 @@ function ScheduleBooking() {
       setSelectedDetails(false);
     }
   }, [selectedTime, selectedDate]);
-
+  //@ts-ignore
   const tileClassName = ({ date }) => {
     const isAvailableDate = User.meeting.availability.availableSchedule.some(
-      (schedule) => {
+      (schedule: { DAY: string, START_TIME: string }) => {
         const { DAY, START_TIME } = schedule;
         const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "long" });
         const startTime = new Date(`1970-01-01T${START_TIME}`);
@@ -88,6 +95,7 @@ function ScheduleBooking() {
   };
 
   const handleSubmit = async () => {
+    //@ts-ignore
     const [hours, minutes] = selectedTime?.split(":").map(Number);
     const combinedDateTime = new Date(selectedDate);
     combinedDateTime.setHours(hours, minutes, 0, 0);
@@ -108,7 +116,9 @@ function ScheduleBooking() {
       navigate(`/bookings/${response.bookingId}`);
       toast.success(response.message);
     } catch (err) {
-      toast.error(err?.data?.message || err?.error);
+      const errorResponse = err as ErrorResponse;
+      toast.error(errorResponse.data?.message || errorResponse.error);
+
     }
   };
 
@@ -323,12 +333,14 @@ function ScheduleBooking() {
           }
         `}
               </style>
-              <Calendar
-                onChange={(date: Date) => {
-                  handleDateChange(date);
-                }}
-                tileClassName={tileClassName}
-              />
+              {
+                <Calendar
+                  //@ts-ignore
+                  onChange={(date: Date) => {
+                    handleDateChange(date);
+                  }}
+                  tileClassName={tileClassName}
+                />}
             </div>
 
             <div className="flex flex-col w-[200px] border-t md:border-l md:border-t-none mt-16 md:mt-0 border-gray-400 border-opacity-40">
