@@ -8,6 +8,7 @@ import { MovingCards } from "../components/MovingCards";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import FoundersPublicPage from "../components/FoundersPublicPage";
+import { Footer } from "../components/Footer";
 
 function Landing() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -74,13 +75,13 @@ function Landing() {
                 </Link>
               </div>
             ) : (
-              <div className=" flex items-center bg-main rounded-3xl w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText">
+              <div className=" flex items-center bg-main rounded-3xl w-28 md:w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText">
                 <Link
                   to={"/register"}
                   className="cursos-pointer w-full flex justify-center"
                 >
                   <p className="font-heading font-semibold text-2xl ">
-                    Sign up
+                    Sign Up
                   </p>
                 </Link>
               </div>
@@ -157,12 +158,7 @@ function Landing() {
               className="flex items-center justify-center p-6 w-full lg:w-8/12 bg-second rounded-3xl md:p-4 md:w-full"
             >
               <div className="flex justify-center text-mainText text-3xl lg:text-2xl xl:text-3xl font-secondHeading w-full">
-                {userInfo ? (
-                  <p>Go to Application</p>
-                )
-                  : (
-                    <p>Claim username</p>
-                  )}
+                {userInfo ? <p>Go to Application</p> : <p>Claim username</p>}
               </div>
             </button>
           </div>
@@ -187,6 +183,9 @@ function Landing() {
         </div>
         <div className="flex items-center justify-center mt-16 lg:mt-24 pb-16 w-full">
           <MovingCards />
+        </div>
+        <div>
+          <Footer />
         </div>
       </div>
     </div>

@@ -126,7 +126,7 @@ const AvailabilityForm = () => {
                     </label>
                   </div>
                   <h3 className="ml-[0x] lg:ml-[-40px] text-md text-mainText font-heading mb-2 w-2/12">
-                    {day}
+                    {day.substring(0, 3)}
                   </h3>
                   <div className="flex gap-3">
                     <label className="flex items-center">
