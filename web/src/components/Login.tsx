@@ -6,10 +6,16 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { IsConnected } from "../slices/isClickedSlice";
+import { z } from "zod"
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const loginSchema = z.object({
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z.string().min(4, { message: "Password must be 4 or more characters long" }),
+  });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,17 +41,28 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      dispatch(IsConnected())
-      navigate("/home/event-types");
-      toast.success(res.message);
-    } catch (err) {
-      toast.error(err?.data?.message || err?.error);
-    }
+      loginSchema.parse({
+        email,
+        password,
+      });
 
-    setEmail("");
-    setPassword("");
+      try {
+        const res = await login({ email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        dispatch(IsConnected());
+        navigate("/home/event-types");
+        toast.success(res.message);
+      } catch (err) {
+        toast.error(err?.data?.message || err?.error);
+      }
+
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      }
+    }
   };
 
   return (

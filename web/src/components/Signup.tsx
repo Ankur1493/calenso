@@ -6,12 +6,19 @@ import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { RootState } from "../store";
 import { IsConnected } from "../slices/isClickedSlice";
+import { z } from "zod"
 
 function Signup() {
   const localName = useParams().username;
   const [username, setUsername] = useState(localName || "");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const signupSchema = z.object({
+    username: z.string().min(5, { message: "username must be longer than 4 characters" }).regex(/^[a-zA-Z0-9]+$/, { message: "Username must contain only alphabets and numbers" }),
+    email: z.string().email({ message: "invalid email address" }),
+    password: z.string().min(4, { message: "password must be equal or longer than 3 characters" })
+  })
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,13 +48,25 @@ function Signup() {
   const SubmitSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await signup({ username, email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      dispatch(IsConnected());
-      navigate("/home/event-types");
-      toast.success(res.message);
-    } catch (err) {
-      toast.error(err?.data?.message || err?.error);
+      signupSchema.parse({
+        username,
+        email,
+        password
+      })
+      try {
+        const res = await signup({ username, email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        dispatch(IsConnected());
+        navigate("/home/event-types");
+        toast.success(res.message);
+      } catch (err) {
+        toast.error(err?.data?.message || err?.error);
+      }
+    }
+    catch (error) {
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+      }
     }
   };
 
