@@ -29,31 +29,28 @@ function Bookings() {
               <div className="mb-4 h-9 max-w-full lg:mb-5">
                 <nav className="flex max-h-9 space-x-4 lg:space-x-12 rounded-md">
                   <button
-                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 mx-4  py-2.5 text-md ${
-                      filter === "upcoming"
-                        ? "font-semibold text-mainText text-[18px] decoration-2"
-                        : ""
-                    }`}
+                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 mx-4  py-2.5 text-md ${filter === "upcoming"
+                      ? "font-semibold text-mainText text-[18px] decoration-2"
+                      : ""
+                      }`}
                     onClick={() => setFilter("upcoming")}
                   >
                     Upcoming
                   </button>
                   <button
-                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 mx-4  py-2.5 text-md ${
-                      filter === "past"
-                        ? "font-semibold text-mainText text-[18px] decoration-2"
-                        : ""
-                    }`}
+                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 mx-4  py-2.5 text-md ${filter === "past"
+                      ? "font-semibold text-mainText text-[18px] decoration-2"
+                      : ""
+                      }`}
                     onClick={() => setFilter("past")}
                   >
                     Past
                   </button>
                   <button
-                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 mx-4  py-2.5 text-md ${
-                      filter === "cancelled"
-                        ? "font-semibold text-mainText text-[18px] decoration-2"
-                        : ""
-                    }`}
+                    className={`bg-emphasis text-input font-heading inline-flex items-center justify-center md:mb-0 px-4 mx-4  py-2.5 text-md ${filter === "cancelled"
+                      ? "font-semibold text-mainText text-[18px] decoration-2"
+                      : ""
+                      }`}
                     onClick={() => setFilter("cancelled")}
                   >
                     Cancelled
@@ -63,9 +60,10 @@ function Bookings() {
             </div>
           </div>
         </div>
-      </div>
-      <BookingType filter={filter} />
-    </div>
+      </div>{
+        //@ts-ignore
+        <BookingType filter={filter} />
+      }    </div>
   );
 }
 

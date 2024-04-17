@@ -5,6 +5,8 @@ import { useCancelBookingMutation } from "../slices/bookingApiSlice";
 import { markBookingCanceled } from "../slices/bookingSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import LoadingComponent from "../components/Loader";
+import { ErrorResponse } from "../interfaces/interfaces";
 
 const BookingDetails = () => {
   const navigate = useNavigate();
@@ -25,16 +27,18 @@ const BookingDetails = () => {
     try {
       const response = await cancel(Booking._id).unwrap();
       if (response) {
+        //@ts-ignore
         dispatch(markBookingCanceled(bookingId));
         toast.success("booking canceled");
       }
     } catch (err) {
-      toast.error(err?.data?.message || err?.error);
+      const errorResponse = err as ErrorResponse;
+      toast.error(errorResponse.data?.message || errorResponse.error);
     }
   };
 
   if (isLoading || isLoadingCancel) {
-    return <div className="text-2xl text-white h-screen w-screen">Loading</div>;
+    return <LoadingComponent />;
   }
 
   if (isError || isErrorCancel) {
@@ -82,10 +86,10 @@ const BookingDetails = () => {
         <div className="flex w-3/4 justify-between mt-4 pb-6 border-b border-b-gray-500 font-heading text-mainText">
           <div className="text-[18px] font-heading">Duration -</div>
           <div className="font-heading text-sm">
-            {(
-              (new Date(Booking.endTime) - new Date(Booking.startTime)) /
-              60000
-            ).toFixed(0)}{" "}
+            {//@ts-ignore
+              ((new Date(Booking.endTime) - new Date(Booking.startTime)) /
+                60000
+              ).toFixed(0)}{" "}
             minutes
           </div>
         </div>
@@ -109,9 +113,8 @@ const BookingDetails = () => {
             <a
               href={Booking.event.meetLink}
               target="_blank"
-              className={`${
-                !isOccured ? "w-3/4" : " w-3/4 md:w-1/3"
-              } flex justify-center py-2 rounded-lg font-heading hover:bg-gray-500 hover:text-black duration-200 border-gray-500 border`}
+              className={`${!isOccured ? "w-3/4" : " w-3/4 md:w-1/3"
+                } flex justify-center py-2 rounded-lg font-heading hover:bg-gray-500 hover:text-black duration-200 border-gray-500 border`}
             >
               Join Event
             </a>

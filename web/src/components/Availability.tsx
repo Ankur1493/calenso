@@ -13,6 +13,7 @@ import { days, timeOptions } from "../constants/constants";
 import { useNavigate } from "react-router-dom";
 import { useCreateMeeting } from "../Hooks/useCreateMeeting";
 import { toast } from "react-toastify";
+import { ErrorResponse } from "../interfaces/interfaces";
 
 const AvailabilityForm = () => {
   const { createNewMeeting } = useCreateMeeting();
@@ -30,10 +31,11 @@ const AvailabilityForm = () => {
     if (!updatedAvailability[dayIndex]) {
       updatedAvailability[dayIndex] = {
         DAY: days[dayIndex],
-        START_TIME: "00:00",
-        END_TIME: "",
+        START_TIME: "01:00",
+        END_TIME: "00:00",
       };
     }
+    //@ts-ignore
     updatedAvailability[dayIndex][field] = value;
     setAvailability(updatedAvailability);
   };
@@ -83,7 +85,7 @@ const AvailabilityForm = () => {
       console.log(filteredData);
       dispatch(
         setActiveAvailabilitySchedule({
-          availabilitySchedule: filteredData,
+          availabilitySchedule: availabilityData,
         })
       );
       const response = await createNewMeeting();
@@ -94,8 +96,8 @@ const AvailabilityForm = () => {
       dispatch(IsMeetingFormClicked());
       toast.success(response.message);
     } catch (error) {
-      console.error(error);
-      toast.error(error?.data?.message || error?.error);
+      const errorResponse = error as ErrorResponse;
+      toast.error(errorResponse.data?.message || errorResponse.error);
     }
   };
 
@@ -119,9 +121,8 @@ const AvailabilityForm = () => {
                         onClick={() => handleSelected(index)}
                       />
                       <div
-                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${
-                          activeDays[index] ? "peer-checked:bg-gray-200" : ""
-                        }`}
+                        className={`w-11 h-6 bg-input bg-opacity-40 border border-gray-400 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-main rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-main after:border after:rounded-full after:h-5 after:w-5 after:transition-all ${activeDays[index] ? "peer-checked:bg-gray-200" : ""
+                          }`}
                       ></div>
                     </label>
                   </div>

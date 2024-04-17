@@ -17,18 +17,21 @@ interface Item {
 }
 
 export function MovingCards() {
-  const items = testimonials.map((testimonial) => ({
+  //@ts-ignore
+  const items: Item = testimonials.map((testimonial) => ({
     image: testimonial.image,
     title: testimonial.title,
     content: testimonial.quote,
   }));
   return (
     <div className="rounded-md flex flex-col antialiased bg-transparent dark:bg-black items-center justify-center relative overflow-hidden">
-      <InfiniteMovingCards
-        items={testimonials}
-        direction="right"
-        speed="slow"
-      />
+      {
+        <InfiniteMovingCards
+          //@ts-ignore
+          items={testimonials}
+          direction="right"
+          speed="slow"
+        />}
     </div>
   );
 }

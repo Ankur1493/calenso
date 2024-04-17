@@ -5,6 +5,7 @@ interface Item {
   quote: string;
   name: string;
   title: string;
+  image: string;
 }
 
 interface Props {
@@ -81,7 +82,7 @@ const InfiniteMovingCards: React.FC<Props> = ({
           pauseOnHover && "hover:animation-play-state:paused"
         )}
       >
-        {items.map((item, idx) => (
+        {items.map((item) => (
           <li
             className="w-[600px] md:w-[350px] max-w-full font-heading relative rounded-2xl shadow-md border flex-shrink-0 border-slate-700 px-8 py-3 flex justify-center items-center md:w-[450px] lg:w-[600px] h-[300px]"
             style={{

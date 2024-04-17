@@ -1,11 +1,11 @@
 interface MeetingTime {
   startTime: string;
-  endTime: string;
 }
 
 function getMeetingTimeStatus(meetingStartTime: MeetingTime) {
   const now = new Date().getTime();
-  const startTime = new Date(meetingStartTime.startTime).getTime();
+  //@ts-ignore
+  const startTime = new Date(meetingStartTime).getTime();
   const timeDifference = startTime - now;
 
   if (timeDifference < 0) {
@@ -33,7 +33,6 @@ function getMeetingTimeStatus(meetingStartTime: MeetingTime) {
   if (seconds > 0 && hours === 0 && days === 0) {
     message += `${seconds} second${seconds > 1 ? "s" : ""} `;
   }
-
   return message.trim();
 }
 
