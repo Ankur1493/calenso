@@ -26,8 +26,8 @@ function EventTypes() {
   };
 
   useEffect(() => {
-    dispatch(refetch);
-  }, [dispatch, refetch]);
+    refetch();
+  }, [refetch]);
 
   useEffect(() => {
     const meetingArr = meetings?.userMeetings?.map((meet: Meeting) => meet);

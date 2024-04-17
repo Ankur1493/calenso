@@ -6,22 +6,33 @@ import {
   IsAvailabilityClicked,
 } from "../slices/isClickedSlice";
 import { setActiveMeetingInfo } from "../slices/meetingSlice";
-import { toast } from "react-toastify"
-import { z } from "zod"
+import { toast } from "react-toastify";
+import { z } from "zod";
 
 function MeetingForm() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const { meetingInfo } = useSelector((state: RootState) => state.meetings.activeMeetingInfo || { meetingInfo: null });
+  const { meetingInfo } = useSelector(
+    (state: RootState) =>
+      state.meetings.activeMeetingInfo || { meetingInfo: null }
+  );
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState<Number>();
+  const [duration, setDuration] = useState<number>();
 
   const meetingSchema = z.object({
-    title: z.string().min(4, { message: "title should be longer than 4 characters" }),
-    description: z.string().min(50, { message: "description should be longer than 100 characters" }).max(200, { message: "description should be less than 250 characters" }),
-    duration: z.number().min(5, { message: "meeting should be longer than 5 minutes" }).max(60, { message: "meeting should be equal or less than 60 minutes" })
-  })
+    title: z
+      .string()
+      .min(4, { message: "title should be longer than 4 characters" }),
+    description: z
+      .string()
+      .min(50, { message: "description should be longer than 100 characters" })
+      .max(200, { message: "description should be less than 250 characters" }),
+    duration: z
+      .number()
+      .min(5, { message: "meeting should be longer than 5 minutes" })
+      .max(60, { message: "meeting should be equal or less than 60 minutes" }),
+  });
 
   useEffect(() => {
     if (meetingInfo) {
@@ -50,18 +61,18 @@ function MeetingForm() {
   };
 
   const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDuration(e.target.value);
+    setDuration(Number(e.target.value));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const durationNumber = Number(duration)
+    const durationNumber = Number(duration);
     try {
       meetingSchema.parse({
         title,
         duration: durationNumber,
-        description
-      })
+        description,
+      });
       dispatch(
         setActiveMeetingInfo({
           meetingInfo: {
@@ -179,4 +190,3 @@ function MeetingForm() {
 }
 
 export default MeetingForm;
-

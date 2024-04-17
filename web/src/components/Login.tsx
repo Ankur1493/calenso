@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { IsConnected } from "../slices/isClickedSlice";
-import { z } from "zod"
+import { z } from "zod";
+import { ErrorResponse } from "../interfaces/interfaces";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,9 @@ function Login() {
 
   const loginSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
-    password: z.string().min(4, { message: "Password must be 4 or more characters long" }),
+    password: z
+      .string()
+      .min(4, { message: "Password must be 4 or more characters long" }),
   });
 
   const navigate = useNavigate();
@@ -53,7 +56,8 @@ function Login() {
         navigate("/home/event-types");
         toast.success(res.message);
       } catch (err) {
-        toast.error(err?.data?.message || err?.error);
+        const errorResponse = err as ErrorResponse;
+        toast.error(errorResponse.data?.message || errorResponse.error);
       }
 
       setEmail("");

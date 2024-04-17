@@ -1,15 +1,21 @@
-import { createApi, fetchBaseQuery, BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import {
+  createApi,
+  fetchBaseQuery,
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+} from "@reduxjs/toolkit/query/react";
 
 import { BASE_URL } from "../constants/constants";
 
-const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = fetchBaseQuery({
-  baseUrl: BASE_URL,
-  credentials: 'include', // Include cookies with requests
-});
+const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
+  fetchBaseQuery({
+    baseUrl: BASE_URL,
+    credentials: "include",
+  });
 
 export const apiSlice = createApi({
   baseQuery,
   tagTypes: ["User"],
-  endpoints: (builder) => ({}),
-})
-
+  endpoints: () => ({}),
+});

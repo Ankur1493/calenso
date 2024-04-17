@@ -35,7 +35,7 @@ function HomeLayout() {
   }, []);
 
   useEffect(() => {
-    let intervalId = null;
+    let intervalId: number | undefined;
     const handleConnectClick = () => {
       dispatch(IsConnectClicked());
     };
@@ -46,7 +46,11 @@ function HomeLayout() {
       }, 2000);
     }
 
-    return () => clearInterval(intervalId);
+    return () => {
+      if (intervalId !== undefined) {
+        clearInterval(intervalId);
+      }
+    };
   }, [isConnectClicked, isConnected, dispatch]);
 
   return (

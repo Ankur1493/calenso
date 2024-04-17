@@ -24,7 +24,7 @@ interface AvailabilityScheduleInfo {
 interface MeetingState {
   meetings: Meeting[];
   activeMeetingInfo: MeetingInfo | null;
-  activeAvailabilitySchedule: AvailabilityScheduleInfo[] | null;
+  activeAvailabilitySchedule: AvailabilityScheduleInfo | null;
 }
 
 const initialState: MeetingState = {
@@ -48,13 +48,17 @@ const meetingSlice = createSlice({
       );
     },
     setActiveMeetingInfo: (
-      state, action: PayloadAction<{ meetingInfo: Meeting }>) => {
+      state,
+      action: PayloadAction<{ meetingInfo: Meeting }>
+    ) => {
       state.activeMeetingInfo = {
         meetingInfo: action.payload.meetingInfo,
       };
     },
     setActiveAvailabilitySchedule: (
-      state, action: PayloadAction<{ availabilitySchedule: AvailabilitySchedule[] }>) => {
+      state,
+      action: PayloadAction<{ availabilitySchedule: AvailabilitySchedule[] }>
+    ) => {
       state.activeAvailabilitySchedule = {
         availabilitySchedule: action.payload.availabilitySchedule,
       };
@@ -78,4 +82,3 @@ export const {
 } = meetingSlice.actions;
 
 export default meetingSlice.reducer;
-

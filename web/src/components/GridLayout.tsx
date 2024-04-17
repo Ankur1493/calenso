@@ -23,7 +23,7 @@ export function GridLayout() {
     </BentoGrid>
   );
 }
-const Skeleton = ({ image1 }) => (
+const Skeleton = ({ image1 }: { image1: any }) => (
   <div
     className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-input bg-opacity-80"
     style={{

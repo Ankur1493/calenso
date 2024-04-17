@@ -1,10 +1,15 @@
-function getMeetingTimeStatus(meetingStartTime: string) {
-  const now = new Date();
-  const startTime = new Date(meetingStartTime);
+interface MeetingTime {
+  startTime: string;
+  endTime: string;
+}
+
+function getMeetingTimeStatus(meetingStartTime: MeetingTime) {
+  const now = new Date().getTime();
+  const startTime = new Date(meetingStartTime.startTime).getTime();
   const timeDifference = startTime - now;
 
   if (timeDifference < 0) {
-    return 'Past meeting';
+    return "Past meeting";
   }
 
   let timeLeft = timeDifference / 1000;
@@ -15,22 +20,21 @@ function getMeetingTimeStatus(meetingStartTime: string) {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = Math.floor(timeLeft % 60);
 
-  let message = 'Meeting starts in ';
+  let message = "Meeting starts in ";
   if (days > 0) {
-    message += `${days} day${days > 1 ? 's' : ''} `;
+    message += `${days} day${days > 1 ? "s" : ""} `;
   }
   if (hours > 0) {
-    message += `${hours} hour${hours > 1 ? 's' : ''} `;
+    message += `${hours} hour${hours > 1 ? "s" : ""} `;
   }
   if (minutes > 0 && days === 0) {
-    message += `${minutes} minute${minutes > 1 ? 's' : ''} `;
+    message += `${minutes} minute${minutes > 1 ? "s" : ""} `;
   }
   if (seconds > 0 && hours === 0 && days === 0) {
-    message += `${seconds} second${seconds > 1 ? 's' : ''} `;
+    message += `${seconds} second${seconds > 1 ? "s" : ""} `;
   }
 
   return message.trim();
 }
 
 export default getMeetingTimeStatus;
-

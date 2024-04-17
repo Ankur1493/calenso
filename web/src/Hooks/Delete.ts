@@ -3,7 +3,11 @@ import { useDispatch } from "react-redux";
 import { deleteMeetingId } from "../slices/meetingSlice";
 import { useNavigate } from "react-router-dom";
 
-const Delete = ({ id }) => {
+interface DeleteProps {
+  id: string;
+}
+
+const Delete = ({ id }: DeleteProps) => {
   const [deleteMeeting] = useDeleteMeetingMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -12,7 +16,7 @@ const Delete = ({ id }) => {
     try {
       await deleteMeeting(id).unwrap();
       dispatch(deleteMeetingId({ id }));
-      console.log(`action dispatched id --- ${id}`)
+      console.log(`action dispatched id --- ${id}`);
       navigate("/home/event-types");
     } catch (error) {
       console.error("Failed to delete meeting:", error);
@@ -23,4 +27,3 @@ const Delete = ({ id }) => {
 };
 
 export default Delete;
-

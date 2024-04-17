@@ -1,7 +1,16 @@
 export interface MeetingInfo {
+  _id: string;
+  user_id: string;
   title: string;
   description: string;
   duration: number;
+}
+
+export interface ErrorResponse {
+  data?: {
+    message?: string;
+  };
+  error?: string;
 }
 
 export interface MeetingFormProps {

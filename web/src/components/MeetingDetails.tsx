@@ -15,7 +15,7 @@ function MeetingDetails() {
   const [showPreviewTooltip, setShowPreviewTooltip] = useState(false);
 
   const { id } = useParams();
-  const { handleDeleteMeeting } = Delete({ id });
+  const { handleDeleteMeeting } = Delete({ id: id ?? "" });
   const {
     data: meetingDetails,
     isLoading,
@@ -24,7 +24,9 @@ function MeetingDetails() {
   } = useMeetingDetailsQuery(id);
 
   const meetingLink = `http://localhost:5173/${userInfo.username}/${id}`;
-  const { isCopied, copyToClipboard } = useCopyToClipboard(meetingLink);
+  const { isCopied, copyToClipboard } = useCopyToClipboard({
+    textToCopy: meetingLink,
+  });
 
   useEffect(() => {}, [id]);
 
@@ -33,7 +35,7 @@ function MeetingDetails() {
   }
 
   if (isError) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: {(error as any).message}</div>;
   }
 
   if (!meetingDetails) {
@@ -83,7 +85,9 @@ function MeetingDetails() {
             <button
               data-state="closed"
               type="button"
-              onClick={copyToClipboard}
+              onClick={() => {
+                copyToClipboard();
+              }}
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default"
               onMouseEnter={() => setShowCopyTooltip(true)}
               onMouseLeave={() => setShowCopyTooltip(false)}

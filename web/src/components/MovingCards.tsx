@@ -1,11 +1,27 @@
-import React from "react";
 import InfiniteMovingCards from "./ui/infiniteMovingCards";
 import doctor from "../assets/images/doctor-patient.jpg";
 import employee from "../assets/images/employee-candidate.png";
 import teacher from "../assets/images/teacher.jpg";
 import expert from "../assets/images/experts.jpg";
 
+interface Testimonial {
+  image: string;
+  title: string;
+  quote: string;
+}
+
+interface Item {
+  image: string;
+  title: string;
+  content: string;
+}
+
 export function MovingCards() {
+  const items = testimonials.map((testimonial) => ({
+    image: testimonial.image,
+    title: testimonial.title,
+    content: testimonial.quote,
+  }));
   return (
     <div className="rounded-md flex flex-col antialiased bg-transparent dark:bg-black items-center justify-center relative overflow-hidden">
       <InfiniteMovingCards
@@ -17,7 +33,7 @@ export function MovingCards() {
   );
 }
 
-const testimonials = [
+const testimonials: Testimonial[] = [
   {
     image: doctor,
     title: "Doctor → Patients",

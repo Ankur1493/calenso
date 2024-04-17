@@ -2,7 +2,6 @@ import { useState } from "react";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
 import landingImage from "../assets/images/landing.png";
-import CALENSO from "../assets/images/CALENSO.png"
 
 function Authentication() {
   const [alreadySigned, setAlreadySigned] = useState(false);

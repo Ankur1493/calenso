@@ -5,20 +5,27 @@ import { useDispatch } from "react-redux";
 import { markBookingCanceled } from "../slices/bookingSlice";
 import { Link } from "react-router-dom";
 import LoadingComponent from "./Loader";
+import { ErrorResponse } from "../interfaces/interfaces";
+import { DateTimeFormatOptions } from "@types/node";
+
 function BookingCard({ booking }) {
-  const formatDate = (ISOString) => {
+  const formatDate = (ISOString: string) => {
     const date = new Date(ISOString);
-    const options = { weekday: "short", month: "short", day: "numeric" };
+    const options: DateTimeFormatOptions = {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    };
     return date.toLocaleDateString("en-US", options);
   };
   const dispatch = useDispatch();
 
-  const formatTime = (ISOString) => {
+  const formatTime = (ISOString: string) => {
     const date = new Date(ISOString);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
-  const [cancel, { isLoading, isError }] = useCancelBookingMutation();
+  const [cancel, { isLoading }] = useCancelBookingMutation();
 
   const cancelBooking = async () => {
     const bookingId = booking._id;
@@ -29,7 +36,8 @@ function BookingCard({ booking }) {
         toast.success("booking canceled");
       }
     } catch (err) {
-      toast.error(err?.data?.message || err?.error);
+      const errorResponse = err as ErrorResponse;
+      toast.error(errorResponse.data?.message || errorResponse.error);
     }
   };
 

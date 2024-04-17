@@ -3,6 +3,7 @@ import { useLogoutMutation } from "../slices/usersApiSlice";
 import { removeCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ErrorResponse } from "../interfaces/interfaces";
 
 const Logout = () => {
   const [logout] = useLogoutMutation();
@@ -16,7 +17,8 @@ const Logout = () => {
       navigate("/register");
       toast.success(res.message);
     } catch (err) {
-      toast.error(err?.data?.message || err?.error);
+      const errorResponse = err as ErrorResponse;
+      toast.error(errorResponse.data?.message || errorResponse.error);
     }
   };
 

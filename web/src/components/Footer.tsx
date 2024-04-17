@@ -22,8 +22,6 @@ const LINKS = [
   },
 ];
 
-const currentYear = new Date().getFullYear();
-
 export function Footer() {
   return (
     <footer className="relative w-full bg-home">

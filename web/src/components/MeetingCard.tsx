@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Delete from "../Hooks/Delete";
 import useCopyToClipboard from "../Hooks/Copy";
+import { Meeting } from "../interfaces/interfaces";
 
-function MeetingCard({ meeting }) {
+interface MeetingCardProps {
+  meeting: Meeting;
+}
+
+function MeetingCard({ meeting }: MeetingCardProps) {
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
-  const navigate = useNavigate();
-
-  const { handleDeleteMeeting } = Delete({ id: meeting._id });
+  const { handleDeleteMeeting } = Delete({ id: String(meeting._id) });
 
   const [showCopyTooltip, setShowCopyTooltip] = useState(false);
   const [showDeleteTooltip, setShowDeleteTooltip] = useState(false);
   const [showPreviewTooltip, setShowPreviewTooltip] = useState(false);
 
   const meetingLink = `http://localhost:5173/${userInfo.username}/${meeting._id}`;
-  const { isCopied, copyToClipboard } = useCopyToClipboard(meetingLink);
+  const { isCopied, copyToClipboard } = useCopyToClipboard({
+    textToCopy: meetingLink,
+  });
 
   return (
     <div className="p-2 px-6">
@@ -97,7 +102,9 @@ function MeetingCard({ meeting }) {
             <button
               data-state="closed"
               type="button"
-              onClick={copyToClipboard}
+              onClick={() => {
+                copyToClipboard();
+              }}
               className="whitespace-nowrap items-center text-sm font-medium relative rounded-md transition flex justify-center text-mainText border border-default h-9 px-4 py-2.5 min-h-[36px] min-w-[36px] !p-2 hover:border-default"
               onMouseEnter={() => setShowCopyTooltip(true)}
               onMouseLeave={() => setShowCopyTooltip(false)}

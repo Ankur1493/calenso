@@ -6,7 +6,8 @@ import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { RootState } from "../store";
 import { IsConnected } from "../slices/isClickedSlice";
-import { z } from "zod"
+import { z } from "zod";
+import { ErrorResponse } from "../interfaces/interfaces";
 
 function Signup() {
   const localName = useParams().username;
@@ -15,10 +16,17 @@ function Signup() {
   const [password, setPassword] = useState("");
 
   const signupSchema = z.object({
-    username: z.string().min(5, { message: "username must be longer than 4 characters" }).regex(/^[a-zA-Z0-9]+$/, { message: "Username must contain only alphabets and numbers" }),
+    username: z
+      .string()
+      .min(5, { message: "username must be longer than 4 characters" })
+      .regex(/^[a-zA-Z0-9]+$/, {
+        message: "Username must contain only alphabets and numbers",
+      }),
     email: z.string().email({ message: "invalid email address" }),
-    password: z.string().min(4, { message: "password must be equal or longer than 3 characters" })
-  })
+    password: z.string().min(4, {
+      message: "password must be equal or longer than 3 characters",
+    }),
+  });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,8 +59,8 @@ function Signup() {
       signupSchema.parse({
         username,
         email,
-        password
-      })
+        password,
+      });
       try {
         const res = await signup({ username, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
@@ -60,10 +68,10 @@ function Signup() {
         navigate("/home/event-types");
         toast.success(res.message);
       } catch (err) {
-        toast.error(err?.data?.message || err?.error);
+        const errorResponse = err as ErrorResponse;
+        toast.error(errorResponse.data?.message || errorResponse.error);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
       }

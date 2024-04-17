@@ -127,10 +127,12 @@ function ScheduleBooking() {
 
   const availableSchedules = User.meeting.availability.availableSchedule;
 
+  const scheduleDetails = getScheduleForSelectedDate(
+    selectedDate,
+    availableSchedules
+  );
 
-  const scheduleDetails = getScheduleForSelectedDate(selectedDate, availableSchedules);
-
-  let intervals = [];
+  const intervals = [];
 
   if (scheduleDetails) {
     const { startTime, endTime } = scheduleDetails;
@@ -152,8 +154,8 @@ function ScheduleBooking() {
     ) {
       intervals.push(
         currentTime.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
+          hour: "2-digit",
+          minute: "2-digit",
           hour12: false,
         })
       );
@@ -349,7 +351,9 @@ function ScheduleBooking() {
                     />
                   ))
                 ) : (
-                  <div className="text-gray-400 text-center">Select a date to see user available time</div>
+                  <div className="text-gray-400 text-center">
+                    Select a date to see user available time
+                  </div>
                 )}
               </div>
             </div>

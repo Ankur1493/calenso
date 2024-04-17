@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useCopyToClipboard(textToCopy) {
+function useCopyToClipboard({ textToCopy }: { textToCopy: string }) {
   const [isCopied, setIsCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -9,7 +9,7 @@ function useCopyToClipboard(textToCopy) {
   };
 
   useEffect(() => {
-    let timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     if (isCopied) {
       timeout = setTimeout(() => setIsCopied(false), 2000);
     }
