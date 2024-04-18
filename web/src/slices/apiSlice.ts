@@ -6,10 +6,9 @@ import {
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 
-const BASE_URL = import.meta.env.BASE_URL;
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
   fetchBaseQuery({
-    baseUrl: BASE_URL,
+    baseUrl: "https://api.calenso.live",
     credentials: "include",
   });
 
