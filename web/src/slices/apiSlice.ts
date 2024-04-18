@@ -8,7 +8,7 @@ import {
 
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
   fetchBaseQuery({
-    baseUrl: "https://api.calenso.live",
+    baseUrl: "http://localhost:8000",
     credentials: "include",
   });
 
