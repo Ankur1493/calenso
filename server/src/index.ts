@@ -53,4 +53,4 @@ mongoose
     console.error("error occured during db connection");
   });
 
-export default app
+export default app;

@@ -40,7 +40,7 @@ function Landing() {
               </a>
             </h1>
           </div>
-          <div className="flex flex-row mx-10 sm:mx-16 gap-y-5 gap-x-4 md:gap-x-10">
+          <div className="flex flex-row mx-10 sm:mx-16 gap-y-5 gap-x-2 md:gap-x-10">
             <div className="bg-mainText rounded-3xl w-24 md:w-36 h-11 px-1.5 flex items-center">
               <a
                 href="https://github.com/Ankur1493/calenso/"
@@ -50,13 +50,13 @@ function Landing() {
                 <div className="flex flex-row justify-center sm:justify-around text-center">
                   <div>
                     <img
-                      className="w-5 h-5 hidden sm:block md:w-7 md:h-7"
+                      className="w-5 h-5 md:w-7 md:h-7"
                       src={github}
                       alt=""
                     />
                   </div>
                   <div>
-                    <p className="text-main font-heading font-semibold text-1xl md:text-2xl ">
+                    <p className=" pl-1 sm:pl-0 text-main font-heading font-semibold text-1xl md:text-2xl ">
                       star us
                     </p>
                   </div>
@@ -75,12 +75,12 @@ function Landing() {
                 </Link>
               </div>
             ) : (
-              <div className=" flex items-center bg-main rounded-3xl w-28 md:w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText">
+              <div className=" flex items-center bg-main rounded-3xl w-20 md:w-36 h-11 px-1.5 border-mainText border-2 text-mainText  hover:text-main hover:bg-mainText">
                 <Link
                   to={"/register"}
                   className="cursos-pointer w-full flex justify-center"
                 >
-                  <p className="font-heading font-semibold text-2xl ">
+                  <p className="font-heading font-semibold text-1xl md:text-2xl ">
                     Sign Up
                   </p>
                 </Link>
