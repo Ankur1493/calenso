@@ -15,10 +15,10 @@ import ErrorPage from "./pages/Error";
 
 function App() {
   const [serverStability, setServerStability] = useState(true);
-
+  const BASE_URL = import.meta.env.BASE_URL
   useEffect(() => {
     const checkServerHealth = () => {
-      fetch("http://localhost:8000/health")
+      fetch(`${BASE_URL}/health`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
