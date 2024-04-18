@@ -11,36 +11,8 @@ import MeetingDetails from "./components/MeetingDetails";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import DispalyOwnerMeetings from "./pages/DispalyOwnerMeetings";
 import BookingDetails from "./pages/BookingDetails";
-import ErrorPage from "./pages/Error";
 
 function App() {
-  const [serverStability, setServerStability] = useState(true);
-  const BASE_URL = import.meta.env.BASE_URL
-  useEffect(() => {
-    const checkServerHealth = () => {
-      fetch(`${BASE_URL}/health`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          setServerStability(true);
-        })
-        .catch((error) => {
-          console.error("Error checking server health:", error.message);
-          setServerStability(false);
-        });
-    };
-
-    checkServerHealth();
-
-    const intervalId = setInterval(checkServerHealth, 10000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  if (!serverStability) {
-    return <ErrorPage />;
-  }
 
   return (
     <div className="w-full bg-black bg-dot-white/[0.2] relative">
