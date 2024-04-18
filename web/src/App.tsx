@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Landing from "./pages/Landing";
 import Authentication from "./pages/Authentication";
 import { ToastContainer } from "react-toastify";
