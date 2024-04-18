@@ -6,8 +6,7 @@ import {
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
 
-import { BASE_URL } from "../constants/constants";
-
+const BASE_URL = import.meta.env.BASE_URL;
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
   fetchBaseQuery({
     baseUrl: BASE_URL,
