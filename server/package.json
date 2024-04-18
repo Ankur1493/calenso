@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node build/index.js",
+    "vercel-build": "echo Hello from Ankur",
     "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\""
   },
   "keywords": [],

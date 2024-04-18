@@ -52,3 +52,5 @@ mongoose
   .catch((_) => {
     console.error("error occured during db connection");
   });
+
+export default app
